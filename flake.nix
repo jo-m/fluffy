@@ -13,7 +13,6 @@
   }: let
     system = "x86_64-linux";
     hostname = "cloudy";
-    username = "admin";
   in {
     nixosConfigurations.${hostname} = nixpkgs.lib.nixosSystem {
       system = system;
