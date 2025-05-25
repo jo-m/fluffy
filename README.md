@@ -12,13 +12,26 @@ export REMOTE_IP=2.2.2.2
 nix run github:nix-community/nixos-anywhere -- --flake .#cloudy --target-host root@$REMOTE_IP
 
 # Later
-ssh-keygen -f /root/.ssh/known_hosts -R $REMOTE_IP
+ssh-keygen -R "[$REMOTE_IP]:4721"
 export NIX_SSHOPTS="-p 4721"
 nixos-rebuild switch --flake .#cloudy --target-host root@$REMOTE_IP
 ssh $NIX_SSHOPTS root@$REMOTE_IP
 ```
 
-# TODO Hetzner cloud-init
+# TODO
+
+- [x] GC https://ryanseipp.com/post/nixos-server/
+- [x] Podman storage, data
+- [ ] ZFS, impermanence, autowipe, ... / https://ryanseipp.com/post/nixos-automated-deployment/
+- [ ] Logging?
+- [ ] IPv6
+- [ ] More hardening (lynis)
+- [ ] Various perf tuning etc.
+
+# Notes
+
+- Container data is in `/home/runner/.local/share/containers`
+- Hetzner cloud-init:
 
 ```
 /run/cloud-init/instance-data.json
@@ -26,11 +39,3 @@ http://169.254.169.254/hetzner/v1/metadata
 http://169.254.169.254/hetzner/v1/userdata
 /usr/lib/python3/dist-packages/cloudinit/sources/DataSourceHetzner.py
 ```
-
-# TODO
-
-- [x] GC https://ryanseipp.com/post/nixos-server/
-- [ ] ZFS, impermanence, autowipe, ... / https://ryanseipp.com/post/nixos-automated-deployment/
-- [ ] Logging?
-- [ ] IPv6
-- [ ] More hardening (lynis)

@@ -37,7 +37,7 @@
         lvs = {
           # https://github.com/nix-community/disko/blob/master/example/swap.nix
           encryptedSwap = {
-            size = "4G";
+            size = "8G";
             content = {
               type = "swap";
               randomEncryption = true;
@@ -45,8 +45,9 @@
             };
           };
 
+          # System (NixOS).
           root = {
-            size = "20G";
+            size = "15G";
             content = {
               type = "filesystem";
               format = "ext4";
@@ -57,6 +58,20 @@
             };
           };
 
+          # Home - container storage.
+          home = {
+            size = "15G";
+            content = {
+              type = "filesystem";
+              format = "ext4";
+              mountpoint = "/home";
+              mountOptions = [
+                "defaults"
+              ];
+            };
+          };
+
+          # Container data mounts.
           data = {
             size = "100%FREE";
             content = {

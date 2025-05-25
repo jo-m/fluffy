@@ -52,12 +52,17 @@ in {
   users.users."${username}" = {
     initialHashedPassword = "!";
     isNormalUser = true;
+    uid = 1000; # TODO: parametrize
 
     # Auto start before user login.
     linger = true;
     # Required for rootless container with multiple users.
     autoSubUidGidRange = true;
   };
+
+  systemd.tmpfiles.rules = [
+    "d /data/echo2 0750 1000 1000"
+  ];
 
   home-manager.users."${username}" = {
     pkgs,
@@ -81,6 +86,7 @@ in {
           image = "docker.io/mendhak/http-https-echo:31";
           publishPorts = ["127.0.0.1:9001:8080"];
           userns = "keep-id";
+          mounts = ["type=bind,src=/data/echo2/,dst=/persisted-data"];
         };
       };
     };
