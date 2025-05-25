@@ -19,6 +19,20 @@ in {
   i18n.defaultLocale = "en_US.UTF-8";
   console.keyMap = "us";
 
+  nix = {
+    gc = {
+      automatic = true;
+      dates = "weekly";
+      options = "delete-older-than 7d";
+      persistent = false;
+    };
+
+    optimise = {
+      automatic = true;
+      dates = ["weekly"];
+    };
+  };
+
   imports = lib.flatten [
     (with modules; [
       hetzner

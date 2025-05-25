@@ -8,13 +8,14 @@
 
 ```bash
 # Initial
-nix run github:nix-community/nixos-anywhere -- --flake .#cloudy --target-host root@2.2.2.2
+export REMOTE_IP=2.2.2.2
+nix run github:nix-community/nixos-anywhere -- --flake .#cloudy --target-host root@$REMOTE_IP
 
 # Later
-ssh-keygen -f /root/.ssh/known_hosts -R 2.2.2.2
+ssh-keygen -f /root/.ssh/known_hosts -R $REMOTE_IP
 export NIX_SSHOPTS="-p 4721"
-nixos-rebuild switch --flake .#cloudy --target-host root@2.2.2.2
-ssh $NIX_SSHOPTS root@2.2.2.2
+nixos-rebuild switch --flake .#cloudy --target-host root@$REMOTE_IP
+ssh $NIX_SSHOPTS root@$REMOTE_IP
 ```
 
 # TODO Hetzner cloud-init
@@ -28,7 +29,7 @@ http://169.254.169.254/hetzner/v1/userdata
 
 # TODO
 
-- [ ] GC https://ryanseipp.com/post/nixos-server/
+- [x] GC https://ryanseipp.com/post/nixos-server/
 - [ ] ZFS, impermanence, autowipe, ... / https://ryanseipp.com/post/nixos-automated-deployment/
 - [ ] Logging?
 - [ ] IPv6
