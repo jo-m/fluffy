@@ -20,8 +20,8 @@
               mountOptions = ["umask=0077"];
             };
           };
-          lvmpool = {
-            name = "lvmpool";
+          lvm_pool = {
+            name = "lvm_pool";
             size = "100%";
             content = {
               type = "lvm_pv";

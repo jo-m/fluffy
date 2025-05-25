@@ -23,45 +23,26 @@ in {
     (with modules; [
       hetzner
       ssh
+      podman
     ])
-    # home-manager.nixosModules.home-manager
-    # ../../services/monitoring.nix
-    # ./headscale.nix
-    # ./proxy.nix
-    # ./nginx.nix
-    # ./kanidm.nix
+    ./caddy.nix
   ];
 
-  # networking.firewall.allowedTCPPorts = [ 4721 ];
-  # networking.useDHCP = lib.mkDefault true;
-
-  environment.systemPackages = map lib.lowPrio [
-    # pkgs.curl
-    # pkgs.gitMinimal
+  environment.systemPackages = with pkgs; [
+    curl
+    htop
+    btop
   ];
-
-  virtualisation.podman = {
-    enable = true;
-    autoPrune.enable = true;
-    dockerCompat = true;
-    dockerSocket.enable = true;
-    defaultNetwork.settings = {
-      # Required for container networking to be able to use names.
-      dns_enabled = true;
-    };
-  };
 
   users.users."${username}" = {
     initialHashedPassword = "!";
     isNormalUser = true;
 
-    # required for auto start before user login
+    # Auto start before user login.
     linger = true;
-    # required for rootless container with multiple users
+    # Required for rootless container with multiple users.
     autoSubUidGidRange = true;
   };
-
-  # home-manager.nixosModules.home-manager {}
 
   home-manager.users."${username}" = {
     pkgs,
@@ -71,7 +52,7 @@ in {
     home.stateVersion = "25.05";
     home.packages = [pkgs.atool pkgs.httpie];
     imports = [inputs.quadlet-nix.homeManagerModules.quadlet];
-    # This is crucial to ensure the systemd services are (re)started on config change
+    # Ensure the systemd services are (re)started on config change.
     systemd.user.startServices = "sd-switch";
 
     virtualisation.quadlet.containers = {
@@ -83,7 +64,7 @@ in {
         };
         containerConfig = {
           image = "docker.io/mendhak/http-https-echo:31";
-          publishPorts = ["127.0.0.1:8080:8080"];
+          publishPorts = ["127.0.0.1:9001:8080"];
           userns = "keep-id";
         };
       };

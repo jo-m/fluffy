@@ -44,7 +44,10 @@
       PrintLastLog no
     '';
   };
+
   services.fail2ban.enable = true;
+
+  # networking.firewall.allowedTCPPorts = [ 4721 ];
 
   users.users.root.openssh.authorizedKeys.keys = [
     # https://github.com/jo-m.keys

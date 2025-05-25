@@ -1,4 +1,8 @@
-{modulesPath, ...}: {
+{
+  modulesPath,
+  lib,
+  ...
+}: {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
     (modulesPath + "/profiles/qemu-guest.nix")
@@ -6,11 +10,13 @@
   ];
 
   boot = {
-    # use predictable network interface names (eth0)
+    # Use predictable network interface names.
     kernelParams = ["net.ifnames=0"];
     loader.grub = {
       efiSupport = true;
       efiInstallAsRemovable = true;
     };
   };
+
+  networking.useDHCP = lib.mkDefault true;
 }
