@@ -45,9 +45,11 @@
     '';
   };
 
-  services.fail2ban.enable = true;
-
-  # networking.firewall.allowedTCPPorts = [ 4721 ];
+  services.fail2ban = {
+    enable = true;
+    maxretry = 10;
+    bantime-increment.enable = true;
+  };
 
   users.users.root.openssh.authorizedKeys.keys = [
     # https://github.com/jo-m.keys

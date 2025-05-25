@@ -24,6 +24,7 @@ in {
       hetzner
       ssh
       podman
+      harden
     ])
     ./caddy.nix
   ];

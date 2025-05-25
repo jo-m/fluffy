@@ -19,4 +19,6 @@
   };
 
   networking.useDHCP = lib.mkDefault true;
+  # https://community.hetzner.com/tutorials/install-and-configure-ntp
+  networking.timeServers = ["ntp1.hetzner.de" "ntp2.hetzner.com" "ntp3.hetzner.net"];
 }
