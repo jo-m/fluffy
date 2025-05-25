@@ -27,10 +27,12 @@ ssh $NIX_SSHOPTS root@$REMOTE_IP
 - [ ] IPv6
 - [ ] More hardening (lynis)
 - [ ] Various perf tuning etc.
+- [ ] Ensure SSL is enforced
 
 # Notes
 
 - Container data is in `/home/runner/.local/share/containers`
+- Data (bind mounts) is in `/data`
 - Hetzner cloud-init:
 
 ```

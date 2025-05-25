@@ -10,6 +10,7 @@
   ...
 }: let
   username = "runner";
+  uid = 1000;
 in {
   system.stateVersion = "25.05";
   networking.hostName = hostname;
@@ -44,15 +45,13 @@ in {
   ];
 
   environment.systemPackages = with pkgs; [
-    curl
-    htop
     btop
   ];
 
   users.users."${username}" = {
     initialHashedPassword = "!";
     isNormalUser = true;
-    uid = 1000; # TODO: parametrize
+    uid = uid;
 
     # Auto start before user login.
     linger = true;
@@ -61,7 +60,7 @@ in {
   };
 
   systemd.tmpfiles.rules = [
-    "d /data/echo2 0750 1000 1000"
+    "d /data/echo2 0750 ${toString uid} ${toString uid}"
   ];
 
   home-manager.users."${username}" = {
@@ -70,8 +69,9 @@ in {
     ...
   }: {
     home.stateVersion = "25.05";
-    home.packages = [pkgs.atool pkgs.httpie];
+    home.packages = [];
     imports = [inputs.quadlet-nix.homeManagerModules.quadlet];
+
     # Ensure the systemd services are (re)started on config change.
     systemd.user.startServices = "sd-switch";
 

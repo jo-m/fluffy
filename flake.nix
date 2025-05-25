@@ -42,7 +42,7 @@
         specialArgs = args;
 
         modules = [
-          ./cloudy.nix
+          ./configuration.nix
 
           disko.nixosModules.disko
           home-manager.nixosModules.home-manager
