@@ -8,7 +8,7 @@
     };
 
     home-manager = {
-      url = "github:nix-community/home-manager/master";
+      url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -45,8 +45,8 @@
           ./cloudy.nix
 
           disko.nixosModules.disko
-          quadlet-nix.nixosModules.quadlet
           home-manager.nixosModules.home-manager
+          quadlet-nix.nixosModules.quadlet
         ];
       };
 
