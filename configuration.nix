@@ -42,6 +42,7 @@ in {
       harden
     ])
     ./caddy.nix
+    ./services/echo.nix
   ];
 
   environment.systemPackages = with pkgs; [
@@ -59,10 +60,6 @@ in {
     autoSubUidGidRange = true;
   };
 
-  systemd.tmpfiles.rules = [
-    "d /data/echo2 0750 ${toString uid} ${toString uid}"
-  ];
-
   home-manager.users."${username}" = {
     pkgs,
     config,
@@ -74,21 +71,5 @@ in {
 
     # Ensure the systemd services are (re)started on config change.
     systemd.user.startServices = "sd-switch";
-
-    virtualisation.quadlet.containers = {
-      echo-server = {
-        autoStart = true;
-        serviceConfig = {
-          RestartSec = "10";
-          Restart = "always";
-        };
-        containerConfig = {
-          image = "docker.io/mendhak/http-https-echo:31";
-          publishPorts = ["127.0.0.1:9001:8080"];
-          userns = "keep-id";
-          mounts = ["type=bind,src=/data/echo2/,dst=/persisted-data"];
-        };
-      };
-    };
   };
 }
