@@ -22,7 +22,7 @@ ssh $NIX_SSHOPTS root@$REMOTE_IP
 
 - [x] GC https://ryanseipp.com/post/nixos-server/
 - [x] Podman storage, data
-- [ ] Module args
+- [x] Module args
 - [ ] Secrets
 - [ ] Syncthing https://nixos.wiki/wiki/Syncthing
 - [ ] Backups - ZFS? Borg -> Rsync.net? Syncthing? Storage-Box? https://ryanseipp.com/post/nixos-automated-deployment/
@@ -34,6 +34,7 @@ ssh $NIX_SSHOPTS root@$REMOTE_IP
 - [ ] Grep TODO
 - [ ] Prefer ipv4 to ipv6 in outgoing connections, to fix hostpoint email ipv6 problem?
 - [ ] Top level IP blocking or login?
+- [ ] Ensure firewall is enabled
 
 # Notes
 

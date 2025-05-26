@@ -1,7 +1,7 @@
 {
   caddy = import ./caddy.nix;
   harden = import ./harden.nix;
-  hetzner = import ./hetzner.nix;
+  hetzner = import ./hetzner;
   rootless-podman = import ./rootless-podman.nix;
   ssh = import ./ssh.nix;
 }

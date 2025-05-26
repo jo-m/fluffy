@@ -1,7 +1,9 @@
-{inputs, ...}: let
-  username = "runner";
-  uid = 1000;
-in {
+{
+  inputs,
+  username,
+  uid,
+  ...
+}: {
   networking.firewall.interfaces."podman+".allowedUDPPorts = [53];
 
   virtualisation.podman = {

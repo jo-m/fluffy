@@ -1,16 +1,15 @@
 {
-  config,
   pkgs,
   lib,
-  modulesPath,
   modules,
-  inputs,
-  outputs,
-  hostname,
+  containers,
   ...
 }: let
+  hostname = "cloudy";
   username = "runner";
   uid = 1000;
+  tld = "test123.example.org";
+  unstablePkgs = pkgs.unstable;
 in {
   system.stateVersion = "25.05";
   networking.hostName = hostname;
@@ -52,6 +51,13 @@ in {
       rootless-podman
       ssh
     ])
-    ./containers/echo.nix
+
+    (with containers; [
+      echo
+    ])
+
+    {
+      _module.args = {inherit unstablePkgs username uid tld;};
+    }
   ];
 }

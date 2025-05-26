@@ -29,26 +29,20 @@
       inherit inputs;
       inherit (self) outputs;
       modules = import ./modules;
+      containers = import ./containers;
     };
   in {
-    nixosConfigurations.cloudy = let
-      args =
-        specialArgs
-        // {
-          hostname = "cloudy";
-        };
-    in
-      nixpkgs.lib.nixosSystem {
-        specialArgs = args;
+    nixosConfigurations.cloudy = nixpkgs.lib.nixosSystem {
+      specialArgs = specialArgs;
 
-        modules = [
-          ./configuration.nix
+      modules = [
+        ./configuration.nix
 
-          disko.nixosModules.disko
-          home-manager.nixosModules.home-manager
-          quadlet-nix.nixosModules.quadlet
-        ];
-      };
+        disko.nixosModules.disko
+        home-manager.nixosModules.home-manager
+        quadlet-nix.nixosModules.quadlet
+      ];
+    };
 
     formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.alejandra;
   };

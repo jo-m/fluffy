@@ -1,6 +1,4 @@
-{...}: let
-  tld = "test123.example.org";
-in {
+{tld, ...}: {
   services.caddy = {
     enable = true;
     # TODO: Remove, or replace with welcome page.
