@@ -20,6 +20,12 @@ in {
   i18n.defaultLocale = "en_US.UTF-8";
   console.keyMap = "us";
 
+  services.journald.extraConfig = "SystemMaxUse=500M";
+
+  boot.kernel.sysctl = {
+    "vm.swappiness" = 25;
+  };
+
   nix = {
     gc = {
       automatic = true;
@@ -34,6 +40,10 @@ in {
     };
   };
 
+  environment.systemPackages = with pkgs; [
+    btop
+  ];
+
   imports = lib.flatten [
     (with modules; [
       caddy
@@ -43,9 +53,5 @@ in {
       ssh
     ])
     ./containers/echo.nix
-  ];
-
-  environment.systemPackages = with pkgs; [
-    btop
   ];
 }
