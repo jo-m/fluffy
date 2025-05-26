@@ -3,15 +3,15 @@
   uid = 1000;
   internal-port = 9001;
   tld = "test123.example.org";
-  data-dir = "/data/echo2/";
+  service-name = "echo";
 in {
-  services.caddy.virtualHosts."echo.${tld}".extraConfig = ''
+  services.caddy.virtualHosts."${service-name}.${tld}".extraConfig = ''
     encode
     reverse_proxy http://127.0.0.1:${toString internal-port}
   '';
 
   systemd.tmpfiles.rules = [
-    "d ${data-dir} 0750 ${toString uid} ${toString uid}"
+    "d /data/${service-name} 0750 ${toString uid} ${toString uid}"
   ];
 
   home-manager.users."${username}" = {
@@ -30,7 +30,7 @@ in {
           image = "docker.io/mendhak/http-https-echo:31";
           publishPorts = ["127.0.0.1:${toString internal-port}:8080"];
           userns = "keep-id";
-          mounts = ["type=bind,src=${data-dir},dst=/persisted-data"];
+          mounts = ["type=bind,src=/data/${service-name},dst=/persisted-data"];
         };
       };
     };

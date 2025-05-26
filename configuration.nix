@@ -36,40 +36,16 @@ in {
 
   imports = lib.flatten [
     (with modules; [
-      hetzner
-      ssh
-      podman
+      caddy
       harden
+      hetzner
+      rootless-podman
+      ssh
     ])
-    ./caddy.nix
-    ./services/echo.nix
+    ./containers/echo.nix
   ];
 
   environment.systemPackages = with pkgs; [
     btop
   ];
-
-  users.users."${username}" = {
-    initialHashedPassword = "!";
-    isNormalUser = true;
-    uid = uid;
-
-    # Auto start before user login.
-    linger = true;
-    # Required for rootless container with multiple users.
-    autoSubUidGidRange = true;
-  };
-
-  home-manager.users."${username}" = {
-    pkgs,
-    config,
-    ...
-  }: {
-    home.stateVersion = "25.05";
-    home.packages = [];
-    imports = [inputs.quadlet-nix.homeManagerModules.quadlet];
-
-    # Ensure the systemd services are (re)started on config change.
-    systemd.user.startServices = "sd-switch";
-  };
 }

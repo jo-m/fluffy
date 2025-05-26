@@ -47,7 +47,7 @@
 
           # System (NixOS).
           root = {
-            size = "15G";
+            size = "5G";
             content = {
               type = "filesystem";
               format = "ext4";
@@ -60,7 +60,7 @@
 
           # Home - container storage.
           home = {
-            size = "15G";
+            size = "5G";
             content = {
               type = "filesystem";
               format = "ext4";

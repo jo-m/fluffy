@@ -1,7 +1,9 @@
-{...}: {
+{...}: let
+  tld = "test123.example.org";
+in {
   services.caddy = {
     enable = true;
-    virtualHosts."test123.example.org".extraConfig = ''
+    virtualHosts."${tld}".extraConfig = ''
       encode
       respond "Hello, world!"
     '';
