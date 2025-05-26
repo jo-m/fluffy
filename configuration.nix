@@ -11,9 +11,7 @@
   tld = "test123.example.org";
   data-base-dir = "/data";
 in {
-  system.stateVersion = "25.05";
   networking.hostName = hostname;
-  nixpkgs.hostPlatform = "x86_64-linux";
 
   time.timeZone = "Europe/Zurich";
   i18n.defaultLocale = "en_US.UTF-8";
@@ -44,6 +42,8 @@ in {
   ];
 
   imports = lib.flatten [
+    ./configuration-stage0.nix
+
     (with modules; [
       caddy
       harden

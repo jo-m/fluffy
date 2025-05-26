@@ -12,6 +12,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     quadlet-nix = {
       url = "github:SEIAROTg/quadlet-nix";
     };
@@ -22,6 +27,7 @@
     nixpkgs,
     disko,
     home-manager,
+    sops-nix,
     quadlet-nix,
     ...
   }: let
@@ -32,15 +38,24 @@
       containers = import ./containers;
     };
   in {
+    nixosConfigurations.cloudy-stage0 = nixpkgs.lib.nixosSystem {
+      specialArgs = specialArgs;
+
+      modules = [
+        ./configuration-stage0.nix
+        disko.nixosModules.disko
+      ];
+    };
+
     nixosConfigurations.cloudy = nixpkgs.lib.nixosSystem {
       specialArgs = specialArgs;
 
       modules = [
         ./configuration.nix
-
         disko.nixosModules.disko
         home-manager.nixosModules.home-manager
         quadlet-nix.nixosModules.quadlet
+        sops-nix.nixosModules.sops
       ];
     };
 

@@ -4,6 +4,14 @@
     allowSFTP = false;
     ports = [4721];
 
+    # Only generate an ed25519 host key.
+    hostKeys = [
+      {
+        path = "/etc/ssh/ssh_host_ed25519_key";
+        type = "ed25519";
+      }
+    ];
+
     # https://www.ssh-audit.com/
     settings = {
       PermitRootLogin = "yes";
