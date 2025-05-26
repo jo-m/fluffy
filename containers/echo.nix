@@ -5,6 +5,7 @@
   username,
   uid,
   tld,
+  data-base-dir,
   ...
 }: {
   services.caddy.virtualHosts."${service-name}.${tld}".extraConfig = ''
@@ -13,7 +14,7 @@
   '';
 
   systemd.tmpfiles.rules = [
-    "d /data/${service-name} 0750 ${toString uid} ${toString uid}"
+    "d ${data-base-dir}/${service-name} 0750 ${toString uid} ${toString uid}"
   ];
 
   home-manager.users."${username}" = {
@@ -32,7 +33,7 @@
           image = "docker.io/mendhak/http-https-echo:31";
           publishPorts = ["127.0.0.1:${toString internal-port}:8080"];
           userns = "keep-id";
-          mounts = ["type=bind,src=/data/${service-name},dst=/persisted-data"];
+          mounts = ["type=bind,src=${data-base-dir}/${service-name},dst=/persisted-data"];
         };
       };
     };

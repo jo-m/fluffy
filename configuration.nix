@@ -9,6 +9,7 @@
   username = "runner";
   uid = 1000;
   tld = "test123.example.org";
+  data-base-dir = "/data";
 in {
   system.stateVersion = "25.05";
   networking.hostName = hostname;
@@ -56,7 +57,7 @@ in {
     ])
 
     {
-      _module.args = {inherit username uid tld;};
+      _module.args = {inherit username uid tld data-base-dir;};
     }
   ];
 }
