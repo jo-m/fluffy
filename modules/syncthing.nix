@@ -19,9 +19,9 @@ in {
 
   # https://docs.syncthing.net/users/reverseproxy.html
   services.caddy.virtualHosts."sync.${tld}".extraConfig = ''
-    encode
+    import mybasicauth
     reverse_proxy http://127.0.0.1:8384 {
-        header_up Host {upstream_hostport}
+      header_up Host {upstream_hostport}
     }
   '';
 

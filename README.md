@@ -52,6 +52,7 @@ ssh $NIX_SSHOPTS root@$REMOTE_IP
 - [ ] Monitoring
 - [ ] Logging?
 - [ ] IPv6
+- [ ] Caddy logging
 - [ ] Put all proxied apps behind additional safety (Caddy)
 - [ ] More hardening (lynis)
 - [x] Ensure SSL is enforced

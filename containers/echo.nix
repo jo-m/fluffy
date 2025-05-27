@@ -10,6 +10,7 @@
 }: {
   services.caddy.virtualHosts."${service-name}.${tld}".extraConfig = ''
     encode
+    import mybasicauth
     reverse_proxy http://127.0.0.1:${toString internal-port}
   '';
 
