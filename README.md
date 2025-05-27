@@ -47,11 +47,12 @@ ssh $NIX_SSHOPTS root@$REMOTE_IP
 - [x] Podman storage, data
 - [x] Module args
 - [ ] Secrets
-- [ ] Syncthing https://nixos.wiki/wiki/Syncthing
+- [ ] Syncthing devices https://nixos.wiki/wiki/Syncthing
 - [ ] Backups - ZFS? Borg -> Rsync.net? Syncthing? Storage-Box? https://ryanseipp.com/post/nixos-automated-deployment/
 - [ ] Monitoring
 - [ ] Logging?
 - [ ] IPv6
+- [ ] Put all proxied apps behind additional safety (Caddy)
 - [ ] More hardening (lynis)
 - [x] Ensure SSL is enforced
 - [ ] Grep TODO
