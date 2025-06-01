@@ -45,26 +45,13 @@
             };
           };
 
-          # System (NixOS).
+          # System (NixOS) & home (container storage).
           root = {
-            size = "10G";
-            content = {
-              type = "filesystem";
-              format = "ext4";
-              mountpoint = "/";
-              mountOptions = [
-                "defaults"
-              ];
-            };
-          };
-
-          # Home - container storage.
-          home = {
             size = "15G";
             content = {
               type = "filesystem";
               format = "ext4";
-              mountpoint = "/home";
+              mountpoint = "/";
               mountOptions = [
                 "defaults"
               ];
