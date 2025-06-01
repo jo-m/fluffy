@@ -1,4 +1,18 @@
-{tld, ...}: {
+{
+  tld,
+  config,
+  ...
+}: {
+  sops.secrets."caddy/basicauth" = {};
+  sops.templates.caddy-top-level-basic-auth.content = ''
+    (top_level_basic_auth) {
+      basic_auth {
+        ${config.sops.placeholder."caddy/basicauth"}
+      }
+    }
+  '';
+  sops.templates.caddy-top-level-basic-auth.owner = "caddy";
+
   services.caddy = {
     enable = true;
     # TODO: Remove, or replace with welcome page.
@@ -6,15 +20,9 @@
       respond "Hello, world!"
     '';
 
-    # TODO: Use real secret
-    # TODO: rename mybasicauth
     extraConfig = ''
-      (mybasicauth) {
-        basic_auth {
-          # Username "Bob", password "hiccup"
-          Bob $2a$14$Zkx19XLiW6VYouLHR5NmfOFU0z2GTNmpkT/5qqR7hx4IjWJPDhjvG
-        }
-      }
+      # Import basic auth config file.
+      import ${config.sops.templates.caddy-top-level-basic-auth.path}
     '';
   };
 

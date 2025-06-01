@@ -2,7 +2,7 @@ keys:
   users:
     me: &me age1rdwj0vjjre2lm8esr5jpvn3yetwc02tahc0uyc5yxlvxpsrkgcwsdpf0ae
   hosts:
-    fluffy: &fluffy age1zwjx2wdxrqtj95rxrymnrp60fhwntjytm5eehgq7p382xswx8c3qenzs7d
+    fluffy: &fluffy age1ypkq0um844hteuf9gq4kgs4swvj3yft9zde6r83tasgaer64y42sc4dt8w
 creation_rules:
   - path_regex: secrets.yaml$
     key_groups:

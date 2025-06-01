@@ -43,8 +43,6 @@ in {
 
   sops.defaultSopsFile = ./secrets.yaml;
   sops.age.sshKeyPaths = ["/etc/ssh/ssh_host_ed25519_key"];
-  sops.secrets."syncthing/devices/pixel" = {};
-  sops.secrets."syncthing/devices/nixbox" = {};
   imports = lib.flatten [
     ./configuration-stage0.nix
 

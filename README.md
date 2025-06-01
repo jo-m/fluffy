@@ -15,11 +15,12 @@ nix-shell -p sops --run "sops secrets.yaml"
 
 # Boostrap
 
-1. Click a CX12 server:
+1. Click a CX32 server:
    1. Debian 12
    2. Add your ssh key.
    3. Enable public IPv4.
-2. Provision:
+2. (Don't forget to add A and AAAA DNS records, including *.)
+3. Provision:
 
 ```bash
 # Bootstrapping - set up SSH and generate host key.
@@ -34,6 +35,7 @@ ssh $NIX_SSHOPTS root@$REMOTE_IP4 cat /etc/ssh/ssh_host_ed25519_key.pub \
    | nix-shell -p ssh-to-age --run ssh-to-age \
    | read REMOTE_HOST_KEY
 nix-shell -p yq-go --run "yq -i e '.keys.hosts.fluffy=\"$REMOTE_HOST_KEY\"' .sops.yaml"
+nix-shell -p sops --run "sops updatekeys secrets.yaml"
 
 # Run full installation.
 nixos-rebuild switch --flake .#fluffy --target-host root@$REMOTE_IP4
