@@ -23,22 +23,23 @@ nix-shell -p sops --run "sops secrets.yaml"
 
 ```bash
 # Bootstrapping - set up SSH and generate host key.
-export REMOTE_IP=2.2.2.2
-ssh-keygen -R "[$REMOTE_IP]:4721"
-nix run github:nix-community/nixos-anywhere -- --flake .#fluffy-stage0 --target-host root@$REMOTE_IP
+export REMOTE_IP4=1.1.1.1
+export REMOTE_IP6=fe80::1
+ssh-keygen -R "[$REMOTE_IP4]:4721"
+nix run github:nix-community/nixos-anywhere -- --flake .#fluffy-stage0 --target-host root@$REMOTE_IP4
 
 # Get host key and add to .sops.yaml.
 export NIX_SSHOPTS="-p 4721"
-ssh $NIX_SSHOPTS root@$REMOTE_IP cat /etc/ssh/ssh_host_ed25519_key.pub \
+ssh $NIX_SSHOPTS root@$REMOTE_IP4 cat /etc/ssh/ssh_host_ed25519_key.pub \
    | nix-shell -p ssh-to-age --run ssh-to-age \
    | read REMOTE_HOST_KEY
 nix-shell -p yq-go --run "yq -i e '.keys.hosts.fluffy=\"$REMOTE_HOST_KEY\"' .sops.yaml"
 
 # Run full installation.
-nixos-rebuild switch --flake .#fluffy --target-host root@$REMOTE_IP
+nixos-rebuild switch --flake .#fluffy --target-host root@$REMOTE_IP4
 
 # SSH access.
-ssh $NIX_SSHOPTS root@$REMOTE_IP
+ssh $NIX_SSHOPTS root@$REMOTE_IP4
 ```
 
 # TODO
@@ -46,20 +47,20 @@ ssh $NIX_SSHOPTS root@$REMOTE_IP
 - [x] GC https://ryanseipp.com/post/nixos-server/
 - [x] Podman storage, data
 - [x] Module args
-- [ ] Secrets
+- [ ] Put all proxied apps behind additional safety (Caddy)
 - [ ] Syncthing devices https://nixos.wiki/wiki/Syncthing
 - [ ] Backups - ZFS? Borg -> Rsync.net? Syncthing? Storage-Box? https://ryanseipp.com/post/nixos-automated-deployment/
+- [ ] Back up data to rsync.net
 - [ ] Monitoring
 - [ ] Logging?
 - [ ] IPv6
 - [ ] Caddy logging
-- [ ] Put all proxied apps behind additional safety (Caddy)
 - [ ] More hardening (lynis)
 - [x] Ensure SSL is enforced
 - [ ] Grep TODO
 - [ ] Prefer ipv4 to ipv6 in outgoing connections, to fix hostpoint email ipv6 problem?
 - [ ] Top level IP blocking or login?
-- [ ] Ensure firewall is enabled
+- [ ] Configure Hetzner Firewall
 
 # Notes
 
