@@ -25,17 +25,17 @@ nix-shell -p sops --run "sops secrets.yaml"
 # Bootstrapping - set up SSH and generate host key.
 export REMOTE_IP=2.2.2.2
 ssh-keygen -R "[$REMOTE_IP]:4721"
-nix run github:nix-community/nixos-anywhere -- --flake .#cloudy-stage0 --target-host root@$REMOTE_IP
+nix run github:nix-community/nixos-anywhere -- --flake .#fluffy-stage0 --target-host root@$REMOTE_IP
 
 # Get host key and add to .sops.yaml.
 export NIX_SSHOPTS="-p 4721"
 ssh $NIX_SSHOPTS root@$REMOTE_IP cat /etc/ssh/ssh_host_ed25519_key.pub \
    | nix-shell -p ssh-to-age --run ssh-to-age \
    | read REMOTE_HOST_KEY
-nix-shell -p yq-go --run "yq -i e '.keys.hosts.cloudy=\"$REMOTE_HOST_KEY\"' .sops.yaml"
+nix-shell -p yq-go --run "yq -i e '.keys.hosts.fluffy=\"$REMOTE_HOST_KEY\"' .sops.yaml"
 
 # Run full installation.
-nixos-rebuild switch --flake .#cloudy --target-host root@$REMOTE_IP
+nixos-rebuild switch --flake .#fluffy --target-host root@$REMOTE_IP
 
 # SSH access.
 ssh $NIX_SSHOPTS root@$REMOTE_IP

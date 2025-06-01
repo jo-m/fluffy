@@ -38,7 +38,7 @@
       containers = import ./containers;
     };
   in {
-    nixosConfigurations.cloudy-stage0 = nixpkgs.lib.nixosSystem {
+    nixosConfigurations.fluffy-stage0 = nixpkgs.lib.nixosSystem {
       specialArgs = specialArgs;
 
       modules = [
@@ -47,7 +47,7 @@
       ];
     };
 
-    nixosConfigurations.cloudy = nixpkgs.lib.nixosSystem {
+    nixosConfigurations.fluffy = nixpkgs.lib.nixosSystem {
       specialArgs = specialArgs;
 
       modules = [
