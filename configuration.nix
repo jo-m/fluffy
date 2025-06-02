@@ -17,7 +17,7 @@ in {
   i18n.defaultLocale = "en_US.UTF-8";
   console.keyMap = "us";
 
-  services.journald.extraConfig = "SystemMaxUse=500M";
+  services.journald.extraConfig = "SystemMaxUse=1G";
 
   boot.kernel.sysctl = {
     "vm.swappiness" = 25;
