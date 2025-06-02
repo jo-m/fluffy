@@ -45,13 +45,13 @@
         rate_limit {
           zone fluff_ratelimit_global {
             key    static
-            events 600
-            window 1m
+            events 1000
+            window 10s
           }
           zone fluff_ratelimit_per_remote_host {
             key    {http.request.remote.host}
-            events 200
-            window 10s
+            events 100
+            window 1s
           }
           log_key
         }
