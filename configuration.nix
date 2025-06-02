@@ -8,7 +8,7 @@
   hostname = "fluffy";
   username = "runner";
   uid = 1000;
-  tld = "${hostname}.example.net";
+  tld = "example.net";
   data-base-dir = "/data";
 in {
   networking.hostName = hostname;
