@@ -35,16 +35,6 @@
       pool = {
         type = "lvm_vg";
         lvs = {
-          # https://github.com/nix-community/disko/blob/master/example/swap.nix
-          encryptedSwap = {
-            size = "8G";
-            content = {
-              type = "swap";
-              randomEncryption = true;
-              priority = 100; # prefer to encrypt as long as we have space for it
-            };
-          };
-
           # System (NixOS) & home (container storage).
           root = {
             size = "15G";
