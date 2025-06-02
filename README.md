@@ -10,7 +10,7 @@ age-keygen -y $HOME/.config/sops/age/keys.txt | read AGE_USER_KEY
 nix-shell -p yq-go --run "yq -i e '.keys.users.me=\"$AGE_USER_KEY\"' .sops.yaml"
 
 # Edit secrets.
-nix-shell -p sops --run "sops secrets.yaml"
+nix-shell -p sops --run "EDITOR='codium --wait' sops secrets.yaml"
 ```
 
 # Boostrap
@@ -49,14 +49,14 @@ ssh $NIX_SSHOPTS root@$REMOTE_IP4
 - [x] GC https://ryanseipp.com/post/nixos-server/
 - [x] Podman storage, data
 - [x] Module args
-- [ ] Put all proxied apps behind additional safety (Caddy)
+- [x] Put all proxied apps behind additional safety (Caddy)
 - [ ] Syncthing devices https://nixos.wiki/wiki/Syncthing
 - [ ] Backups - ZFS? Borg -> Rsync.net? Syncthing? Storage-Box? https://ryanseipp.com/post/nixos-automated-deployment/
 - [ ] Back up data to rsync.net
 - [ ] Monitoring
 - [ ] Logging?
-- [ ] IPv6
 - [ ] Caddy logging
+- [ ] IPv6
 - [ ] More hardening (lynis)
 - [x] Ensure SSL is enforced
 - [ ] Grep TODO

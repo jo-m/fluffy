@@ -10,7 +10,8 @@
 }: {
   services.caddy.virtualHosts."${service-name}.${tld}".extraConfig = ''
     encode
-    import top_level_basic_auth
+    import fluff_global_rate_limit
+    import fluff_global_basicauth
     reverse_proxy http://127.0.0.1:${toString internal-port}
   '';
 

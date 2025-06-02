@@ -1,28 +1,61 @@
 {
   tld,
   config,
+  pkgs,
   ...
 }: {
-  sops.secrets."caddy/basicauth" = {};
-  sops.templates.caddy-top-level-basic-auth.content = ''
-    (top_level_basic_auth) {
+  sops.secrets."caddy/global-basicauth" = {};
+  sops.templates.caddy-global-basicauth.content = ''
+    (fluff_global_basicauth) {
       basic_auth {
-        ${config.sops.placeholder."caddy/basicauth"}
+        ${config.sops.placeholder."caddy/global-basicauth"}
       }
     }
   '';
-  sops.templates.caddy-top-level-basic-auth.owner = "caddy";
+  sops.templates.caddy-global-basicauth.owner = "caddy";
+
+  sops.secrets."caddy/home-ips" = {};
+  sops.templates.caddy-home-ips.content = ''
+    (fluff_home_ips_only) {
+      @denied not remote_ip ${config.sops.placeholder."caddy/home-ips"}
+	    abort @denied
+    }
+  '';
+  sops.templates.caddy-home-ips.owner = "caddy";
 
   services.caddy = {
     enable = true;
-    # TODO: Remove, or replace with welcome page.
+
+    package = pkgs.caddy.withPlugins {
+      plugins = ["github.com/mholt/caddy-ratelimit@v0.1.0"];
+      hash = "sha256-gn+FDt9GJ6bM1AJMUuBpLZqf/PXr5qYPHqB1kVy8ovQ=";
+    };
+
     virtualHosts."${tld}".extraConfig = ''
-      respond "Hello, world!"
+      import fluff_global_rate_limit
+      respond "Nothing to see here."
     '';
 
     extraConfig = ''
-      # Import basic auth config file.
-      import ${config.sops.templates.caddy-top-level-basic-auth.path}
+      # Import config files with secrets.
+      import ${config.sops.templates.caddy-global-basicauth.path}
+      import ${config.sops.templates.caddy-home-ips.path}
+
+      (fluff_global_rate_limit) {
+        rate_limit {
+          zone fluff_ratelimit_global {
+            key    static
+            events 600
+            window 1m
+          }
+          zone fluff_ratelimit_per_remote_host {
+            key    {http.request.remote.host}
+            events 100
+            window 10s
+          }
+          log_key
+        }
+      }
     '';
   };
 

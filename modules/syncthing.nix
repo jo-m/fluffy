@@ -34,7 +34,13 @@ in {
 
   # https://docs.syncthing.net/users/reverseproxy.html
   services.caddy.virtualHosts."sync.${tld}".extraConfig = ''
-    import top_level_basic_auth
+    encode
+    import fluff_global_rate_limit
+
+    # No global basic auth, as this would conflict with Syncthing's own basic auth.
+    # Instead, we only allow the home IP to access this service.
+    import fluff_home_ips_only
+
     reverse_proxy http://127.0.0.1:8384 {
       header_up Host {upstream_hostport}
     }
