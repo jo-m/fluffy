@@ -50,18 +50,16 @@ ssh $NIX_SSHOPTS root@$REMOTE_IP4
 - [x] Podman storage, data
 - [x] Module args
 - [x] Put all proxied apps behind additional safety (Caddy)
-- [ ] Syncthing devices https://nixos.wiki/wiki/Syncthing
-- [ ] Backups - ZFS? Borg -> Rsync.net? Syncthing? Storage-Box? https://ryanseipp.com/post/nixos-automated-deployment/
+- [x] Syncthing devices https://nixos.wiki/wiki/Syncthing
 - [ ] Back up data to rsync.net
 - [ ] Monitoring
-- [ ] Logging?
-- [ ] Caddy logging
+- [ ] All container logs to journald
+- [ ] Journald web frontend
 - [ ] IPv6
 - [ ] More hardening (lynis)
 - [x] Ensure SSL is enforced
-- [ ] Grep TODO
 - [ ] Prefer ipv4 to ipv6 in outgoing connections, to fix hostpoint email ipv6 problem?
-- [ ] Top level IP blocking or login?
+- [x] Top level IP blocking or login?
 - [ ] Configure Hetzner Firewall
 
 # Notes
