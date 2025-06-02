@@ -58,6 +58,7 @@ in {
     (with containers; [
       echo
       readeck
+      qr
     ])
 
     {

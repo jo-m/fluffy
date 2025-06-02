@@ -7,4 +7,8 @@
     service-name = "readeck";
     internal-port = 30002;
   };
+  qr = import ./qr.nix {
+    service-name = "qr";
+    internal-port = 30003;
+  };
 }
