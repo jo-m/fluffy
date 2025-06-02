@@ -57,6 +57,7 @@ in {
 
     (with containers; [
       echo
+      readeck
     ])
 
     {

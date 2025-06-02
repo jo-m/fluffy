@@ -74,3 +74,6 @@ http://169.254.169.254/hetzner/v1/metadata
 http://169.254.169.254/hetzner/v1/userdata
 /usr/lib/python3/dist-packages/cloudinit/sources/DataSourceHetzner.py
 ```
+
+
+sudo -u runner podman logs -f

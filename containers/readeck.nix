@@ -11,7 +11,9 @@
   services.caddy.virtualHosts."${service-name}.${tld}".extraConfig = ''
     encode
     import fluff_global_rate_limit
-    import fluff_global_basicauth
+
+    # Readeck auth is incompatible with global basic auth.
+
     reverse_proxy http://127.0.0.1:${toString internal-port}
   '';
 
@@ -32,10 +34,17 @@
           Restart = "always";
         };
         containerConfig = {
-          image = "docker.io/mendhak/http-https-echo:31";
-          publishPorts = ["127.0.0.1:${toString internal-port}:8080"];
+          image = "codeberg.org/readeck/readeck:latest";
+          publishPorts = ["127.0.0.1:${toString internal-port}:8000"];
           userns = "keep-id";
-          mounts = ["type=bind,src=${data-base-dir}/${service-name},dst=/persisted-data"];
+          mounts = ["type=bind,src=${data-base-dir}/${service-name},dst=/readeck"];
+          environments = {
+            # https://readeck.org/en/docs/configuration
+            READECK_LOG_LEVEL = "info";
+            READECK_SERVER_HOST = "0.0.0.0";
+            READECK_SERVER_PORT = "8000";
+            READECK_TRUSTED_PROXIES="127.0.0.1";
+          };
         };
       };
     };
