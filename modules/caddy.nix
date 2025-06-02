@@ -18,7 +18,7 @@
   sops.templates.caddy-home-ips.content = ''
     (fluff_home_ips_only) {
       @denied not remote_ip ${config.sops.placeholder."caddy/home-ips"}
-	    abort @denied
+      abort @denied
     }
   '';
   sops.templates.caddy-home-ips.owner = "caddy";
@@ -50,7 +50,7 @@
           }
           zone fluff_ratelimit_per_remote_host {
             key    {http.request.remote.host}
-            events 100
+            events 200
             window 10s
           }
           log_key
