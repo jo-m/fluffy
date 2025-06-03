@@ -54,6 +54,7 @@ ssh $NIX_SSHOPTS root@$REMOTE_IP4
 - [ ] Back up data to rsync.net
 - [ ] Monitoring
 - [ ] All container logs to journald
+- [ ] Caddy logging (nix sets it to /var/log/caddy/access-*.log)
 - [ ] Journald web frontend
 - [ ] IPv6
 - [ ] More hardening (lynis)

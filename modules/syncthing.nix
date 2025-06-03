@@ -26,7 +26,7 @@ in {
     };
   };
 
-  # https://docs.syncthing.net/users/reverseproxy.html
+  # Comment out to make Syncthing GUI accessible remotely.
   services.caddy.virtualHosts."sync.${tld}".extraConfig = ''
     encode
     # We additionally protect the Syncthing GUI with IP blocking.
@@ -34,6 +34,7 @@ in {
     import fluff_global_rate_limit
     import fluff_global_basicauth
 
+    # https://docs.syncthing.net/users/reverseproxy.html
     reverse_proxy http://127.0.0.1:8384 {
       header_up Host {upstream_hostport}
     }

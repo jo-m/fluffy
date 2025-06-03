@@ -59,6 +59,7 @@ in {
       echo
       readeck
       qr
+      webdav
     ])
 
     {

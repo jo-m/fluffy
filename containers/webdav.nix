@@ -1,0 +1,32 @@
+{service-name}: {
+  username,
+  tld,
+  data-base-dir,
+  config,
+  ...
+}: {
+  sops.secrets."caddy/webdav-basicauth" = {};
+  sops.templates.caddy-webdav-basicauth.content = ''
+    basic_auth {
+      ${config.sops.placeholder."caddy/webdav-basicauth"}
+    }
+  '';
+  sops.templates.caddy-webdav-basicauth.owner = "caddy";
+
+  services.caddy.virtualHosts."${service-name}.${tld}".extraConfig = ''
+    encode
+
+    import ${config.sops.templates.caddy-webdav-basicauth.path}
+
+    route {
+        webdav {
+            root ${data-base-dir}/${service-name}
+            prefix /
+        }
+    }
+  '';
+
+  systemd.tmpfiles.rules = [
+    "d ${data-base-dir}/${service-name} 0750 caddy caddy"
+  ];
+}

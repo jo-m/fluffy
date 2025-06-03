@@ -27,8 +27,11 @@
     enable = true;
 
     package = pkgs.caddy.withPlugins {
-      plugins = ["github.com/mholt/caddy-ratelimit@v0.1.0"];
-      hash = "sha256-gn+FDt9GJ6bM1AJMUuBpLZqf/PXr5qYPHqB1kVy8ovQ=";
+      plugins = [
+        "github.com/mholt/caddy-ratelimit@v0.1.0"
+        "github.com/mholt/caddy-webdav@v0.0.0-20241008162340-42168ba04c9d"
+      ];
+      hash = "sha256-4m6rYh+SAeNz8PMl8/8xow2BBJmQLnXIymMeN45qIZQ=";
     };
 
     virtualHosts."${tld}".extraConfig = ''

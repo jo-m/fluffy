@@ -11,4 +11,7 @@
     service-name = "qr";
     internal-port = 30003;
   };
+  webdav = import ./webdav.nix {
+    service-name = "webdav";
+  };
 }
