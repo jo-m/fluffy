@@ -40,6 +40,7 @@
           autoUpdate = "registry";
           name = "${service-name}";
 
+          userns = "";
           publishPorts = ["127.0.0.1:${toString internal-port}:8080"];
         };
       };

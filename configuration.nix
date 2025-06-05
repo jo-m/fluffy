@@ -50,6 +50,7 @@ in {
       caddy
       harden
       hetzner
+      opentelemetry-collector
       rootless-podman
       ssh
       syncthing
@@ -57,8 +58,9 @@ in {
 
     (with containers; [
       echo
-      readeck
+      openobserve
       qr
+      readeck
       webdav
     ])
 
