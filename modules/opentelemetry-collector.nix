@@ -8,7 +8,6 @@
   serviceName = "opentelemetry-collector";
   username = "opentelemetry-collector";
   openobserve-url = "http://127.0.0.1:30004";
-  base64 = import ./base64.nix {inherit lib;};
   # https://github.com/openobserve/agents/blob/bf46fe5a4d440e3621ba826d4034bdf0ca243ef7/linux/install.sh#L49
   configFile = pkgs.writeText "opentelemetry-collector.yaml" ''
     receivers:
@@ -76,10 +75,9 @@ in {
     isNormalUser = true;
   };
 
-  sops.templates.openobserve-basicauth.content = let
-    concat = ''${config.sops.placeholder."openobserve/user"}:${config.sops.placeholder."openobserve/password"}'';
-  in ''
-    BASIC_AUTH=${base64.toBase64 concat}
+  sops.secrets."openobserve/basicauth" = {};
+  sops.templates.openobserve-basicauth.content = ''
+    BASIC_AUTH=${config.sops.placeholder."openobserve/basicauth"}
   '';
   sops.templates.openobserve-basicauth.owner = username;
 
