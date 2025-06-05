@@ -19,10 +19,6 @@
     logFormat = "output stderr";
   };
 
-  systemd.tmpfiles.rules = [
-    "d ${data-base-dir}/${service-name} 0750 ${toString uid} ${toString uid}"
-  ];
-
   home-manager.users."${username}" = {
     pkgs,
     config,
