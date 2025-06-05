@@ -9,12 +9,16 @@
   config,
   ...
 }: {
-  services.caddy.virtualHosts."${service-name}.${tld}".extraConfig = ''
-    encode
-    import fluff_global_rate_limit
-    import fluff_global_basicauth
-    reverse_proxy http://127.0.0.1:${toString internal-port}
-  '';
+  services.caddy.virtualHosts."${service-name}.${tld}" = {
+    extraConfig = ''
+      encode
+      import fluff_global_rate_limit
+      import fluff_global_basicauth
+      reverse_proxy http://127.0.0.1:${toString internal-port}
+    '';
+    # NixOS defaults to /var/log/caddy/access-*.log.
+    logFormat = "output stderr";
+  };
 
   systemd.tmpfiles.rules = [
     "d ${data-base-dir}/${service-name} 0750 ${toString uid} ${toString uid}"

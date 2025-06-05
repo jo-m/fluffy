@@ -13,18 +13,22 @@
   '';
   sops.templates.caddy-webdav-basicauth.owner = "caddy";
 
-  services.caddy.virtualHosts."${service-name}.${tld}".extraConfig = ''
-    encode
+  services.caddy.virtualHosts."${service-name}.${tld}" = {
+    extraConfig = ''
+      encode
 
-    import ${config.sops.templates.caddy-webdav-basicauth.path}
+      import ${config.sops.templates.caddy-webdav-basicauth.path}
 
-    route {
-        webdav {
-            root ${data-base-dir}/${service-name}
-            prefix /
-        }
-    }
-  '';
+      route {
+          webdav {
+              root ${data-base-dir}/${service-name}
+              prefix /
+          }
+      }
+    '';
+    # NixOS defaults to /var/log/caddy/access-*.log.
+    logFormat = "output stderr";
+  };
 
   systemd.tmpfiles.rules = [
     "d ${data-base-dir}/${service-name} 0750 caddy caddy"

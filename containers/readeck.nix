@@ -8,14 +8,18 @@
   data-base-dir,
   ...
 }: {
-  services.caddy.virtualHosts."${service-name}.${tld}".extraConfig = ''
-    encode
-    import fluff_global_rate_limit
+  services.caddy.virtualHosts."${service-name}.${tld}" = {
+    extraConfig = ''
+      encode
+      import fluff_global_rate_limit
 
-    # Readeck auth is incompatible with global basic auth.
+      # Readeck auth is incompatible with global basic auth.
 
-    reverse_proxy http://127.0.0.1:${toString internal-port}
-  '';
+      reverse_proxy http://127.0.0.1:${toString internal-port}
+    '';
+    # NixOS defaults to /var/log/caddy/access-*.log.
+    logFormat = "output stderr";
+  };
 
   systemd.tmpfiles.rules = [
     "d ${data-base-dir}/${service-name} 0750 ${toString uid} ${toString uid}"

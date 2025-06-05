@@ -56,9 +56,9 @@ ssh $NIX_SSHOPTS root@$REMOTE_IP4
 
 ```bash
 # Status
-systemctl status --user --machine=runner@.host readeck-server.service
+systemctl status --user --machine=runner@.host readeck.service
 # Logs
-sudo -u runner journalctl --user -efu readeck-server
+sudo -u runner journalctl --user -efu readeck
 ```
 # Notes
 
@@ -80,14 +80,18 @@ http://169.254.169.254/hetzner/v1/userdata
 - [x] Module args
 - [x] Put all proxied apps behind additional safety (Caddy)
 - [x] Syncthing devices https://nixos.wiki/wiki/Syncthing
-- [ ] Back up data to rsync.net
-- [ ] Monitoring
-- [ ] All container logs to journald
-- [ ] Caddy logging (nix sets it to /var/log/caddy/access-*.log)
-- [ ] Journald web frontend
 - [ ] IPv6
+- [ ] Ferrishare
+- [ ] Set up openobserve and journald forwarding
+- [x] Set up caddy logs to journald instead of /var/log/caddy/access-*.log
+- [ ] Back up data to rsync.net
 - [ ] More hardening (lynis)
 - [x] Ensure SSL is enforced
 - [ ] Prefer ipv4 to ipv6 in outgoing connections, to fix hostpoint email ipv6 problem?
 - [x] Top level IP blocking or login?
 - [ ] Configure Hetzner Firewall
+
+# Manual steps after setup
+
+- Readeck https://readeck.example.net/onboarding
+- Syncthing https://sync.example.net
