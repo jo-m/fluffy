@@ -13,19 +13,31 @@ nix-shell -p yq-go --run "yq -i e '.keys.users.me=\"$AGE_USER_KEY\"' .sops.yaml"
 nix-shell -p sops --run "EDITOR='codium --wait' sops secrets.yaml"
 ```
 
-# Boostrap
+# Deployment
+
+## Preparation
 
 1. Click a CX32 server:
    1. Debian 12
    2. Add your ssh key.
    3. Enable public IPv4.
-2. (Don't forget to add A and AAAA DNS records, including *.)
-3. Provision:
+3. Update the .envrc file with the addresses of the new server
+4. Install `direnv`, and `direnv allow`
+5. Set up DNS:
+
+```
+; A Records
+@	3600	IN	A	1.1.1.1
+; AAAA Records
+@	3600	IN	AAAA	fe80::1
+; CNAME Records
+*	3600	IN	CNAME	example.net.
+```
+
+## Provisioning
 
 ```bash
 # Bootstrapping - set up SSH and generate host key.
-export REMOTE_IP4=1.1.1.1
-export REMOTE_IP6=fe80::1
 ssh-keygen -R "[$REMOTE_IP4]:4721"
 nix run github:nix-community/nixos-anywhere -- --flake .#fluffy-stage0 --target-host root@$REMOTE_IP4
 
@@ -38,10 +50,17 @@ nix-shell -p yq-go --run "yq -i e '.keys.hosts.fluffy=\"$REMOTE_HOST_KEY\"' .sop
 nix-shell -p sops --run "sops updatekeys secrets.yaml"
 
 # Run full installation.
-nixos-rebuild switch --flake .#fluffy --target-host root@$REMOTE_IP4
+nixos-rebuild switch --flake .#fluffy --impure --target-host root@$REMOTE_IP4
 
 # SSH access.
 ssh $NIX_SSHOPTS root@$REMOTE_IP4
+```
+
+## Applying config changes
+
+```bash
+export NIX_SSHOPTS="-p 4721"
+nixos-rebuild switch --flake .#fluffy --impure --target-host root@$REMOTE_IP4
 ```
 
 # Logs
@@ -81,7 +100,7 @@ http://169.254.169.254/hetzner/v1/userdata
 - [x] Module args
 - [x] Put all proxied apps behind additional safety (Caddy)
 - [x] Syncthing devices https://nixos.wiki/wiki/Syncthing
-- [ ] IPv6
+- [x] IPv6
 - [ ] Ferrishare
 - [x] Set up openobserve and journald forwarding
 - [x] Set up caddy logs to journald instead of /var/log/caddy/access-*.log
