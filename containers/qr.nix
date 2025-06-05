@@ -24,15 +24,22 @@
     config,
     ...
   }: {
+    # https://seiarotg.github.io/quadlet-nix/nixos-options.html
     virtualisation.quadlet.containers = {
-      "${service-name}-server" = {
+      "${service-name}" = {
         autoStart = true;
+        # https://www.freedesktop.org/software/systemd/man/latest/systemd.service.html#Options
         serviceConfig = {
-          RestartSec = "10";
           Restart = "always";
+          RestartSec = "100ms";
+          RestartSteps = "10";
+          RestartMaxDelaySec = "60s";
         };
         containerConfig = {
           image = "ghcr.io/lyqht/mini-qr:latest";
+          autoUpdate = "registry";
+          name = "${service-name}";
+
           publishPorts = ["127.0.0.1:${toString internal-port}:8080"];
         };
       };

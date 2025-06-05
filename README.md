@@ -44,6 +44,35 @@ nixos-rebuild switch --flake .#fluffy --target-host root@$REMOTE_IP4
 ssh $NIX_SSHOPTS root@$REMOTE_IP4
 ```
 
+# Logs
+
+## Containers
+
+> `quadlet-nix` tries to put containers into full management under systemd. This means once a container crashes, it will be fully deleted and debugging mechanisms like `podman ps -a` or `podman logs` will not work.
+>
+> However, status and logs are still accessible through systemd, namely, `systemctl status <service name>` and `journalctl -u <service name>`, where `<service name>` is container name, `<network name>-network`, `<pod name>-pod`, or similar. These names are the names as appeared in `virtualisation.quadlet.containers.<container name>`, rather than podman container name, in case it's different.
+>
+> -- https://seiarotg.github.io/quadlet-nix/introduction.html
+
+```bash
+# Status
+systemctl status --user --machine=runner@.host readeck-server.service
+# Logs
+sudo -u runner journalctl --user -efu readeck-server
+```
+# Notes
+
+- Container state and images are in `/home/runner/.local/share/containers`
+- Data (bind mounts) is in `/data`
+- Hetzner cloud-init endpoints and files:
+
+```
+/run/cloud-init/instance-data.json
+http://169.254.169.254/hetzner/v1/metadata
+http://169.254.169.254/hetzner/v1/userdata
+/usr/lib/python3/dist-packages/cloudinit/sources/DataSourceHetzner.py
+```
+
 # TODO
 
 - [x] GC https://ryanseipp.com/post/nixos-server/
@@ -62,19 +91,3 @@ ssh $NIX_SSHOPTS root@$REMOTE_IP4
 - [ ] Prefer ipv4 to ipv6 in outgoing connections, to fix hostpoint email ipv6 problem?
 - [x] Top level IP blocking or login?
 - [ ] Configure Hetzner Firewall
-
-# Notes
-
-- Container data is in `/home/runner/.local/share/containers`
-- Data (bind mounts) is in `/data`
-- Hetzner cloud-init:
-
-```
-/run/cloud-init/instance-data.json
-http://169.254.169.254/hetzner/v1/metadata
-http://169.254.169.254/hetzner/v1/userdata
-/usr/lib/python3/dist-packages/cloudinit/sources/DataSourceHetzner.py
-```
-
-
-sudo -u runner podman logs -f

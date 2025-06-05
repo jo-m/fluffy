@@ -26,17 +26,25 @@
     config,
     ...
   }: {
+    # https://seiarotg.github.io/quadlet-nix/nixos-options.html
     virtualisation.quadlet.containers = {
-      "${service-name}-server" = {
+      "${service-name}" = {
         autoStart = true;
+        # https://www.freedesktop.org/software/systemd/man/latest/systemd.service.html#Options
         serviceConfig = {
-          RestartSec = "10";
           Restart = "always";
+          RestartSec = "100ms";
+          RestartSteps = "10";
+          RestartMaxDelaySec = "60s";
         };
+        # https://docs.podman.io/en/latest/markdown/podman-systemd.unit.5.html
         containerConfig = {
           image = "codeberg.org/readeck/readeck:latest";
-          publishPorts = ["127.0.0.1:${toString internal-port}:8000"];
+          autoUpdate = "registry";
+          name = "${service-name}";
+
           userns = "keep-id";
+          publishPorts = ["127.0.0.1:${toString internal-port}:8000"];
           mounts = ["type=bind,src=${data-base-dir}/${service-name},dst=/readeck"];
           environments = {
             # https://readeck.org/en/docs/configuration

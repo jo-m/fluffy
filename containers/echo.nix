@@ -24,17 +24,25 @@
     config,
     ...
   }: {
+    # https://seiarotg.github.io/quadlet-nix/nixos-options.html
     virtualisation.quadlet.containers = {
-      "${service-name}-server" = {
+      "${service-name}" = {
         autoStart = true;
+        # https://www.freedesktop.org/software/systemd/man/latest/systemd.service.html#Options
         serviceConfig = {
-          RestartSec = "10";
           Restart = "always";
+          RestartSec = "100ms";
+          RestartSteps = "10";
+          RestartMaxDelaySec = "60s";
         };
+        # https://docs.podman.io/en/latest/markdown/podman-systemd.unit.5.html
         containerConfig = {
-          image = "docker.io/mendhak/http-https-echo:31";
-          publishPorts = ["127.0.0.1:${toString internal-port}:8080"];
+          image = "docker.io/mendhak/http-https-echo:latest";
+          autoUpdate = "registry";
+          name = "${service-name}";
+
           userns = "keep-id";
+          publishPorts = ["127.0.0.1:${toString internal-port}:8080"];
           mounts = ["type=bind,src=${data-base-dir}/${service-name},dst=/persisted-data"];
         };
       };
