@@ -111,6 +111,8 @@ http://169.254.169.254/hetzner/v1/userdata
 - [ ] Back up data to rsync.net
 - [ ] More hardening (lynis)
 - [x] Ensure SSL is enforced
+- [x] Ferrishare
 - [x] Top level IP blocking or login?
+- [ ] Grep TODO
 - [ ] Configure Hetzner Firewall
 

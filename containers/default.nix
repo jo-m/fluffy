@@ -6,7 +6,7 @@
   };
   ferrishare = import ./ferrishare.nix {
     service-name = "ferrishare";
-    domain = "share";
+    domain = "files";
     internal-port = 30002;
   };
   openobserve = import ./openobserve.nix {

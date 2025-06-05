@@ -62,6 +62,7 @@ in {
 
     (with containers; [
       echo
+      ferrishare
       openobserve
       qr
       readeck

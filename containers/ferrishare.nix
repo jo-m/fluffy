@@ -1,7 +1,3 @@
-# TODO: Still broken, see
-#
-#   sudo -u runner journalctl --user -efu ferrishare
-#   journalctl -eu systemd-tmpfiles-resetup.service
 {
   internal-port,
   service-name,
@@ -17,9 +13,11 @@
     app_name = "FluffyShare"
     interface = "0.0.0.0:3000"
     proxy_depth = 1
-    # TODO: Update.
-    admin_password_hash = "$argon2id$v=19$m=32768,t=4,p=1$YIVAwwQOs/2ti1Ybx1aN2w$UhGiI9vkEBKN42XqsyXeoyQ2/eTvOtQNVP9G16NyPCk"
-    maximum_filesize = 26214400
+    # Too lazy to make this a real secret...
+    admin_password_hash = "$argon2id$v=19$m=32768,t=4,p=1$oQJoVQOBFUQKMvx2y7/JTw$+hceuclY7qK+HpDN9HM80xkUUeIYzjve0Ccp8Hxrj7M"
+    # 500 MiB
+    maximum_filesize = 524288000
+    # 5 GiB
     maximum_quota = 5368709120
     maximum_uploads_per_ip = 5
     daily_request_limit_per_ip = 50
@@ -69,8 +67,8 @@ in {
           autoUpdate = "registry";
           name = "${service-name}";
 
-          userns = "keep-id";
-          publishPorts = ["127.0.0.1:${toString internal-port}:8080"];
+          userns = "";
+          publishPorts = ["127.0.0.1:${toString internal-port}:3000"];
           mounts = [
             "type=bind,src=${data-base-dir}/${service-name},dst=/app/data"
             "type=bind,src=${configFile},dst=/app/data/config.toml,ro"
