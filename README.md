@@ -105,7 +105,7 @@ http://169.254.169.254/hetzner/v1/userdata
 - [x] Put all proxied apps behind additional safety (Caddy)
 - [x] Syncthing devices https://nixos.wiki/wiki/Syncthing
 - [x] IPv6
-- [ ] Ferrishare
+- [ ] Dashboard/entrypoint
 - [x] Set up openobserve and journald forwarding
 - [x] Set up caddy logs to journald instead of /var/log/caddy/access-*.log
 - [ ] Back up data to rsync.net
