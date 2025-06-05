@@ -4,6 +4,11 @@
     domain = "echo";
     internal-port = 30001;
   };
+  ferrishare = import ./ferrishare.nix {
+    service-name = "ferrishare";
+    domain = "share";
+    internal-port = 30002;
+  };
   openobserve = import ./openobserve.nix {
     service-name = "openobserve";
     domain = "logs";
