@@ -1,4 +1,8 @@
-# Secrets
+# Fluffy Cloud
+
+## Deployment
+
+### Secrets
 
 See https://github.com/Mic92/sops-nix.
 
@@ -13,12 +17,10 @@ nix-shell -p yq-go --run "yq -i e '.keys.users.me=\"$AGE_USER_KEY\"' .sops.yaml"
 nix-shell -p sops --run "EDITOR='codium --wait' sops secrets.yaml"
 ```
 
-# Deployment
+### Provisioning
 
-## Preparation
-
-1. Click a CX32 server:
-   1. Debian 12
+1. Click a CX32 server in the Hetzner Cloud Console:
+   1. Debian 12 (although almost any Linux should work)
    2. Add your ssh key.
    3. Enable public IPv4.
 3. Update the .envrc file with the addresses of the new server
@@ -34,7 +36,7 @@ nix-shell -p sops --run "EDITOR='codium --wait' sops secrets.yaml"
 *	3600	IN	CNAME	example.net.
 ```
 
-## Provisioning
+### Deploying NixOS
 
 ```bash
 # Bootstrapping - set up SSH and generate host key.
@@ -50,22 +52,24 @@ nix-shell -p yq-go --run "yq -i e '.keys.hosts.fluffy=\"$REMOTE_HOST_KEY\"' .sop
 nix-shell -p sops --run "sops updatekeys secrets.yaml"
 
 # Run full installation.
+# To apply changes after changing the Nix config, run the same command.
 nixos-rebuild switch --flake .#fluffy --impure --target-host root@$REMOTE_IP4
+```
 
-# SSH access.
+## Manual steps after setup
+
+- Readeck user https://readeck.example.net/onboarding
+- Syncthing devices and shares https://sync.example.net
+
+### SSH access
+
+```
 ssh $NIX_SSHOPTS root@$REMOTE_IP4
 ```
 
-## Applying config changes
+## Logs
 
-```bash
-export NIX_SSHOPTS="-p 4721"
-nixos-rebuild switch --flake .#fluffy --impure --target-host root@$REMOTE_IP4
-```
-
-# Logs
-
-## Containers
+### Containers
 
 > `quadlet-nix` tries to put containers into full management under systemd. This means once a container crashes, it will be fully deleted and debugging mechanisms like `podman ps -a` or `podman logs` will not work.
 >
@@ -80,7 +84,7 @@ systemctl status --user --machine=runner@.host readeck.service
 sudo -u runner journalctl --user -efu readeck
 ```
 
-# Notes
+## Notes
 
 - Container state and images are in `/home/runner/.local/share/containers`
 - Data (bind mounts) is in `/data`
@@ -93,7 +97,7 @@ http://169.254.169.254/hetzner/v1/userdata
 /usr/lib/python3/dist-packages/cloudinit/sources/DataSourceHetzner.py
 ```
 
-# TODO
+## TODO
 
 - [x] GC https://ryanseipp.com/post/nixos-server/
 - [x] Podman storage, data
@@ -107,11 +111,6 @@ http://169.254.169.254/hetzner/v1/userdata
 - [ ] Back up data to rsync.net
 - [ ] More hardening (lynis)
 - [x] Ensure SSL is enforced
-- [ ] Prefer ipv4 to ipv6 in outgoing connections, to fix hostpoint email ipv6 problem?
 - [x] Top level IP blocking or login?
 - [ ] Configure Hetzner Firewall
 
-# Manual steps after setup
-
-- Readeck https://readeck.example.net/onboarding
-- Syncthing https://sync.example.net
