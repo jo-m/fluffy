@@ -117,13 +117,8 @@ http://169.254.169.254/hetzner/v1/userdata
 - [ ] Grep TODO
 - [ ] Configure Hetzner Firewall
 - [x] https://github.com/HemmeligOrg/Hemmelig.app
-- [ ] https://github.com/Flomp/wanderer
-- [ ] https://github.com/glanceapp/glance
-- [ ] https://github.com/dgtlmoon/changedetection.io
-- [ ] https://github.com/henrygd/beszel
-- [ ] https://traggo.net/ or https://www.solidtime.io/
-- [ ] https://github.com/paperless-ngx/paperless-ngx
 - [ ] https://homer-demo.netlify.app/
-- [ ] Kanboard
-- [ ] https://hivedav.p0c.ch
+- [ ] https://github.com/henrygd/beszel
+- [ ] https://github.com/Flomp/wanderer
+- [ ] https://github.com/dgtlmoon/changedetection.io
 
