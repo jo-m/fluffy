@@ -60,6 +60,7 @@ systemctl status --user --machine=runner@.host readeck.service
 # Logs
 sudo -u runner journalctl --user -efu readeck
 ```
+
 # Notes
 
 - Container state and images are in `/home/runner/.local/share/containers`
@@ -82,7 +83,7 @@ http://169.254.169.254/hetzner/v1/userdata
 - [x] Syncthing devices https://nixos.wiki/wiki/Syncthing
 - [ ] IPv6
 - [ ] Ferrishare
-- [ ] Set up openobserve and journald forwarding
+- [x] Set up openobserve and journald forwarding
 - [x] Set up caddy logs to journald instead of /var/log/caddy/access-*.log
 - [ ] Back up data to rsync.net
 - [ ] More hardening (lynis)
