@@ -63,6 +63,7 @@ in {
     (with containers; [
       echo
       ferrishare
+      hemmelig
       openobserve
       qr
       readeck

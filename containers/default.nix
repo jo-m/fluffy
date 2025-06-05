@@ -24,6 +24,11 @@
     domain = "readeck";
     internal-port = 30005;
   };
+  hemmelig = import ./hemmelig.nix {
+    service-name = "hemmelig";
+    domain = "secrets";
+    internal-port = 30006;
+  };
   webdav = import ./webdav.nix {
     service-name = "webdav";
     domain = "webdav";
