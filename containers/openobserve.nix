@@ -1,6 +1,7 @@
 {
   internal-port,
   service-name,
+  domain,
 }: {
   username,
   uid,
@@ -9,7 +10,7 @@
   config,
   ...
 }: {
-  services.caddy.virtualHosts."${service-name}.${tld}" = {
+  services.caddy.virtualHosts."${domain}.${tld}" = {
     extraConfig = ''
       encode
       import fluff_global_rate_limit

@@ -1,4 +1,7 @@
-{service-name}: {
+{
+  service-name,
+  domain,
+}: {
   username,
   tld,
   data-base-dir,
@@ -13,7 +16,7 @@
   '';
   sops.templates.caddy-webdav-basicauth.owner = "caddy";
 
-  services.caddy.virtualHosts."${service-name}.${tld}" = {
+  services.caddy.virtualHosts."${domain}.${tld}" = {
     extraConfig = ''
       encode
 
