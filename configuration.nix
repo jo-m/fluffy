@@ -41,6 +41,10 @@ in {
     btop
   ];
 
+  environment.shellAliases = {
+    l = "ls -luh";
+  };
+
   sops.defaultSopsFile = ./secrets.yaml;
   sops.age.sshKeyPaths = ["/etc/ssh/ssh_host_ed25519_key"];
   imports = lib.flatten [
@@ -65,6 +69,7 @@ in {
     ])
 
     {
+      # This is considered a bad practice but I couldn't care less.
       _module.args = {inherit username uid tld data-base-dir;};
     }
   ];

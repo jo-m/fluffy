@@ -4,7 +4,6 @@
   domain,
 }: {
   username,
-  uid,
   tld,
   data-base-dir,
   ...

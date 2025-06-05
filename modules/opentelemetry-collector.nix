@@ -66,9 +66,13 @@
           exporters: [otlphttp/openobserve_journald]
   '';
 in {
+  users.groups."${username}" = {};
+
   users.users."${username}" = {
     initialHashedPassword = "!";
     isNormalUser = true;
+    group = username;
+    extraGroups = ["users"];
   };
 
   sops.secrets."openobserve/basicauth" = {};

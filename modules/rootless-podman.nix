@@ -17,10 +17,16 @@
     };
   };
 
+  users.groups."${username}" = {
+    gid = uid;
+  };
+
   users.users."${username}" = {
     initialHashedPassword = "!";
     isNormalUser = true;
     uid = uid;
+    group = username;
+    extraGroups = ["users"];
 
     # Auto start before user login.
     linger = true;

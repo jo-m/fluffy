@@ -4,7 +4,6 @@
   domain,
 }: {
   username,
-  uid,
   tld,
   data-base-dir,
   config,
@@ -22,7 +21,7 @@
   };
 
   systemd.tmpfiles.rules = [
-    "d ${data-base-dir}/${service-name} 0750 ${toString uid} ${toString uid}"
+    "d ${data-base-dir}/${service-name} 0750 ${username} ${username}"
   ];
 
   sops.secrets."openobserve/user" = {};
