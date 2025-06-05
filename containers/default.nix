@@ -29,6 +29,11 @@
     domain = "secrets";
     internal-port = 30006;
   };
+  traggo = import ./traggo.nix {
+    service-name = "traggo";
+    domain = "track";
+    internal-port = 30007;
+  };
   webdav = import ./webdav.nix {
     service-name = "webdav";
     domain = "webdav";

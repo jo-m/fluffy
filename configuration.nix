@@ -67,6 +67,7 @@ in {
       openobserve
       qr
       readeck
+      traggo
       webdav
     ])
 
