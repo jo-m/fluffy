@@ -39,8 +39,8 @@ in {
   systemd.tmpfiles.rules = [
     "d ${data-base-dir}/${service-name} 0750 ${username} ${username}"
     "d ${data-base-dir}/${service-name}/user_templates 0750 ${username} ${username}"
-    "f+ ${data-base-dir}/${service-name}/user_templates/legal_notice.html 0640 ${username} ${username} - asdf"
-    "f+ ${data-base-dir}/${service-name}/user_templates/privacy_policy.html 0640 ${username} ${username} - asdf"
+    "f+ ${data-base-dir}/${service-name}/user_templates/legal_notice.html 0640 ${username} ${username} - nope"
+    "f+ ${data-base-dir}/${service-name}/user_templates/privacy_policy.html 0640 ${username} ${username} - nope"
   ];
 
   home-manager.users."${username}" = {
@@ -58,14 +58,6 @@ in {
           RestartSec = "100ms";
           RestartSteps = "10";
           RestartMaxDelaySec = "60s";
-          ExecStartPre = let
-            cut = "${pkgs.coreutils-full}/bin";
-            cfg = "${data-base-dir}/${service-name}/config.toml";
-          in [
-            "${cut}/cp ${configFile} ${cfg}" 
-            "${cut}/chown ${username}:${username} ${cfg}"
-            "${cut}/chmod 0640 ${cfg}"
-            ];
         };
         # https://docs.podman.io/en/latest/markdown/podman-systemd.unit.5.html
         containerConfig = {
@@ -75,7 +67,10 @@ in {
 
           userns = "keep-id";
           publishPorts = ["127.0.0.1:${toString internal-port}:8080"];
-          mounts = ["type=bind,src=${data-base-dir}/${service-name},dst=/app/data"];
+          mounts = [
+            "type=bind,src=${data-base-dir}/${service-name},dst=/app/data"
+            "type=bind,src=${configFile},dst=/app/data/config.toml,ro"
+          ];
         };
       };
     };
