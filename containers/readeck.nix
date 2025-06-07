@@ -48,6 +48,7 @@
           name = "${service-name}";
 
           userns = "keep-id";
+          podmanArgs = ["--umask=0027"];
           publishPorts = ["127.0.0.1:${toString internal-port}:8000"];
           mounts = ["type=bind,src=${data-base-dir}/${service-name},dst=/readeck"];
           environments = {

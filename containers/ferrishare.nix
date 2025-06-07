@@ -68,6 +68,7 @@ in {
           name = "${service-name}";
 
           userns = "";
+          podmanArgs = ["--umask=0027"];
           publishPorts = ["127.0.0.1:${toString internal-port}:3000"];
           mounts = [
             "type=bind,src=${data-base-dir}/${service-name},dst=/app/data"

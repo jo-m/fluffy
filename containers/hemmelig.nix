@@ -59,6 +59,7 @@
           name = "${service-name}";
 
           userns = "";
+          podmanArgs = ["--umask=0027"];
           user = "root"; # The Hemmelig Dockerfile creates a "node" user which breaks the bind mount permissions.
           publishPorts = ["127.0.0.1:${toString internal-port}:3000"];
           mounts = [

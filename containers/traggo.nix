@@ -52,6 +52,7 @@
           name = "${service-name}";
 
           userns = "";
+          podmanArgs = ["--umask=0027"];
           publishPorts = ["127.0.0.1:${toString internal-port}:3030"];
           mounts = ["type=bind,src=${data-base-dir}/${service-name},dst=/opt/traggo/data"];
           environmentFiles = [config.sops.templates.traggo-secret-env.path];
