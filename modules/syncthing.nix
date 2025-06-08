@@ -5,7 +5,8 @@
   config,
   ...
 }: let
-  dataDir = "${data-base-dir}/sync";
+  service-name = "syncthing";
+  domain = "sync";
 in {
   sops.secrets."syncthing/devices/nixbox" = {};
   sops.secrets."syncthing/devices/pixel" = {};
@@ -18,7 +19,7 @@ in {
   services.syncthing = {
     enable = true;
     openDefaultPorts = true;
-    dataDir = "${data-base-dir}/sync";
+    dataDir = "${data-base-dir}/${service-name}";
     settings.options.urAccepted = -1;
     settings.devices = {
       nixbox = {id = config.sops.templates."syncthing-devices-nixbox".content;};
@@ -27,7 +28,7 @@ in {
   };
 
   # Comment out to make Syncthing GUI accessible remotely.
-  services.caddy.virtualHosts."sync.${tld}".extraConfig = ''
+  services.caddy.virtualHosts."${domain}.${tld}".extraConfig = ''
     encode
     # We additionally protect the Syncthing GUI with IP blocking.
     import fluff_home_ips_only
