@@ -133,11 +133,18 @@ http://169.254.169.254/hetzner/v1/userdata
 - [x] Syncthing devices https://nixos.wiki/wiki/Syncthing
 - [x] IPv6
 - [x] Let sops load key from Keepass
+- [x] Fix Openobserve collector
+- [ ] Backup data to rsync.net
+- [ ] Kitchenowl
+- [ ] Weather Dashboard
+- [ ] Ferrishare config file
 - [ ] Dashboard/entrypoint
+- [ ] Uptime monitoring https://github.com/louislam/uptime-kuma
+- [ ] https://github.com/calcom/cal.com
 - [x] Set up openobserve and journald forwarding
 - [x] Set up caddy logs to journald instead of /var/log/caddy/access-*.log
-- [ ] Back up data to rsync.net
 - [ ] More hardening (lynis)
+- [x] Test if web services work through IPv6
 - [x] Ensure SSL is enforced
 - [x] Ferrishare
 - [x] Top level IP blocking or login?
