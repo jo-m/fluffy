@@ -128,7 +128,7 @@ http://169.254.169.254/hetzner/v1/userdata
 - [x] IPv6
 - [x] Let sops load key from Keepass
 - [x] Fix Openobserve collector
-- [ ] Backup data to rsync.net
+- [x] Backup data to rsync.net
 - [ ] Kitchenowl
 - [ ] Weather Dashboard
 - [x] Ferrishare config file
@@ -150,3 +150,4 @@ http://169.254.169.254/hetzner/v1/userdata
 - [ ] https://github.com/Flomp/wanderer
 - [ ] https://github.com/dgtlmoon/changedetection.io
 - [ ] Monitoring for caddy, fail2ban, sshd, syncthing
+- [ ] Monitoring for failed backups
