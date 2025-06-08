@@ -53,15 +53,20 @@
 
           userns = "";
           publishPorts = ["127.0.0.1:${toString internal-port}:5080"];
-          mounts = ["type=bind,src=${data-base-dir}/${service-name},dst=/data"];
+          mounts = ["type=bind,src=${data-base-dir}/${service-name},dst=/data/openobserve"];
 
           environments = {
             # https://openobserve.ai/docs/environment-variables/
             RUST_BACKTRACE = "full";
             ZO_HTTP_PORT = "5080";
-            ZO_HTTP_ADDR = "5080";
+            ZO_HTTP_ADDR = "127.0.0.1";
             ZO_HTTP_IPV6_ENABLED = "true";
             ZO_TELEMETRY = "false";
+            ZO_DATA_DIR = "/data/openobserve";
+            ZO_DATA_DB_DIR = "/data/openobserve/db";
+            ZO_DATA_WAL_DIR = "/data/openobserve/wal";
+            ZO_DATA_STREAM_DIR = "/data/openobserve/stream";
+            ZO_DATA_IDX_DIR = "/data/openobserve/idx";
           };
           environmentFiles = [config.sops.templates.openobserve-auth.path];
         };
