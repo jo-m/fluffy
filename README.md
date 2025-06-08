@@ -2,39 +2,24 @@
 
 ## Deployment
 
-### Prerequisites
-
-On the host machine.
+Prerequisites on the host machine.
 
 - [Nix](https://nixos.org/download/)
 - [Direnv](https://direnv.net/)
+- [KeePassXC](https://keepassxc.org/)
 
 ### Secrets
 
-See https://github.com/Mic92/sops-nix for more.
+We use `sops-nix` with `age`, and use KeePassXC as user key store.
+See https://github.com/Mic92/sops-nix for more info.
 
-#### Key stored in plain text (bad)
-
-```bash
-# Setup user key.
-mkdir -p ~/.config/sops/age
-age-keygen -o ~/.config/sops/age/keys.txt
-age-keygen -y $HOME/.config/sops/age/keys.txt | read AGE_USER_PUB_KEY
-yq -i e ".keys.users.me=\"$AGE_USER_PUB_KEY\"" .sops.yaml
-
-# Edit secrets.
-EDITOR='codium --wait' sops secrets.yaml
-```
-
-#### Key stored in KeePassXC (better)
-
-1. Set up git-credential-keepassxc: `git-credential-keepassxc configure --group git-credential-keepassxc`
-2. Open your KeePassXC database.
-3. Go to Tools > Settings, enable browser integration.
-4. Create a KeePassXC entry for the user master key
+1. Open your KeePassXC database.
+2. Go to Tools > Settings, enable browser integration.
+3. Set up git-credential-keepassxc: `git-credential-keepassxc configure --group git-credential-keepassxc`
+4. Create a KeePassXC entry for the user master key.
    1. With the output of `age-keygen` (pub key as username and private key as password).
-   2. Set URL to `age://fluffy-user-key`
-5. Use the key in `.sops.yaml`:
+   2. Set URL to `age://fluffy-user-key`.
+5. Set they key as user key in `.sops.yaml`:
 
 ```bash
 print-age-pub-key | read AGE_USER_KEY
@@ -44,15 +29,15 @@ yq -i e ".keys.users.me=\"$AGE_USER_KEY\"" .sops.yaml
 SOPS_AGE_KEY_CMD=print-age-priv-key EDITOR='codium --wait' sops secrets.yaml
 ```
 
-### Provisioning
+### Server provisioning
 
 1. Click a CX32 server in the Hetzner Cloud Console:
-   1. Debian 12 (although almost any Linux should work)
+   1. Debian 12 (although any Linux with sshd should work).
    2. Add your ssh key.
    3. Enable public IPv4.
-3. Update the .envrc file with the addresses of the new server
-4. Install `direnv`, and `direnv allow`
-5. Set up DNS:
+2. Update the .envrc file with the addresses of the new machine.
+3. And run`direnv allow`.
+4. Set up DNS:
 
 ```
 ; A Records
@@ -63,10 +48,10 @@ SOPS_AGE_KEY_CMD=print-age-priv-key EDITOR='codium --wait' sops secrets.yaml
 *	3600	IN	CNAME	example.net.
 ```
 
-### Deploying NixOS
+### Bootstrapping
 
 ```bash
-# Bootstrapping - set up SSH and generate host key.
+# Set up SSH and generate host key.
 ssh-keygen -R "[$REMOTE_IP4]:4721"
 NIX_SSHOPTS="" nix run github:nix-community/nixos-anywhere -- --flake .#fluffy-stage0 --target-host root@$REMOTE_IP4
 
@@ -76,13 +61,16 @@ ssh $NIX_SSHOPTS root@$REMOTE_IP4 cat /etc/ssh/ssh_host_ed25519_key.pub \
    | read REMOTE_HOST_KEY
 yq -i e ".keys.hosts.fluffy=\"$REMOTE_HOST_KEY\"" .sops.yaml
 sops updatekeys secrets.yaml
+```
 
-# Run full installation.
+### Full installation and updating
+
+```bash
 # To apply changes after changing the Nix config, run the same command.
 nixos-rebuild switch --flake .#fluffy --impure --target-host root@$REMOTE_IP4
 ```
 
-## Manual steps after setup
+### Manual steps after setup
 
 - Readeck user https://readeck.example.net/onboarding
 - Syncthing devices and shares https://sync.example.net
@@ -155,4 +143,4 @@ http://169.254.169.254/hetzner/v1/userdata
 - [ ] https://github.com/henrygd/beszel
 - [ ] https://github.com/Flomp/wanderer
 - [ ] https://github.com/dgtlmoon/changedetection.io
-
+- [ ] Monitoring for caddy, fail2ban, sshd, syncthing
