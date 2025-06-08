@@ -130,24 +130,20 @@ http://169.254.169.254/hetzner/v1/userdata
 - [x] Fix Openobserve collector
 - [x] Backup data to rsync.net
 - [ ] Kitchenowl
-- [ ] Weather Dashboard
+- [ ] Dashboard/entrypoint: https://homer-demo.netlify.app/
 - [x] Ferrishare config file
-- [ ] Dashboard/entrypoint
-- [ ] Uptime monitoring https://github.com/louislam/uptime-kuma
-- [ ] https://github.com/calcom/cal.com
 - [x] Set up openobserve and journald forwarding
 - [x] Set up caddy logs to journald instead of /var/log/caddy/access-*.log
-- [ ] More hardening (lynis)
 - [x] Test if web services work through IPv6
 - [x] Ensure SSL is enforced
 - [x] Ferrishare
 - [x] Top level IP blocking or login?
 - [ ] Grep TODO
-- [ ] Configure Hetzner Firewall
 - [x] https://github.com/HemmeligOrg/Hemmelig.app
-- [ ] https://homer-demo.netlify.app/
-- [ ] https://github.com/henrygd/beszel
+- [ ] Uptime monitoring https://github.com/louislam/uptime-kuma
 - [ ] https://github.com/Flomp/wanderer
 - [ ] https://github.com/dgtlmoon/changedetection.io
+- [ ] Configure Hetzner Firewall
 - [ ] Monitoring for caddy, fail2ban, sshd, syncthing
 - [ ] Monitoring for failed backups
+- [ ] More hardening (lynis)
