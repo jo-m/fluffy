@@ -12,7 +12,9 @@
   openobserve = import ./openobserve.nix {
     service-name = "openobserve";
     domain = "monitor";
+    # When you change this, also update `opentelemetry-collector.nix`.
     internal-port = 30030;
+    internal-port-grpc = 30031;
   };
   qr = import ./qr.nix {
     service-name = "qr";

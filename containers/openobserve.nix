@@ -1,5 +1,6 @@
 {
   internal-port,
+  internal-port-grpc,
   service-name,
   domain,
 }: {
@@ -52,7 +53,10 @@
           name = "${service-name}";
 
           userns = "";
-          publishPorts = ["127.0.0.1:${toString internal-port}:5080"];
+          publishPorts = [
+            "127.0.0.1:${toString internal-port}:5080"
+            "127.0.0.1:${toString internal-port-grpc}:5081"
+          ];
           mounts = ["type=bind,src=${data-base-dir}/${service-name},dst=/data/openobserve"];
 
           environments = {
@@ -61,6 +65,8 @@
             ZO_HTTP_PORT = "5080";
             ZO_HTTP_ADDR = "127.0.0.1";
             ZO_HTTP_IPV6_ENABLED = "true";
+            ZO_GRPC_PORT = "5081";
+            ZO_GRPC_ADDR = "127.0.0.1";
             ZO_TELEMETRY = "false";
             ZO_DATA_DIR = "/data/openobserve";
             ZO_DATA_DB_DIR = "/data/openobserve/db";
