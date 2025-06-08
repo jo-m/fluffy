@@ -2,6 +2,13 @@
 
 ## Deployment
 
+### Prerequisites
+
+On the host machine.
+
+- [Nix](https://nixos.org/download/)
+- [Direnv](https://direnv.net/)
+
 ### Secrets
 
 See https://github.com/Mic92/sops-nix.
@@ -11,10 +18,10 @@ See https://github.com/Mic92/sops-nix.
 mkdir -p ~/.config/sops/age
 age-keygen -o ~/.config/sops/age/keys.txt
 age-keygen -y $HOME/.config/sops/age/keys.txt | read AGE_USER_KEY
-nix-shell -p yq-go --run "yq -i e '.keys.users.me=\"$AGE_USER_KEY\"' .sops.yaml"
+yq -i e ".keys.users.me=\"$AGE_USER_KEY\"" .sops.yaml
 
 # Edit secrets.
-nix-shell -p sops --run "EDITOR='codium --wait' sops secrets.yaml"
+EDITOR='codium --wait' sops secrets.yaml
 ```
 
 ### Provisioning
@@ -45,10 +52,10 @@ NIX_SSHOPTS="" nix run github:nix-community/nixos-anywhere -- --flake .#fluffy-s
 
 # Get host key and add to .sops.yaml.
 ssh $NIX_SSHOPTS root@$REMOTE_IP4 cat /etc/ssh/ssh_host_ed25519_key.pub \
-   | nix-shell -p ssh-to-age --run ssh-to-age \
+   | ssh-to-age \
    | read REMOTE_HOST_KEY
-nix-shell -p yq-go --run "yq -i e '.keys.hosts.fluffy=\"$REMOTE_HOST_KEY\"' .sops.yaml"
-nix-shell -p sops --run "sops updatekeys secrets.yaml"
+yq -i e ".keys.hosts.fluffy=\"$REMOTE_HOST_KEY\"" .sops.yaml
+sops updatekeys secrets.yaml
 
 # Run full installation.
 # To apply changes after changing the Nix config, run the same command.

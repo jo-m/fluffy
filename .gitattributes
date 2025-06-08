@@ -1,0 +1,4 @@
+# Show secrets in plain text in diffs.
+# To make use of this, you need to update .git/config accordingly:
+#   git config diff.sops_diff.textconv "sops decrypt"
+*.yaml diff=sops_diff

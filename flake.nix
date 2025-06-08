@@ -37,6 +37,10 @@
       modules = import ./modules;
       containers = import ./containers;
     };
+    hostSystem = "x86_64-linux";
+    pkgs = import inputs.nixpkgs {
+      system = hostSystem;
+    };
   in {
     nixosConfigurations.fluffy-stage0 = nixpkgs.lib.nixosSystem {
       specialArgs = specialArgs;
@@ -59,6 +63,15 @@
       ];
     };
 
-    formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.alejandra;
+    formatter.${hostSystem} = nixpkgs.legacyPackages.${hostSystem}.alejandra;
+
+    devShells.${hostSystem}.default = pkgs.mkShell rec {
+      buildInputs = with pkgs; [
+        sops
+        ssh-to-age
+        yq-go
+        age
+      ];
+    };
   };
 }
