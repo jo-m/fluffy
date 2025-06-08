@@ -2,7 +2,7 @@
 
 ## Deployment
 
-Prerequisites on the host machine.
+Prerequisites on the host machine:
 
 - [Nix](https://nixos.org/download/)
 - [Direnv](https://direnv.net/)
@@ -10,8 +10,11 @@ Prerequisites on the host machine.
 
 ### Secrets
 
-We use `sops-nix` with `age`, and use KeePassXC as user key store.
-See https://github.com/Mic92/sops-nix for more info.
+[Secrets](secrets.yaml) are managed and deployed with [sops-nix](.sops.yaml).
+The `age` master key is pulled from KeePassXC via `git-credential-keepassxc`.
+On the host, secrets are decrypted using the SSH host key.
+
+Setup:
 
 1. Open your KeePassXC database.
 2. Go to Tools > Settings, enable browser integration.
@@ -50,12 +53,13 @@ SOPS_AGE_KEY_CMD=print-age-priv-key EDITOR='codium --wait' sops secrets.yaml
 
 ### Bootstrapping
 
+On the target host, set up only SSH and generate the host key.
+
 ```bash
-# Set up SSH and generate host key.
 ssh-keygen -R "[$REMOTE_IP4]:4721"
 NIX_SSHOPTS="" nix run github:nix-community/nixos-anywhere -- --flake .#fluffy-stage0 --target-host root@$REMOTE_IP4
 
-# Get host key and add to .sops.yaml.
+# Pull the host pub key and encrypt the secrets with it.
 ssh $NIX_SSHOPTS root@$REMOTE_IP4 cat /etc/ssh/ssh_host_ed25519_key.pub \
    | ssh-to-age \
    | read REMOTE_HOST_KEY
@@ -65,12 +69,14 @@ sops updatekeys secrets.yaml
 
 ### Full installation and updating
 
+As we have the secrets available now, we can run the rest of the installation.
+To update the installation after changes in this repo are made, the same command can be used.
+
 ```bash
-# To apply changes after changing the Nix config, run the same command.
 nixos-rebuild switch --flake .#fluffy --impure --target-host root@$REMOTE_IP4
 ```
 
-### Manual steps after setup
+### Manual steps after initial setup
 
 - Readeck user https://readeck.example.net/onboarding
 - Syncthing devices and shares https://sync.example.net
@@ -78,7 +84,7 @@ nixos-rebuild switch --flake .#fluffy --impure --target-host root@$REMOTE_IP4
 
 ### SSH access
 
-```
+```bash
 ssh $NIX_SSHOPTS root@$REMOTE_IP4
 ```
 
@@ -102,7 +108,7 @@ sudo -u runner journalctl --user -efu readeck
 ## Notes
 
 - Container state and images are in `/home/runner/.local/share/containers`
-- Data (bind mounts) is in `/data`
+- Data (container bind mounts) is in `/data`
 - Hetzner cloud-init endpoints and files:
 
 ```
