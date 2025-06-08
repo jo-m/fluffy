@@ -70,12 +70,14 @@ in {
           userns = "";
           podmanArgs = ["--umask=0027"];
           publishPorts = ["127.0.0.1:${toString internal-port}:3000"];
+          exec = ["--config-file" "/config.toml"];
           mounts = [
             "type=bind,src=${data-base-dir}/${service-name},dst=/app/data"
-            "type=bind,src=${configFile},dst=/app/data/config.toml,ro"
+            "type=bind,src=${configFile},dst=/config.toml,ro"
           ];
         };
       };
     };
+    virtualisation.quadlet.autoEscape = true;
   };
 }

@@ -125,7 +125,7 @@ http://169.254.169.254/hetzner/v1/userdata
 - [ ] Backup data to rsync.net
 - [ ] Kitchenowl
 - [ ] Weather Dashboard
-- [ ] Ferrishare config file
+- [x] Ferrishare config file
 - [ ] Dashboard/entrypoint
 - [ ] Uptime monitoring https://github.com/louislam/uptime-kuma
 - [ ] https://github.com/calcom/cal.com
