@@ -29,7 +29,7 @@ print-age-pub-key | read AGE_USER_KEY
 yq -i e ".keys.users.me=\"$AGE_USER_KEY\"" .sops.yaml
 
 # Edit secrets.
-SOPS_AGE_KEY_CMD=print-age-priv-key EDITOR='codium --wait' sops secrets.yaml
+sops secrets.yaml
 ```
 
 ### Server provisioning
