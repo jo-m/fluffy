@@ -8,23 +8,11 @@
   service-name = "syncthing";
   domain = "sync";
 in {
-  sops.secrets."syncthing/devices/nixbox" = {};
-  sops.secrets."syncthing/devices/pixel" = {};
-
-  sops.templates = {
-    "syncthing-devices-nixbox".content = ''${config.sops.placeholder."syncthing/devices/nixbox"}'';
-    "syncthing-devices-pixel".content = ''${config.sops.placeholder."syncthing/devices/pixel"}'';
-  };
-
   services.syncthing = {
     enable = true;
     openDefaultPorts = true;
     dataDir = "${data-base-dir}/${service-name}";
     settings.options.urAccepted = -1;
-    settings.devices = {
-      nixbox = {id = config.sops.templates."syncthing-devices-nixbox".content;};
-      pixel = {id = config.sops.templates."syncthing-devices-pixel".content;};
-    };
   };
 
   # Comment out to make Syncthing GUI accessible remotely.
