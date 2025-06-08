@@ -12,8 +12,22 @@ in {
     enable = true;
     openDefaultPorts = true;
     dataDir = "${data-base-dir}/${service-name}";
+
+    overrideFolders = false;
+    overrideDevices = false;
+
+    # Do not submit anonymous usage data.
     settings.options.urAccepted = -1;
   };
+
+  systemd.tmpfiles.rules = [
+    "d ${data-base-dir}/${service-name} 0750 syncthing syncthing"
+  ];
+
+  systemd.services.syncthing.serviceConfig.UMask = "0027";
+
+  # Don't create default ~/Sync folder
+  systemd.services.syncthing.environment.STNODEFAULTFOLDER = "true";
 
   # Comment out to make Syncthing GUI accessible remotely.
   services.caddy.virtualHosts."${domain}.${tld}".extraConfig = ''
@@ -28,6 +42,4 @@ in {
       header_up Host {upstream_hostport}
     }
   '';
-
-  systemd.services.syncthing.environment.STNODEFAULTFOLDER = "true"; # Don't create default ~/Sync folder
 }
