@@ -36,8 +36,4 @@
     domain = "track";
     internal-port = 30070;
   };
-  webdav = import ./webdav.nix {
-    service-name = "webdav";
-    domain = "webdav";
-  };
 }

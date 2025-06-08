@@ -58,6 +58,7 @@ in {
       rootless-podman
       ssh
       syncthing
+      webdav
     ])
 
     (with containers; [
@@ -68,7 +69,6 @@ in {
       qr
       readeck
       traggo
-      webdav
     ])
 
     {

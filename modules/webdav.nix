@@ -1,13 +1,13 @@
 {
-  service-name,
-  domain,
-}: {
   username,
   tld,
   data-base-dir,
   config,
   ...
-}: {
+}: let
+  service-name = "webdav";
+  domain = "webdav";
+in {
   sops.secrets."caddy/webdav-basicauth" = {};
   sops.templates.caddy-webdav-basicauth.content = ''
     basic_auth {
