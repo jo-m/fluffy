@@ -85,6 +85,7 @@ in {
   systemd.services."${serviceName}" = {
     enable = true;
     wantedBy = ["multi-user.target"];
+    wants = ["network-online.target"];
     after = ["network.target" "network-online.target" "systemd-journald.service"];
     serviceConfig = {
       ExecStart = "${pkgs.opentelemetry-collector-contrib}/bin/otelcol-contrib --config ${configFile}";
