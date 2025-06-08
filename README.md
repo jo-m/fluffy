@@ -11,17 +11,37 @@ On the host machine.
 
 ### Secrets
 
-See https://github.com/Mic92/sops-nix.
+See https://github.com/Mic92/sops-nix for more.
+
+#### Key stored in plain text (bad)
 
 ```bash
 # Setup user key.
 mkdir -p ~/.config/sops/age
 age-keygen -o ~/.config/sops/age/keys.txt
-age-keygen -y $HOME/.config/sops/age/keys.txt | read AGE_USER_KEY
-yq -i e ".keys.users.me=\"$AGE_USER_KEY\"" .sops.yaml
+age-keygen -y $HOME/.config/sops/age/keys.txt | read AGE_USER_PUB_KEY
+yq -i e ".keys.users.me=\"$AGE_USER_PUB_KEY\"" .sops.yaml
 
 # Edit secrets.
 EDITOR='codium --wait' sops secrets.yaml
+```
+
+#### Key stored in KeePassXC (better)
+
+1. Set up git-credential-keepassxc: `git-credential-keepassxc configure --group git-credential-keepassxc`
+2. Open your KeePassXC database.
+3. Go to Tools > Settings, enable browser integration.
+4. Create a KeePassXC entry for the user master key
+   1. With the output of `age-keygen` (pub key as username and private key as password).
+   2. Set URL to `age://fluffy-user-key`
+5. Use the key in `.sops.yaml`:
+
+```bash
+print-age-pub-key | read AGE_USER_KEY
+yq -i e ".keys.users.me=\"$AGE_USER_KEY\"" .sops.yaml
+
+# Edit secrets.
+SOPS_AGE_KEY_CMD=print-age-priv-key EDITOR='codium --wait' sops secrets.yaml
 ```
 
 ### Provisioning
@@ -112,6 +132,7 @@ http://169.254.169.254/hetzner/v1/userdata
 - [x] Put all proxied apps behind additional safety (Caddy)
 - [x] Syncthing devices https://nixos.wiki/wiki/Syncthing
 - [x] IPv6
+- [x] Let sops load key from Keepass
 - [ ] Dashboard/entrypoint
 - [x] Set up openobserve and journald forwarding
 - [x] Set up caddy logs to journald instead of /var/log/caddy/access-*.log

@@ -67,10 +67,17 @@
 
     devShells.${hostSystem}.default = pkgs.mkShell rec {
       buildInputs = with pkgs; [
+        age
+        git-credential-keepassxc
         sops
         ssh-to-age
         yq-go
-        age
+        (writeShellScriptBin "print-age-pub-key" ''
+          echo 'url=age://fluffy-user-key' | git-credential-keepassxc get | sed -n 's/^username=//p'
+        '')
+        (writeShellScriptBin "print-age-priv-key" ''
+          echo 'url=age://fluffy-user-key' | git-credential-keepassxc get | sed -n 's/^password=//p'
+        '')
       ];
     };
   };
