@@ -81,6 +81,7 @@ nixos-rebuild switch --flake .#fluffy --impure --target-host root@$REMOTE_IP4
 - Readeck user https://readeck.example.net/onboarding
 - Syncthing devices and shares https://sync.example.net
 - Disable registration https://secrets.example.net/account/instance-settings
+- Kitchenowl setup https://kitchen.example.net
 
 ### SSH access
 
@@ -129,7 +130,7 @@ http://169.254.169.254/hetzner/v1/userdata
 - [x] Let sops load key from Keepass
 - [x] Fix Openobserve collector
 - [x] Backup data to rsync.net
-- [ ] Kitchenowl
+- [x] Kitchenowl
 - [ ] Dashboard/entrypoint: https://homer-demo.netlify.app/
 - [x] Ferrishare config file
 - [x] Set up openobserve and journald forwarding

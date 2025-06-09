@@ -9,6 +9,11 @@
     domain = "files";
     internal-port = 30020;
   };
+  kitchenowl = import ./kitchenowl.nix {
+    service-name = "kitchenowl";
+    domain = "kitchen";
+    internal-port = 30025;
+  };
   openobserve = import ./openobserve.nix {
     service-name = "openobserve";
     domain = "monitor";

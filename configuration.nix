@@ -67,6 +67,7 @@ in {
       echo
       ferrishare
       hemmelig
+      kitchenowl
       openobserve
       qr
       readeck
