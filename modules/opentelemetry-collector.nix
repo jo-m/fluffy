@@ -7,7 +7,7 @@
 }: let
   serviceName = "opentelemetry-collector";
   username = "opentelemetry-collector";
-  openobserve-url = "http://127.0.0.1:30030/api/default/";
+  openobserve-url = "http://127.0.0.1:30050/api/default/";
   # https://github.com/openobserve/agents/blob/bf46fe5a4d440e3621ba826d4034bdf0ca243ef7/linux/install.sh#L49
   configFile = pkgs.writeText "opentelemetry-collector.yaml" ''
     receivers:
