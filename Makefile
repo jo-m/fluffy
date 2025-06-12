@@ -3,6 +3,7 @@ bootstrap:
 	# Remove old host keys.
 	ssh-keygen -R "[$$REMOTE_IP4]:$$SSH_PORT"
 	ssh-keygen -R "[$$REMOTE_IP6]:$$SSH_PORT"
+	ssh-keygen -R "[$$REMOTE_TLD]:$$SSH_PORT"
 
 	# Set up SSH.
 	NIX_SSHOPTS= SSH_PORT=22 nix run github:nix-community/nixos-anywhere -- --flake .#fluffy-stage0 --target-host root@$$REMOTE_IP4

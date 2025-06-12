@@ -8,7 +8,7 @@
   hostname = "fluffy";
   username = "runner";
   uid = 1000;
-  tld = "example.net";
+  tld = builtins.getEnv "REMOTE_TLD";
   data-base-dir = "/data";
 in {
   networking.hostName = hostname;
