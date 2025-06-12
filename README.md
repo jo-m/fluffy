@@ -121,29 +121,6 @@ http://169.254.169.254/hetzner/v1/userdata
 
 ## TODO
 
-- [x] GC https://ryanseipp.com/post/nixos-server/
-- [x] Podman storage, data
-- [x] Module args
-- [x] Put all proxied apps behind additional safety (Caddy)
-- [x] Syncthing devices https://nixos.wiki/wiki/Syncthing
-- [x] IPv6
-- [x] Let sops load key from Keepass
-- [x] Fix Openobserve collector
-- [x] Backup data to rsync.net
-- [x] Kitchenowl
-- [x] Dashboard/entrypoint: https://homer-demo.netlify.app/
-- [x] Ferrishare config file
-- [x] Set up openobserve and journald forwarding
-- [x] Set up caddy logs to journald instead of /var/log/caddy/access-*.log
-- [x] Test if web services work through IPv6
-- [x] Ensure SSL is enforced
-- [x] Ferrishare
-- [x] Top level IP blocking or login?
-- [ ] Grep TODO
-- [x] https://github.com/HemmeligOrg/Hemmelig.app
-- [ ] Uptime monitoring https://github.com/louislam/uptime-kuma
-- [ ] https://github.com/Flomp/wanderer
-- [ ] https://github.com/dgtlmoon/changedetection.io
 - [ ] Configure Hetzner Firewall
 - [ ] Monitoring for caddy, fail2ban, sshd, syncthing
 - [ ] Monitoring for failed backups

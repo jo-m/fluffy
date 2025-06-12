@@ -3,6 +3,7 @@
   config,
   data-base-dir,
   lib,
+  pkgs,
   ...
 }: let
   username = "backup";
@@ -29,8 +30,9 @@ in {
 
   sops.secrets."borg-backup/repo-hostkeys".mode = "0444";
   sops.secrets."borg-backup/repo-hostkeys".owner = "root";
-  # TODO: Does not work.
-  # programs.ssh.knownHostsFiles = [config.sops.secrets."borg-backup/repo-hostkeys".path];
+  programs.ssh.extraConfig = ''
+    GlobalKnownHostsFile ${config.sops.secrets."borg-backup/repo-hostkeys".path}
+  '';
 
   # Start and monitor manually:
   #   systemctl start borgbackup-job-data.service
@@ -48,8 +50,7 @@ in {
       passCommand = "cat ${config.sops.secrets."borg-backup/repo-passphrase".path}";
     };
     environment = {
-      # TODO: Get rid of StrictHostKeyChecking.
-      BORG_RSH = "ssh -o StrictHostKeyChecking=no -i ${config.sops.secrets."borg-backup/ssh-key-priv".path}";
+      BORG_RSH = "ssh -i ${config.sops.secrets."borg-backup/ssh-key-priv".path}";
       BORG_REMOTE_PATH = "borg1";
     };
     compression = "auto,zstd";
