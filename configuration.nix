@@ -67,6 +67,7 @@ in {
       echo
       ferrishare
       hemmelig
+      homer
       kitchenowl
       openobserve
       qr

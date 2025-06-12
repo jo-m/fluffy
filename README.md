@@ -131,7 +131,7 @@ http://169.254.169.254/hetzner/v1/userdata
 - [x] Fix Openobserve collector
 - [x] Backup data to rsync.net
 - [x] Kitchenowl
-- [ ] Dashboard/entrypoint: https://homer-demo.netlify.app/
+- [x] Dashboard/entrypoint: https://homer-demo.netlify.app/
 - [x] Ferrishare config file
 - [x] Set up openobserve and journald forwarding
 - [x] Set up caddy logs to journald instead of /var/log/caddy/access-*.log

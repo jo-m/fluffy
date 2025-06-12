@@ -9,6 +9,11 @@
     domain = "files";
     internal-port = 30020;
   };
+  homer = import ./homer.nix {
+    service-name = "homer";
+    domain = "files";
+    internal-port = 30030;
+  };
   kitchenowl = import ./kitchenowl.nix {
     service-name = "kitchenowl";
     domain = "kitchen";

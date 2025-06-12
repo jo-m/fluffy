@@ -34,11 +34,6 @@
       hash = "sha256-4m6rYh+SAeNz8PMl8/8xow2BBJmQLnXIymMeN45qIZQ=";
     };
 
-    virtualHosts."${tld}".extraConfig = ''
-      import fluff_global_rate_limit
-      respond "Nothing to see here."
-    '';
-
     extraConfig = ''
       # Import config files with secrets.
       import ${config.sops.templates.caddy-global-basicauth.path}
