@@ -14,7 +14,7 @@ Prerequisites on the host machine:
 The `age` master key is pulled from KeePassXC via `git-credential-keepassxc`.
 On the host, secrets are decrypted using the SSH host key.
 
-Setup:
+Initial setup:
 
 1. Open your KeePassXC database.
 2. Go to Tools > Settings, enable browser integration.
@@ -34,37 +34,30 @@ sops secrets.yaml
 
 ### Server provisioning
 
-1. Click a CX32 server in the Hetzner Cloud Console:
-   1. Debian 12 (although any Linux with sshd should work).
-   2. Add your ssh key.
+1. Click a CPX21 server in the Hetzner Cloud Console:
+   1. Debian 12 (although any Linux with `sshd` should work).
+   2. Add your SSH key.
    3. Enable public IPv4.
-2. Update the .envrc file with the addresses of the new machine.
+2. Update the `.envrc` file with the IP addresses of the new machine.
 3. And run`direnv allow`.
 4. Set up DNS:
 
 ```
 ; A Records
-@	3600	IN	A	1.1.1.1
+@	3600	IN	A	....
 ; AAAA Records
-@	3600	IN	AAAA	fe80::1
+@	3600	IN	AAAA	:::::::
 ; CNAME Records
 *	3600	IN	CNAME	example.net.
 ```
 
 ### Bootstrapping
 
-On the target host, set up only SSH and generate the host key.
+On the target host, we first set up SSH and pull the new host key, encrypting the secrets with it:
 
 ```bash
-ssh-keygen -R "[$REMOTE_IP4]:4721"
-NIX_SSHOPTS="" nix run github:nix-community/nixos-anywhere -- --flake .#fluffy-stage0 --target-host root@$REMOTE_IP4
-
-# Pull the host pub key and encrypt the secrets with it.
-ssh $NIX_SSHOPTS root@$REMOTE_IP4 cat /etc/ssh/ssh_host_ed25519_key.pub \
-   | ssh-to-age \
-   | read REMOTE_HOST_KEY
-yq -i e ".keys.hosts.fluffy=\"$REMOTE_HOST_KEY\"" .sops.yaml
-sops updatekeys secrets.yaml
+make bootstrap
+make pull-host-key
 ```
 
 ### Full installation and updating
@@ -73,7 +66,7 @@ As we have the secrets available now, we can run the rest of the installation.
 To update the installation after changes in this repo are made, the same command can be used.
 
 ```bash
-nixos-rebuild switch --flake .#fluffy --impure --target-host root@$REMOTE_IP4
+make push
 ```
 
 ### Manual steps after initial setup
