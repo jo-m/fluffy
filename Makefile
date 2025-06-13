@@ -18,3 +18,7 @@ pull-host-key:
 .PHONY: push
 push:
 	nixos-rebuild switch --flake .#fluffy --impure --target-host root@$$REMOTE_IP4
+
+.PHONY: format
+format:
+	nix fmt .
