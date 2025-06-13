@@ -103,6 +103,7 @@
             url: "https://track.${tld}/"
             target: "_blank"
           - name: "Syncthing GUI"
+            subtitle: "Usually disabled, needs to be temporarily enabled"
             icon: "fas fa-rotate"
             url: "https://sync.${tld}/"
             target: "_blank"

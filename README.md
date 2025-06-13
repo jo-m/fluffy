@@ -75,6 +75,7 @@ make push
 - Syncthing devices and shares https://sync.example.net
 - Disable registration https://secrets.example.net/account/instance-settings
 - Kitchenowl setup https://kitchen.example.net
+- Set up Openobserve dashboards
 
 ### SSH access
 
@@ -114,7 +115,6 @@ http://169.254.169.254/hetzner/v1/userdata
 
 ## TODO
 
-- [ ] Configure Hetzner Firewall
+- [x] Configure Hetzner Firewall
+- [ ] Monitoring for failed backups (notifications)
 - [ ] Monitoring for caddy, fail2ban, sshd, syncthing
-- [ ] Monitoring for failed backups
-- [ ] More hardening (lynis)
