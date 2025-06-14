@@ -48,7 +48,7 @@ sops secrets.yaml
 ; AAAA Records
 @	3600	IN	AAAA	:::::::
 ; CNAME Records
-*	3600	IN	CNAME	example.net.
+*	3600	IN	CNAME	${REMOTE_TLD}.
 ```
 
 ### Bootstrapping
@@ -71,11 +71,11 @@ make push
 
 ### Manual steps after initial setup
 
-- Readeck user https://readeck.example.net/onboarding
-- Syncthing devices and shares https://sync.example.net
-- Disable registration https://secrets.example.net/account/instance-settings
-- Kitchenowl setup https://kitchen.example.net
-- Set up Openobserve dashboards
+- Readeck user
+- Syncthing devices and shares
+- Disable registration on Hemmelig
+- Kitchenowl setup
+- Openobserve dashboards setup
 
 ### SSH access
 
