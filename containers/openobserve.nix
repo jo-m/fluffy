@@ -72,6 +72,7 @@
             ZO_DATA_WAL_DIR = "/data/openobserve/wal";
             ZO_DATA_STREAM_DIR = "/data/openobserve/stream";
             ZO_DATA_IDX_DIR = "/data/openobserve/idx";
+            ZO_INGEST_ALLOWED_UPTO = "24";
           };
           environmentFiles = [config.sops.templates.openobserve-auth.path];
         };

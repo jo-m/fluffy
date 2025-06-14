@@ -17,6 +17,13 @@
     };
   };
 
+  virtualisation.containers.containersConf.settings = {
+    # https://github.com/containers/common/blob/main/docs/containers.conf.5.md
+    containers = {
+      log_driver = "journald";
+    };
+  };
+
   users.groups."${username}" = {
     gid = uid;
   };

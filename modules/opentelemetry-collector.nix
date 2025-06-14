@@ -15,7 +15,7 @@
         directory: /var/log/journal
       hostmetrics:
         root_path: /
-        collection_interval: 30s
+        collection_interval: 10s
         scrapers:
           cpu:
           disk:
@@ -72,7 +72,7 @@ in {
     initialHashedPassword = "!";
     isNormalUser = true;
     group = username;
-    extraGroups = ["users"];
+    extraGroups = ["systemd-journal"];
   };
 
   sops.secrets."openobserve/basicauth" = {};
