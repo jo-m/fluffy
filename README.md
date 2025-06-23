@@ -1,5 +1,15 @@
 # Fluffy Cloud
 
+Features:
+
+- Encrypted env vars and secrets (sops)
+- Automatic Borg backups to rsync.net
+- Various apps running as rootless podman containers
+- Caddy reverse proxy, automatic TLS, rate limiting
+- Dashboard (Homer)
+- Centralized monitoring and logging (Openobserve)
+- Webdav server for Joplin sync
+
 ## Deployment
 
 Prerequisites on the host machine:
