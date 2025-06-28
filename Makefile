@@ -22,3 +22,10 @@ push:
 .PHONY: format
 format:
 	nix fmt .
+
+.PHONY: upgrade
+upgrade:
+	nix flake update
+	$(MAKE) push
+	git add flake.lock
+	git commit -m 'upgrade'
