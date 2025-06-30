@@ -46,7 +46,7 @@
         };
         # https://docs.podman.io/en/latest/markdown/podman-systemd.unit.5.html
         containerConfig = {
-          image = "docker.io/traggo/server:latest";
+          image = "ghcr.io/jo-m/traggo-server:amd64-latest";
           autoUpdate = "registry";
           name = "${service-name}";
 
