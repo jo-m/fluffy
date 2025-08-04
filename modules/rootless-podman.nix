@@ -41,6 +41,8 @@
     autoSubUidGidRange = true;
   };
 
+  virtualisation.quadlet.enable = true;
+
   home-manager.users."${username}" = {
     pkgs,
     config,
