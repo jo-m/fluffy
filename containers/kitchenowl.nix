@@ -30,6 +30,7 @@ in {
 
   systemd.tmpfiles.rules = [
     "d ${data-base-dir}/${service-name} 0750 ${username} ${username}"
+    "d ${data-base-dir}/${service-name}/upload 0750 ${username} ${username}"
   ];
 
   home-manager.users."${username}" = {
