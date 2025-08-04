@@ -39,6 +39,7 @@ in {
 
   environment.systemPackages = with pkgs; [
     btop
+    sqlite-interactive
   ];
 
   environment.shellAliases = {
@@ -76,7 +77,7 @@ in {
     ])
 
     {
-      # This is considered a bad practice but I couldn't care less.
+      # This is considered bad practice but I couldn't care less.
       _module.args = {inherit username uid tld data-base-dir;};
     }
   ];
