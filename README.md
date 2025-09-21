@@ -127,6 +127,6 @@ http://169.254.169.254/hetzner/v1/userdata
 
 - [x] Configure Hetzner Firewall
 - [ ] Monitoring for failed backups (notifications)
-- [ ] Monitoring for caddy, fail2ban, sshd, syncthing
+- [x] Monitoring for caddy, fail2ban, sshd, syncthing
 - [ ] https://github.com/alextselegidis/easyappointments
-- [ ] Fix ferrishare logs
+- [x] Fix ferrishare logs
