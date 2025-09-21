@@ -77,7 +77,7 @@ in {
 
     {
       # This is considered bad practice but I couldn't care less.
-      _module.args = {inherit username uid tld data-base-dir;};
+      _module.args = {inherit username uid tld data-base-dir hostname;};
     }
   ];
 }
