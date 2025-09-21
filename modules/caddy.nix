@@ -28,10 +28,13 @@
 
     package = pkgs.caddy.withPlugins {
       plugins = [
-        "github.com/mholt/caddy-ratelimit@v0.1.1-0.20250318145942-a8e9f68d7bed"
-        "github.com/mholt/caddy-webdav@v0.0.0-20250609161527-33ba3cd2088c"
+        # To update: Put entire git rev after @, build, correct version will be in the error message.
+        # https://github.com/mholt/caddy-ratelimit
+        "github.com/mholt/caddy-ratelimit@v0.1.1-0.20250915152450-04ea34edc0c4"
+        # https://github.com/mholt/caddy-webdav
+        "github.com/mholt/caddy-webdav@v0.0.0-20250805175825-7a5c90d8bf90"
       ];
-      hash = "sha256-ZmrqejMy8uwzZxyrcfrENllehz4uRzXI7j0eYhogjTg=";
+      hash = "sha256-kXynvoH99o4NOm1PQrLR1ZrSyVST48HrcQNrse9Sf14=";
     };
 
     extraConfig = ''
