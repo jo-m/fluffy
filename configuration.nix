@@ -57,6 +57,7 @@ in {
       caddy
       harden
       hetzner
+      monitoring
       rootless-podman
       ssh
       syncthing

@@ -8,6 +8,7 @@ Features:
 - Caddy reverse proxy, automatic TLS, rate limiting
 - Dashboard (Homer)
 - Webdav server for Joplin sync
+- Logging/monitoring (Prometheus, Grafana, Loki)
 
 ## Deployment
 
@@ -84,6 +85,7 @@ make push
 - Syncthing devices and shares
 - Disable registration on Hemmelig
 - Kitchenowl setup
+- Grafana setup (default: admin:admin)
 
 ### SSH access
 
@@ -126,3 +128,5 @@ http://169.254.169.254/hetzner/v1/userdata
 - [x] Configure Hetzner Firewall
 - [ ] Monitoring for failed backups (notifications)
 - [ ] Monitoring for caddy, fail2ban, sshd, syncthing
+- [ ] https://github.com/alextselegidis/easyappointments
+- [ ] Fix ferrishare logs

@@ -128,10 +128,10 @@
       - name: "Infrastructure"
         icon: "fas fa-heartbeat"
         items:
-          - name: "Openobserve"
+          - name: "Grafana"
             subtitle: "Metrics & Logs"
             icon: "fas fa-chart-simple"
-            url: "https://monitor.${tld}/"
+            url: "https://monitoring.${tld}/"
             target: "_blank"
           - name: "Echo"
             subtitle: "HTTP Connection Info"
