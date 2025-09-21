@@ -26,10 +26,12 @@ in {
 
   services.grafana = {
     enable = true;
-    domain = "${grafana-domain}.${tld}";
-    port = grafana-port;
+    settings.server = {
+      domain = "${grafana-domain}.${tld}";
+      http_port = grafana-port;
+      http_addr = "127.0.0.1";
+    };
     openFirewall = false;
-    addr = "127.0.0.1";
 
     provision = {
       enable = true;
