@@ -131,7 +131,7 @@
           - name: "Grafana"
             subtitle: "Metrics & Logs"
             icon: "fas fa-chart-simple"
-            url: "https://monitoring.${tld}/"
+            url: "https://monitor.${tld}/"
             target: "_blank"
           - name: "Echo"
             subtitle: "HTTP Connection Info"
