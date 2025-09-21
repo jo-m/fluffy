@@ -45,6 +45,7 @@ in {
       "${data-base-dir}/lost+found"
       "${data-base-dir}/readeck/config.toml"
     ];
+    extraCreateArgs = "--verbose --stats";
     encryption = {
       mode = "repokey-blake2";
       passCommand = "cat ${config.sops.secrets."borg-backup/repo-passphrase".path}";
