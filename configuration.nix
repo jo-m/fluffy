@@ -57,7 +57,6 @@ in {
       caddy
       harden
       hetzner
-      opentelemetry-collector
       rootless-podman
       ssh
       syncthing
@@ -70,7 +69,6 @@ in {
       hemmelig
       homer
       kitchenowl
-      openobserve
       qr
       readeck
       traggo
