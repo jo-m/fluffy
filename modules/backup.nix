@@ -45,6 +45,7 @@ in {
       "${data-base-dir}/lost+found"
       "${data-base-dir}/readeck/config.toml"
     ];
+    preHook = "set -x";
     extraCreateArgs = "--verbose --stats";
     encryption = {
       mode = "repokey-blake2";
