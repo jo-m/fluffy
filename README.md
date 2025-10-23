@@ -123,6 +123,16 @@ http://169.254.169.254/hetzner/v1/userdata
 /usr/lib/python3/dist-packages/cloudinit/sources/DataSourceHetzner.py
 ```
 
+### Debug store size
+
+```bash
+nix build .#nixosConfigurations.fluffy.config.system.build.toplevel
+# Show size of store paths sorted by size.
+nix path-info --recursive --size ./result | sort -nk2
+# Show total size.
+nix path-info --closure-size --human-readable ./result
+```
+
 ## TODO
 
 - [x] Configure Hetzner Firewall

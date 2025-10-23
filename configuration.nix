@@ -28,6 +28,15 @@ in {
     algorithm = "zstd";
   };
 
+  # Try to save some space.
+  documentation = {
+    enable = false;
+    doc.enable = false;
+    info.enable = false;
+    man.enable = false;
+    nixos.enable = false;
+  };
+
   nix = {
     gc = {
       automatic = true;
