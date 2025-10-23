@@ -23,6 +23,11 @@ in {
     "vm.swappiness" = 25;
   };
 
+  zramSwap = {
+    enable = true;
+    algorithm = "zstd";
+  };
+
   nix = {
     gc = {
       automatic = true;
