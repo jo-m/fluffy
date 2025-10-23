@@ -135,8 +135,6 @@ nix path-info --closure-size --human-readable ./result
 
 ## TODO
 
-- [x] Configure Hetzner Firewall
 - [ ] Monitoring for failed backups (notifications)
-- [x] Monitoring for caddy, fail2ban, sshd, syncthing
 - [ ] https://github.com/alextselegidis/easyappointments
-- [x] Fix ferrishare logs
+- [ ] Ensure Podman auto-update works (`systemctl --machine=runner@.host status podman-auto-update.service; journalctl -u podman-auto-update.service`)
