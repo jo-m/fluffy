@@ -2,17 +2,18 @@
 
 Features:
 
-- Encrypted env vars and secrets (sops)
-- Automatic Borg backups to rsync.net
 - Various apps running as rootless podman containers
 - Caddy reverse proxy, automatic TLS, rate limiting
 - Dashboard (Homer)
 - Webdav server for Joplin sync
+- Syncthing
 - Logging/monitoring (Prometheus, Grafana, Loki)
+- Automatic Borg backups to rsync.net
+- Secrets provisioning and even secret env vars
 
 ## Deployment
 
-Prerequisites on the host machine:
+Prerequisites on the machine you run the deployment from:
 
 - [Nix](https://nixos.org/download/)
 - [Direnv](https://direnv.net/)
