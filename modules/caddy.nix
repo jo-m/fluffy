@@ -34,7 +34,7 @@
         # https://github.com/mholt/caddy-webdav
         "github.com/mholt/caddy-webdav@v0.0.0-20250805175825-7a5c90d8bf90"
       ];
-      hash = "sha256-kXynvoH99o4NOm1PQrLR1ZrSyVST48HrcQNrse9Sf14=";
+      hash = "sha256-1O0mnv/J7XetfGeOH9ssuaaZ5LGXr0mclM6INNhEXRk=";
     };
 
     extraConfig = ''

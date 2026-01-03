@@ -29,3 +29,7 @@ upgrade:
 	$(MAKE) push
 	git add flake.lock
 	git commit -m 'upgrade'
+
+.PHONY: build
+build:
+	nixos-rebuild build --flake .#fluffy -L
