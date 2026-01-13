@@ -87,6 +87,7 @@ in {
       qr
       readeck
       traggo
+      flyermap
     ])
 
     {

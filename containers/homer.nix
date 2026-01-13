@@ -125,6 +125,10 @@
             icon: "fas fa-qrcode"
             url: "https://qr.${tld}/"
             target: "_blank"
+          - name: "Flyers"
+            icon: "fas fa-paper-plane"
+            url: "https://flyers.${tld}/"
+            target: "_blank"
       - name: "Infrastructure"
         icon: "fas fa-heartbeat"
         items:
