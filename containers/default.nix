@@ -46,4 +46,9 @@
     domain = "track";
     internal-port = 30090;
   };
+  flyermap = import ./flyermap.nix {
+    service-name = "flyermap";
+    domain = "flyers";
+    internal-port = 30100;
+  };
 }
