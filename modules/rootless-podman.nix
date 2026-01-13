@@ -55,6 +55,8 @@
     home.packages = [];
     imports = [inputs.quadlet-nix.homeManagerModules.quadlet];
 
+    virtualisation.quadlet.autoUpdate.enable = true;
+
     # Ensure the systemd services are (re)started on config change.
     systemd.user.startServices = "sd-switch";
   };
