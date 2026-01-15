@@ -6,31 +6,30 @@
   tld,
   data-base-dir,
   ...
-}:
-with lib; let
+}: let
   cfg = config.services.fluffy.kitchenowl;
   outerConfig = config;
 in {
   options.services.fluffy.kitchenowl = {
-    enable = mkEnableOption "Kitchenowl recipe and grocery manager" // {default = true;};
+    enable = lib.mkEnableOption "Kitchenowl recipe and grocery manager" // {default = true;};
 
-    serviceName = mkOption {
-      type = types.str;
+    serviceName = lib.mkOption {
+      type = lib.types.str;
       description = "Systemd service name for the container";
     };
 
-    domain = mkOption {
-      type = types.str;
+    domain = lib.mkOption {
+      type = lib.types.str;
       description = "Domain for Caddy reverse proxy";
     };
 
-    port = mkOption {
-      type = types.port;
+    port = lib.mkOption {
+      type = lib.types.port;
       description = "Internal container port";
     };
   };
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     services.caddy.virtualHosts."${cfg.domain}.${tld}" = {
       extraConfig = ''
         encode

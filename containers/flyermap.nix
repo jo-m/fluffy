@@ -6,30 +6,29 @@
   tld,
   data-base-dir,
   ...
-}:
-with lib; let
+}: let
   cfg = config.services.fluffy.flyermap;
 in {
   options.services.fluffy.flyermap = {
-    enable = mkEnableOption "Flyermap flyer management service" // {default = true;};
+    enable = lib.mkEnableOption "Flyermap flyer management service" // {default = true;};
 
-    serviceName = mkOption {
-      type = types.str;
+    serviceName = lib.mkOption {
+      type = lib.types.str;
       description = "Systemd service name for the container";
     };
 
-    domain = mkOption {
-      type = types.str;
+    domain = lib.mkOption {
+      type = lib.types.str;
       description = "Domain for Caddy reverse proxy";
     };
 
-    port = mkOption {
-      type = types.port;
+    port = lib.mkOption {
+      type = lib.types.port;
       description = "Internal container port";
     };
   };
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     services.caddy.virtualHosts."${cfg.domain}.${tld}" = {
       extraConfig = ''
         encode
