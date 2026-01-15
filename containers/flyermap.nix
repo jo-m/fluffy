@@ -65,7 +65,7 @@ in {
           containerConfig = {
             image = "ghcr.io/jo-m/flyermap:latest";
             autoUpdate = "registry";
-            name = "${cfg.serviceName}";
+            name = cfg.serviceName;
 
             userns = "keep-id";
             podmanArgs = ["--umask=0027"];

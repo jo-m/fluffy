@@ -30,7 +30,6 @@ with lib; {
       };
       homer = {
         serviceName = mkDefault "homer";
-        domain = mkDefault "files";
         port = mkDefault 30030;
       };
       kitchenowl = {

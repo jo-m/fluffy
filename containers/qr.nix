@@ -59,7 +59,7 @@ in {
           containerConfig = {
             image = "ghcr.io/lyqht/mini-qr:latest";
             autoUpdate = "registry";
-            name = "${cfg.serviceName}";
+            name = cfg.serviceName;
 
             userns = "";
             publishPorts = ["127.0.0.1:${toString cfg.port}:8080"];

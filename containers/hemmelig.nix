@@ -78,7 +78,7 @@ in {
           containerConfig = {
             image = "docker.io/hemmeligapp/hemmelig:v6";
             autoUpdate = "registry";
-            name = "${cfg.serviceName}";
+            name = cfg.serviceName;
 
             userns = "";
             podmanArgs = ["--umask=0027"];

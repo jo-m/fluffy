@@ -151,11 +151,6 @@ in {
       description = "Systemd service name for the container";
     };
 
-    domain = mkOption {
-      type = types.str;
-      description = "Domain for Caddy reverse proxy (Note: homer routes to root tld, not subdomain)";
-    };
-
     port = mkOption {
       type = types.port;
       description = "Internal container port";
@@ -190,7 +185,7 @@ in {
           containerConfig = {
             image = "docker.io/b4bz/homer:latest";
             autoUpdate = "registry";
-            name = "${cfg.serviceName}";
+            name = cfg.serviceName;
 
             userns = "";
             podmanArgs = ["--umask=0027"];

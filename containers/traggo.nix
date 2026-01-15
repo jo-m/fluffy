@@ -70,7 +70,7 @@ in {
           containerConfig = {
             image = "ghcr.io/jo-m/traggo-server:amd64-latest";
             autoUpdate = "registry";
-            name = "${cfg.serviceName}";
+            name = cfg.serviceName;
 
             userns = "";
             podmanArgs = ["--umask=0027"];

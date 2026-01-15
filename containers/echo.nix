@@ -61,7 +61,7 @@ in {
           containerConfig = {
             image = "docker.io/mendhak/http-https-echo:latest";
             autoUpdate = "registry";
-            name = "${cfg.serviceName}";
+            name = cfg.serviceName;
 
             userns = "keep-id";
             publishPorts = ["127.0.0.1:${toString cfg.port}:8080"];
