@@ -6,8 +6,7 @@
   tld,
   data-base-dir,
   ...
-}:
-with lib; let
+}: let
   cfg = config.services.fluffy.homer;
   configFile = pkgs.writeText "homer.yaml" ''
     ---
@@ -144,20 +143,20 @@ with lib; let
   '';
 in {
   options.services.fluffy.homer = {
-    enable = mkEnableOption "Homer home dashboard" // {default = true;};
+    enable = lib.mkEnableOption "Homer home dashboard" // {default = true;};
 
-    serviceName = mkOption {
-      type = types.str;
+    serviceName = lib.mkOption {
+      type = lib.types.str;
       description = "Systemd service name for the container";
     };
 
-    port = mkOption {
-      type = types.port;
+    port = lib.mkOption {
+      type = lib.types.port;
       description = "Internal container port";
     };
   };
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     services.caddy.virtualHosts."${tld}" = {
       extraConfig = ''
         encode

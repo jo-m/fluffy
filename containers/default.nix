@@ -2,8 +2,7 @@
   config,
   lib,
   ...
-}:
-with lib; {
+}: {
   imports = [
     ./echo.nix
     ./ferrishare.nix
@@ -19,48 +18,48 @@ with lib; {
   config = {
     services.fluffy = {
       echo = {
-        serviceName = mkDefault "echo";
-        domain = mkDefault "echo";
-        port = mkDefault 30010;
+        serviceName = lib.mkDefault "echo";
+        domain = lib.mkDefault "echo";
+        port = lib.mkDefault 30010;
       };
       ferrishare = {
-        serviceName = mkDefault "ferrishare";
-        domain = mkDefault "files";
-        port = mkDefault 30020;
+        serviceName = lib.mkDefault "ferrishare";
+        domain = lib.mkDefault "files";
+        port = lib.mkDefault 30020;
       };
       homer = {
-        serviceName = mkDefault "homer";
-        port = mkDefault 30030;
+        serviceName = lib.mkDefault "homer";
+        port = lib.mkDefault 30030;
       };
       kitchenowl = {
-        serviceName = mkDefault "kitchenowl";
-        domain = mkDefault "kitchen";
-        port = mkDefault 30040;
+        serviceName = lib.mkDefault "kitchenowl";
+        domain = lib.mkDefault "kitchen";
+        port = lib.mkDefault 30040;
       };
       qr = {
-        serviceName = mkDefault "qr";
-        domain = mkDefault "qr";
-        port = mkDefault 30060;
+        serviceName = lib.mkDefault "qr";
+        domain = lib.mkDefault "qr";
+        port = lib.mkDefault 30060;
       };
       readeck = {
-        serviceName = mkDefault "readeck";
-        domain = mkDefault "readeck";
-        port = mkDefault 30070;
+        serviceName = lib.mkDefault "readeck";
+        domain = lib.mkDefault "readeck";
+        port = lib.mkDefault 30070;
       };
       hemmelig = {
-        serviceName = mkDefault "hemmelig";
-        domain = mkDefault "secrets";
-        port = mkDefault 30080;
+        serviceName = lib.mkDefault "hemmelig";
+        domain = lib.mkDefault "secrets";
+        port = lib.mkDefault 30080;
       };
       traggo = {
-        serviceName = mkDefault "traggo";
-        domain = mkDefault "track";
-        port = mkDefault 30090;
+        serviceName = lib.mkDefault "traggo";
+        domain = lib.mkDefault "track";
+        port = lib.mkDefault 30090;
       };
       flyermap = {
-        serviceName = mkDefault "flyermap";
-        domain = mkDefault "flyers";
-        port = mkDefault 30100;
+        serviceName = lib.mkDefault "flyermap";
+        domain = lib.mkDefault "flyers";
+        port = lib.mkDefault 30100;
       };
     };
   };
