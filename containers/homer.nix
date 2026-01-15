@@ -1,15 +1,14 @@
 {
-  internal-port,
-  service-name,
-  domain,
-}: {
+  config,
+  lib,
+  pkgs,
   username,
   tld,
   data-base-dir,
-  config,
-  pkgs,
   ...
-}: let
+}:
+with lib; let
+  cfg = config.services.fluffy.homer;
   configFile = pkgs.writeText "homer.yaml" ''
     ---
     # https://github.com/bastienwirtz/homer/blob/main/docs/configuration.md
@@ -144,39 +143,60 @@
             target: "_blank"
   '';
 in {
-  services.caddy.virtualHosts."${tld}" = {
-    extraConfig = ''
-      encode
-      import fluff_global_rate_limit
-      import fluff_global_basicauth
-      reverse_proxy http://127.0.0.1:${toString internal-port}
-    '';
-    # NixOS defaults to /var/log/caddy/access-*.log.
-    logFormat = "output stderr";
+  options.services.fluffy.homer = {
+    enable = mkEnableOption "Homer home dashboard" // {default = true;};
+
+    serviceName = mkOption {
+      type = types.str;
+      description = "Systemd service name for the container";
+    };
+
+    domain = mkOption {
+      type = types.str;
+      description = "Domain for Caddy reverse proxy (Note: homer routes to root tld, not subdomain)";
+    };
+
+    port = mkOption {
+      type = types.port;
+      description = "Internal container port";
+    };
   };
 
-  home-manager.users."${username}" = {pkgs, ...}: {
-    # https://seiarotg.github.io/quadlet-nix/nixos-options.html
-    virtualisation.quadlet.containers = {
-      "${service-name}" = {
-        autoStart = true;
-        # https://www.freedesktop.org/software/systemd/man/latest/systemd.service.html#Options
-        serviceConfig = {
-          Restart = "always";
-          RestartSec = "100ms";
-          RestartSteps = "10";
-          RestartMaxDelaySec = "60s";
-        };
-        # https://docs.podman.io/en/latest/markdown/podman-systemd.unit.5.html
-        containerConfig = {
-          image = "docker.io/b4bz/homer:latest";
-          autoUpdate = "registry";
-          name = "${service-name}";
+  config = mkIf cfg.enable {
+    services.caddy.virtualHosts."${tld}" = {
+      extraConfig = ''
+        encode
+        import fluff_global_rate_limit
+        import fluff_global_basicauth
+        reverse_proxy http://127.0.0.1:${toString cfg.port}
+      '';
+      # NixOS defaults to /var/log/caddy/access-*.log.
+      logFormat = "output stderr";
+    };
 
-          userns = "";
-          podmanArgs = ["--umask=0027"];
-          publishPorts = ["127.0.0.1:${toString internal-port}:8080"];
-          mounts = ["type=bind,src=${configFile},dst=/www/assets/config.yml"];
+    home-manager.users."${username}" = {pkgs, ...}: {
+      # https://seiarotg.github.io/quadlet-nix/nixos-options.html
+      virtualisation.quadlet.containers = {
+        "${cfg.serviceName}" = {
+          autoStart = true;
+          # https://www.freedesktop.org/software/systemd/man/latest/systemd.service.html#Options
+          serviceConfig = {
+            Restart = "always";
+            RestartSec = "100ms";
+            RestartSteps = "10";
+            RestartMaxDelaySec = "60s";
+          };
+          # https://docs.podman.io/en/latest/markdown/podman-systemd.unit.5.html
+          containerConfig = {
+            image = "docker.io/b4bz/homer:latest";
+            autoUpdate = "registry";
+            name = "${cfg.serviceName}";
+
+            userns = "";
+            podmanArgs = ["--umask=0027"];
+            publishPorts = ["127.0.0.1:${toString cfg.port}:8080"];
+            mounts = ["type=bind,src=${configFile},dst=/www/assets/config.yml"];
+          };
         };
       };
     };

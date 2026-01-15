@@ -1,54 +1,68 @@
 {
-  echo = import ./echo.nix {
-    service-name = "echo";
-    domain = "echo";
-    internal-port = 30010;
-  };
-  ferrishare = import ./ferrishare.nix {
-    service-name = "ferrishare";
-    domain = "files";
-    internal-port = 30020;
-  };
-  homer = import ./homer.nix {
-    service-name = "homer";
-    domain = "files";
-    internal-port = 30030;
-  };
-  kitchenowl = import ./kitchenowl.nix {
-    service-name = "kitchenowl";
-    domain = "kitchen";
-    internal-port = 30040;
-  };
-  openobserve = import ./openobserve.nix {
-    service-name = "openobserve";
-    domain = "monitor";
-    # When you change this, also update `opentelemetry-collector.nix`.
-    internal-port = 30050;
-    internal-port-grpc = 30051;
-  };
-  qr = import ./qr.nix {
-    service-name = "qr";
-    domain = "qr";
-    internal-port = 30060;
-  };
-  readeck = import ./readeck.nix {
-    service-name = "readeck";
-    domain = "readeck";
-    internal-port = 30070;
-  };
-  hemmelig = import ./hemmelig.nix {
-    service-name = "hemmelig";
-    domain = "secrets";
-    internal-port = 30080;
-  };
-  traggo = import ./traggo.nix {
-    service-name = "traggo";
-    domain = "track";
-    internal-port = 30090;
-  };
-  flyermap = import ./flyermap.nix {
-    service-name = "flyermap";
-    domain = "flyers";
-    internal-port = 30100;
+  config,
+  lib,
+  ...
+}:
+with lib; {
+  imports = [
+    ./echo.nix
+    ./ferrishare.nix
+    ./flyermap.nix
+    ./hemmelig.nix
+    ./homer.nix
+    ./kitchenowl.nix
+    ./qr.nix
+    ./readeck.nix
+    ./traggo.nix
+  ];
+
+  config = {
+    services.fluffy = {
+      echo = {
+        serviceName = mkDefault "echo";
+        domain = mkDefault "echo";
+        port = mkDefault 30010;
+      };
+      ferrishare = {
+        serviceName = mkDefault "ferrishare";
+        domain = mkDefault "files";
+        port = mkDefault 30020;
+      };
+      homer = {
+        serviceName = mkDefault "homer";
+        domain = mkDefault "files";
+        port = mkDefault 30030;
+      };
+      kitchenowl = {
+        serviceName = mkDefault "kitchenowl";
+        domain = mkDefault "kitchen";
+        port = mkDefault 30040;
+      };
+      qr = {
+        serviceName = mkDefault "qr";
+        domain = mkDefault "qr";
+        port = mkDefault 30060;
+      };
+      readeck = {
+        serviceName = mkDefault "readeck";
+        domain = mkDefault "readeck";
+        port = mkDefault 30070;
+      };
+      hemmelig = {
+        serviceName = mkDefault "hemmelig";
+        domain = mkDefault "secrets";
+        port = mkDefault 30080;
+      };
+      traggo = {
+        serviceName = mkDefault "traggo";
+        domain = mkDefault "track";
+        port = mkDefault 30090;
+      };
+      flyermap = {
+        serviceName = mkDefault "flyermap";
+        domain = mkDefault "flyers";
+        port = mkDefault 30100;
+      };
+    };
   };
 }

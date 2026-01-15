@@ -1,14 +1,14 @@
 {
-  internal-port,
-  service-name,
-  domain,
-}: {
+  config,
+  lib,
+  pkgs,
   username,
   tld,
   data-base-dir,
-  pkgs,
   ...
-}: let
+}:
+with lib; let
+  cfg = config.services.fluffy.ferrishare;
   configFile = pkgs.writeText "config.toml" ''
     app_name = "FluffyShare"
     interface = "0.0.0.0:3000"
@@ -27,57 +27,78 @@
     demo_mode = false
   '';
 in {
-  services.caddy.virtualHosts."${domain}.${tld}" = {
-    extraConfig = ''
-      encode
-      import fluff_global_rate_limit
-      # No basic auth here.
-      reverse_proxy http://127.0.0.1:${toString internal-port}
-    '';
-    # NixOS defaults to /var/log/caddy/access-*.log.
-    logFormat = "output stderr";
+  options.services.fluffy.ferrishare = {
+    enable = mkEnableOption "Ferrishare file sharing service" // {default = true;};
+
+    serviceName = mkOption {
+      type = types.str;
+      description = "Systemd service name for the container";
+    };
+
+    domain = mkOption {
+      type = types.str;
+      description = "Domain for Caddy reverse proxy";
+    };
+
+    port = mkOption {
+      type = types.port;
+      description = "Internal container port";
+    };
   };
 
-  systemd.tmpfiles.rules = [
-    "d ${data-base-dir}/${service-name} 0750 ${username} ${username}"
-    "d ${data-base-dir}/${service-name}/user_templates 0750 ${username} ${username}"
-    "f+ ${data-base-dir}/${service-name}/user_templates/legal_notice.html 0640 ${username} ${username} - nope"
-    "f+ ${data-base-dir}/${service-name}/user_templates/privacy_policy.html 0640 ${username} ${username} - nope"
-  ];
+  config = mkIf cfg.enable {
+    services.caddy.virtualHosts."${cfg.domain}.${tld}" = {
+      extraConfig = ''
+        encode
+        import fluff_global_rate_limit
+        # No basic auth here.
+        reverse_proxy http://127.0.0.1:${toString cfg.port}
+      '';
+      # NixOS defaults to /var/log/caddy/access-*.log.
+      logFormat = "output stderr";
+    };
 
-  home-manager.users."${username}" = {
-    pkgs,
-    config,
-    ...
-  }: {
-    # https://seiarotg.github.io/quadlet-nix/nixos-options.html
-    virtualisation.quadlet.containers = {
-      "${service-name}" = {
-        autoStart = true;
-        # https://www.freedesktop.org/software/systemd/man/latest/systemd.service.html#Options
-        serviceConfig = {
-          Restart = "always";
-          RestartSec = "100ms";
-          RestartSteps = "10";
-          RestartMaxDelaySec = "60s";
-        };
-        # https://docs.podman.io/en/latest/markdown/podman-systemd.unit.5.html
-        containerConfig = {
-          image = "ghcr.io/tobiasmarschner/ferrishare:1";
-          autoUpdate = "registry";
-          name = "${service-name}";
+    systemd.tmpfiles.rules = [
+      "d ${data-base-dir}/${cfg.serviceName} 0750 ${username} ${username}"
+      "d ${data-base-dir}/${cfg.serviceName}/user_templates 0750 ${username} ${username}"
+      "f+ ${data-base-dir}/${cfg.serviceName}/user_templates/legal_notice.html 0640 ${username} ${username} - nope"
+      "f+ ${data-base-dir}/${cfg.serviceName}/user_templates/privacy_policy.html 0640 ${username} ${username} - nope"
+    ];
 
-          userns = "";
-          podmanArgs = ["--umask=0027"];
-          publishPorts = ["127.0.0.1:${toString internal-port}:3000"];
-          exec = ["--config-file" "/config.toml"];
-          mounts = [
-            "type=bind,src=${data-base-dir}/${service-name},dst=/app/data"
-            "type=bind,src=${configFile},dst=/config.toml,ro"
-          ];
+    home-manager.users."${username}" = {
+      pkgs,
+      config,
+      ...
+    }: {
+      # https://seiarotg.github.io/quadlet-nix/nixos-options.html
+      virtualisation.quadlet.containers = {
+        "${cfg.serviceName}" = {
+          autoStart = true;
+          # https://www.freedesktop.org/software/systemd/man/latest/systemd.service.html#Options
+          serviceConfig = {
+            Restart = "always";
+            RestartSec = "100ms";
+            RestartSteps = "10";
+            RestartMaxDelaySec = "60s";
+          };
+          # https://docs.podman.io/en/latest/markdown/podman-systemd.unit.5.html
+          containerConfig = {
+            image = "ghcr.io/tobiasmarschner/ferrishare:1";
+            autoUpdate = "registry";
+            name = "${cfg.serviceName}";
+
+            userns = "";
+            podmanArgs = ["--umask=0027"];
+            publishPorts = ["127.0.0.1:${toString cfg.port}:3000"];
+            exec = ["--config-file" "/config.toml"];
+            mounts = [
+              "type=bind,src=${data-base-dir}/${cfg.serviceName},dst=/app/data"
+              "type=bind,src=${configFile},dst=/config.toml,ro"
+            ];
+          };
         };
       };
+      virtualisation.quadlet.autoEscape = true;
     };
-    virtualisation.quadlet.autoEscape = true;
   };
 }

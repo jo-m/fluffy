@@ -78,17 +78,8 @@ in {
       webdav
     ])
 
-    (with containers; [
-      echo
-      ferrishare
-      hemmelig
-      homer
-      kitchenowl
-      qr
-      readeck
-      traggo
-      flyermap
-    ])
+    # Import all container modules.
+    containers
 
     {
       # This is considered bad practice but I couldn't care less.
