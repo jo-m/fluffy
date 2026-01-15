@@ -18,48 +18,48 @@
   config = {
     services.fluffy = {
       echo = {
-        serviceName = lib.mkDefault "echo";
-        domain = lib.mkDefault "echo";
-        port = lib.mkDefault 30010;
+        serviceName = "echo";
+        domain = "echo";
+        port = 30010;
       };
       ferrishare = {
-        serviceName = lib.mkDefault "ferrishare";
-        domain = lib.mkDefault "files";
-        port = lib.mkDefault 30020;
+        serviceName = "ferrishare";
+        domain = "files";
+        port = 30020;
       };
       homer = {
-        serviceName = lib.mkDefault "homer";
-        port = lib.mkDefault 30030;
+        serviceName = "homer";
+        port = 30030;
       };
       kitchenowl = {
-        serviceName = lib.mkDefault "kitchenowl";
-        domain = lib.mkDefault "kitchen";
-        port = lib.mkDefault 30040;
+        serviceName = "kitchenowl";
+        domain = "kitchen";
+        port = 30040;
       };
       qr = {
-        serviceName = lib.mkDefault "qr";
-        domain = lib.mkDefault "qr";
-        port = lib.mkDefault 30060;
+        serviceName = "qr";
+        domain = "qr";
+        port = 30060;
       };
       readeck = {
-        serviceName = lib.mkDefault "readeck";
-        domain = lib.mkDefault "readeck";
-        port = lib.mkDefault 30070;
+        serviceName = "readeck";
+        domain = "readeck";
+        port = 30070;
       };
       hemmelig = {
-        serviceName = lib.mkDefault "hemmelig";
-        domain = lib.mkDefault "secrets";
-        port = lib.mkDefault 30080;
+        serviceName = "hemmelig";
+        domain = "secrets";
+        port = 30080;
       };
       traggo = {
-        serviceName = lib.mkDefault "traggo";
-        domain = lib.mkDefault "track";
-        port = lib.mkDefault 30090;
+        serviceName = "traggo";
+        domain = "track";
+        port = 30090;
       };
       flyermap = {
-        serviceName = lib.mkDefault "flyermap";
-        domain = lib.mkDefault "flyers";
-        port = lib.mkDefault 30100;
+        serviceName = "flyermap";
+        domain = "flyers";
+        port = 30100;
       };
     };
   };
