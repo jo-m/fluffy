@@ -67,7 +67,7 @@ in {
           containerConfig = {
             image = "codeberg.org/readeck/readeck:latest";
             autoUpdate = "registry";
-            name = "${cfg.serviceName}";
+            name = cfg.serviceName;
 
             userns = "keep-id";
             podmanArgs = ["--umask=0027"];

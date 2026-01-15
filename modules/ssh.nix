@@ -16,7 +16,7 @@
     settings = {
       PermitRootLogin = "yes";
       PasswordAuthentication = false;
-      KbdInteractiveAuthentication = true;
+      KbdInteractiveAuthentication = false;
 
       KexAlgorithms = [
         "sntrup761x25519-sha512@openssh.com"
@@ -44,7 +44,7 @@
       ClientAliveCountMax 0
       ClientAliveInterval 300
 
-      MaxAuthTries 10
+      MaxAuthTries 5
       MaxSessions 10
       TCPKeepAlive no
 
@@ -54,7 +54,7 @@
 
   services.fail2ban = {
     enable = true;
-    maxretry = 10;
+    maxretry = 5;
     bantime-increment.enable = true;
   };
 

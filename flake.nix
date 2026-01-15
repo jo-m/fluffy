@@ -65,7 +65,7 @@
 
     formatter.${hostSystem} = nixpkgs.legacyPackages.${hostSystem}.alejandra;
 
-    devShells.${hostSystem}.default = pkgs.mkShell rec {
+    devShells.${hostSystem}.default = pkgs.mkShell {
       buildInputs = with pkgs; [
         age
         git-credential-keepassxc

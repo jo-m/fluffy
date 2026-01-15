@@ -85,7 +85,7 @@ in {
           containerConfig = {
             image = "ghcr.io/tobiasmarschner/ferrishare:1";
             autoUpdate = "registry";
-            name = "${cfg.serviceName}";
+            name = cfg.serviceName;
 
             userns = "";
             podmanArgs = ["--umask=0027"];
