@@ -12,6 +12,7 @@
     ./kitchenowl.nix
     ./qr.nix
     ./readeck.nix
+    ./stfu.nix
     ./traggo.nix
   ];
 
@@ -60,6 +61,9 @@
         serviceName = "flyermap";
         domain = "flyers";
         port = 30100;
+      };
+      stfu = {
+        domain = "stfu";
       };
     };
   };

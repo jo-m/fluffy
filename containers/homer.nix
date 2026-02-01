@@ -127,6 +127,10 @@
             icon: "fas fa-paper-plane"
             url: "https://flyers.${tld}/"
             target: "_blank"
+          - name: "STFU"
+            icon: "fas fa-volume-xmark"
+            url: "https://stfu.${tld}/"
+            target: "_blank"
       - name: "Infrastructure"
         icon: "fas fa-heartbeat"
         items:
