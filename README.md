@@ -124,6 +124,18 @@ http://169.254.169.254/hetzner/v1/userdata
 /usr/lib/python3/dist-packages/cloudinit/sources/DataSourceHetzner.py
 ```
 
+### Various Commands on Server
+
+```bash
+# Immediately update podman containers.
+cd /home/runner
+sudo -u runner podman auto-update
+
+# NixOS cleanup.
+nixos-rebuild list-generations
+nix-collect-garbage --delete-older-than 30d
+```
+
 ### Debug store size
 
 ```bash
