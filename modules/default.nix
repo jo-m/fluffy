@@ -1,6 +1,6 @@
 {
   backup = import ./backup.nix;
-  caddy = import ./caddy.nix;
+  caddy = import ./caddy;
   harden = import ./harden.nix;
   hetzner = import ./hetzner;
   monitoring = import ./monitoring.nix;
