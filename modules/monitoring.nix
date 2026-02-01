@@ -31,6 +31,7 @@ in {
       domain = "${grafana-domain}.${tld}";
       http_port = grafana-port;
       http_addr = "127.0.0.1";
+      root_url = "https://${grafana-domain}.${tld}";
     };
     openFirewall = false;
 
