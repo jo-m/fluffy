@@ -54,6 +54,8 @@ in {
   environment.systemPackages = with pkgs; [
     btop
     sqlite-interactive
+    duf
+    jq
   ];
 
   environment.shellAliases = {
