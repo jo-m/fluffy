@@ -146,7 +146,7 @@ in {
   # https://github.com/NixOS/nixpkgs/blob/nixos-24.05/nixos/modules/services/monitoring/prometheus/default.nix
   services.prometheus = {
     enable = true;
-    globalConfig.scrape_interval = "1m";
+    globalConfig.scrape_interval = "15s";
     listenAddress = "localhost";
     port = prom-port;
     scrapeConfigs = [
