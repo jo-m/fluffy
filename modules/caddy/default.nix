@@ -37,6 +37,12 @@
       hash = "sha256-1O0mnv/J7XetfGeOH9ssuaaZ5LGXr0mclM6INNhEXRk=";
     };
 
+    globalConfig = ''
+      metrics{
+        per_host
+      }
+    '';
+
     extraConfig = ''
       # Import config files with secrets.
       import ${config.sops.templates.caddy-global-basicauth.path}
