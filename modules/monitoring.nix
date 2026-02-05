@@ -158,6 +158,15 @@ in {
           }
         ];
       }
+      # https://caddyserver.com/docs/metrics
+      {
+        job_name = "caddy";
+        static_configs = [
+          {
+            targets = ["localhost:2019"];
+          }
+        ];
+      }
     ];
   };
 }
