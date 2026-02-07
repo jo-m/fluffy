@@ -67,6 +67,7 @@
 
     devShells.${hostSystem}.default = pkgs.mkShell {
       buildInputs = with pkgs; [
+        # Secrets handling
         age
         git-credential-keepassxc
         sops
@@ -78,6 +79,9 @@
         (writeShellScriptBin "print-age-priv-key" ''
           echo 'url=age://fluffy-user-key' | git-credential-keepassxc get | sed -n 's/^password=//p'
         '')
+
+        # VSCode Caddyfile plugin
+        caddy
       ];
     };
   };
