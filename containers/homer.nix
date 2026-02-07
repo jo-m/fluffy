@@ -101,7 +101,7 @@
             url: "https://track.${tld}/"
             target: "_blank"
           - name: "Syncthing GUI"
-            subtitle: "Usually disabled, needs to be temporarily enabled"
+            subtitle: "Only from home IP"
             icon: "fas fa-rotate"
             url: "https://sync.${tld}/"
             target: "_blank"

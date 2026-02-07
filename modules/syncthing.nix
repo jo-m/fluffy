@@ -29,22 +29,14 @@ in {
   # Don't create default ~/Sync folder
   systemd.services.syncthing.environment.STNODEFAULTFOLDER = "true";
 
-  # Uncomment below to make Syncthing GUI accessible remotely.
-  # services.caddy.virtualHosts."${domain}.${tld}".extraConfig = ''
-  #   encode
-  #   # We additionally protect the Syncthing GUI with IP blocking.
-  #   import fluff_home_ips_only
-  #   # Custom ratelimit as the Syncthing web GUI does a lot of requests...
-  #   zone syncthing_ratelimit_global_1s {
-  #     key    static
-  #     events 200
-  #     window 1s
-  #   }
-  #   import fluff_global_basicauth
-
-  #   # https://docs.syncthing.net/users/reverseproxy.html
-  #   reverse_proxy http://127.0.0.1:8384 {
-  #     header_up Host {upstream_hostport}
-  #   }
-  # '';
+  services.caddy.virtualHosts."${domain}.${tld}".extraConfig = ''
+    encode
+    authorize with fluff_internal_auth
+    # We additionally protect the Syncthing GUI with IP blocking.
+    import fluff_home_ips_only
+    # https://docs.syncthing.net/users/reverseproxy.html
+    reverse_proxy http://127.0.0.1:8384 {
+      header_up Host {upstream_hostport}
+    }
+  '';
 }
