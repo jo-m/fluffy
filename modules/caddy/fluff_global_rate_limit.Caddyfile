@@ -1,36 +1,36 @@
 (fluff_global_rate_limit) {
-  rate_limit {
-    zone fluff_ratelimit_global_60s {
-      key    static
-      events 1000
-      window 60s
-    }
-    zone fluff_ratelimit_global_10s {
-      key    static
-      events 200
-      window 10s
-    }
-    zone fluff_ratelimit_global_1s {
-      key    static
-      events 100
-      window 1s
-    }
+	rate_limit {
+		zone fluff_ratelimit_global_60s {
+			key static
+			events 1000
+			window 60s
+		}
+		zone fluff_ratelimit_global_10s {
+			key static
+			events 200
+			window 10s
+		}
+		zone fluff_ratelimit_global_1s {
+			key static
+			events 100
+			window 1s
+		}
 
-    zone fluff_ratelimit_per_remote_host_60s {
-      key    {http.request.remote.host}
-      events 500
-      window 60s
-    }
-    zone fluff_ratelimit_per_remote_host_10s {
-      key    {http.request.remote.host}
-      events 100
-      window 10s
-    }
-    zone fluff_ratelimit_per_remote_host_1s {
-      key    {http.request.remote.host}
-      events 50
-      window 1s
-    }
-    log_key
-  }
+		zone fluff_ratelimit_per_remote_host_60s {
+			key {http.request.remote.host}
+			events 500
+			window 60s
+		}
+		zone fluff_ratelimit_per_remote_host_10s {
+			key {http.request.remote.host}
+			events 100
+			window 10s
+		}
+		zone fluff_ratelimit_per_remote_host_1s {
+			key {http.request.remote.host}
+			events 50
+			window 1s
+		}
+		log_key
+	}
 }
