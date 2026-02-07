@@ -134,6 +134,11 @@
       - name: "Infrastructure"
         icon: "fas fa-heartbeat"
         items:
+          - name: "Auth"
+            subtitle: "Auth Portal"
+            icon: "fas fa-lock"
+            url: "https://auth.${tld}/whoami"
+            target: "_blank"
           - name: "Grafana"
             subtitle: "Metrics & Logs"
             icon: "fas fa-chart-simple"
@@ -164,8 +169,7 @@ in {
     services.caddy.virtualHosts."${tld}" = {
       extraConfig = ''
         encode
-        import fluff_global_rate_limit
-        import fluff_global_basicauth
+        authorize with fluff_internal_auth
         reverse_proxy http://127.0.0.1:${toString cfg.port}
       '';
       # NixOS defaults to /var/log/caddy/access-*.log.

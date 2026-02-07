@@ -33,7 +33,7 @@ in {
     services.caddy.virtualHosts."${cfg.domain}.${tld}" = {
       extraConfig = ''
         encode
-        import fluff_global_rate_limit
+        authorize with fluff_internal_auth
         reverse_proxy http://127.0.0.1:${toString cfg.port}
       '';
       # NixOS defaults to /var/log/caddy/access-*.log.

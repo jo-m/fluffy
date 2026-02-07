@@ -20,6 +20,7 @@ in {
     services.caddy.virtualHosts."${cfg.domain}.${tld}" = {
       extraConfig = ''
         encode
+        # Public, no auth - thus, ratelimit.
         import fluff_global_rate_limit
         root * ${builtins.dirOf ./stfu.html}
         rewrite * /stfu.html

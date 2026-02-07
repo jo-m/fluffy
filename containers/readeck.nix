@@ -32,10 +32,8 @@ in {
     services.caddy.virtualHosts."${cfg.domain}.${tld}" = {
       extraConfig = ''
         encode
+        # Hast its own auth - thus, ratelimit.
         import fluff_global_rate_limit
-
-        # Readeck auth is incompatible with global basic auth.
-
         reverse_proxy http://127.0.0.1:${toString cfg.port}
       '';
       # NixOS defaults to /var/log/caddy/access-*.log.

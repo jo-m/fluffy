@@ -17,8 +17,7 @@ in {
   services.caddy.virtualHosts."${grafana-domain}.${tld}" = {
     extraConfig = ''
       encode
-      import fluff_global_rate_limit
-      import fluff_global_basicauth
+      authorize with fluff_internal_auth
       reverse_proxy http://127.0.0.1:${toString grafana-port}
     '';
     # NixOS defaults to /var/log/caddy/access-*.log.
