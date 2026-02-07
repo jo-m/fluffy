@@ -6,16 +6,6 @@
 }: let
   authPortalSubdomain = "auth";
 in {
-  sops.secrets."caddy/global-basicauth" = {};
-  sops.templates.caddy-global-basicauth.content = ''
-    (fluff_global_basicauth) {
-      basic_auth {
-        ${config.sops.placeholder."caddy/global-basicauth"}
-      }
-    }
-  '';
-  sops.templates.caddy-global-basicauth.owner = "caddy";
-
   sops.secrets."caddy/home-ips" = {};
   sops.templates.caddy-home-ips.content = ''
     (fluff_home_ips_only) {
@@ -122,7 +112,6 @@ in {
 
     extraConfig = ''
       # Import config files with secrets.
-      import ${config.sops.templates.caddy-global-basicauth.path}
       import ${config.sops.templates.caddy-home-ips.path}
 
       ${builtins.readFile ./fluff_global_rate_limit.Caddyfile}
