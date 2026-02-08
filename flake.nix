@@ -67,6 +67,9 @@
 
     devShells.${hostSystem}.default = pkgs.mkShell {
       buildInputs = with pkgs; [
+        # Scripts
+        (import ./scripts.nix {inherit pkgs;})
+
         # Secrets handling
         age
         git-credential-keepassxc
