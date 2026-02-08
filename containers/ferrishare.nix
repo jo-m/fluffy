@@ -1,29 +1,12 @@
 {
   config,
   lib,
-  pkgs,
   ...
 }: let
   inherit (config.fluffy) username tld data-base-dir;
   cfg = config.services.fluffy.ferrishare;
+  outerConfig = config;
   containerLib = import ./lib.nix;
-  configFile = pkgs.writeText "config.toml" ''
-    app_name = "FluffyShare"
-    interface = "0.0.0.0:3000"
-    proxy_depth = 1
-    # Too lazy to make this a real secret...
-    admin_password_hash = "$argon2id$v=19$m=32768,t=4,p=1$oQJoVQOBFUQKMvx2y7/JTw$+hceuclY7qK+HpDN9HM80xkUUeIYzjve0Ccp8Hxrj7M"
-    # 500 MiB
-    maximum_filesize = 524288000
-    # 5 GiB
-    maximum_quota = 5368709120
-    maximum_uploads_per_ip = 5
-    daily_request_limit_per_ip = 50
-    log_level = "INFO"
-    enable_privacy_policy = false
-    enable_legal_notice = false
-    demo_mode = false
-  '';
 in {
   options.services.fluffy.ferrishare = {
     enable = lib.mkEnableOption "Ferrishare file sharing service" // {default = true;};
@@ -56,6 +39,25 @@ in {
       logFormat = "output stderr";
     };
 
+    sops.secrets."ferrishare/admin_password_hash" = {};
+    sops.templates.ferrishare-config.content = ''
+      app_name = "FluffyShare"
+      interface = "0.0.0.0:3000"
+      proxy_depth = 1
+      admin_password_hash = "${outerConfig.sops.placeholder."ferrishare/admin_password_hash"}"
+      # 500 MiB
+      maximum_filesize = 524288000
+      # 5 GiB
+      maximum_quota = 5368709120
+      maximum_uploads_per_ip = 5
+      daily_request_limit_per_ip = 50
+      log_level = "INFO"
+      enable_privacy_policy = false
+      enable_legal_notice = false
+      demo_mode = false
+    '';
+    sops.templates.ferrishare-config.owner = username;
+
     systemd.tmpfiles.rules = [
       "d ${data-base-dir}/${cfg.serviceName} 0750 ${username} ${username}"
       "d ${data-base-dir}/${cfg.serviceName}/user_templates 0750 ${username} ${username}"
@@ -81,7 +83,7 @@ in {
             exec = ["--config-file" "/config.toml"];
             mounts = [
               "type=bind,src=${data-base-dir}/${cfg.serviceName},dst=/app/data"
-              "type=bind,src=${configFile},dst=/config.toml,ro"
+              "type=bind,src=${outerConfig.sops.templates.ferrishare-config.path},dst=/config.toml,ro"
             ];
           };
         };

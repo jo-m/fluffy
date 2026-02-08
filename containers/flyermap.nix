@@ -5,6 +5,7 @@
 }: let
   inherit (config.fluffy) username tld data-base-dir;
   cfg = config.services.fluffy.flyermap;
+  outerConfig = config;
   containerLib = import ./lib.nix;
 in {
   options.services.fluffy.flyermap = {
@@ -38,6 +39,12 @@ in {
       logFormat = "output stderr";
     };
 
+    sops.secrets."flyermap/users" = {};
+    sops.templates.flyermap-secret-env.content = ''
+      FLYERMAP_USERS=${outerConfig.sops.placeholder."flyermap/users"}
+    '';
+    sops.templates.flyermap-secret-env.owner = username;
+
     systemd.tmpfiles.rules = [
       "d ${data-base-dir}/${cfg.serviceName} 0750 ${username} ${username}"
     ];
@@ -60,14 +67,8 @@ in {
             mounts = ["type=bind,src=${data-base-dir}/${cfg.serviceName},dst=/data"];
             environments = {
               PORT = "8000";
-              # TODO: Move credentials to sops secrets
-              FLYERMAP_USERS = ''
-                {
-                  "joni":"QR4DAWGB0wZSO4/vxVmtsA==:U/znDg5aMHh+Txe9Rp14LxI+NRUpGdYb/z9CD8MBjVM=",
-                  "test":"107SUnnplT0GqnFHcVdBzA==:CrBPvwNA+0HWKIkB+skyfubx0Ebw/W4CqVI0iJCc6SA="
-                }
-              '';
             };
+            environmentFiles = [outerConfig.sops.templates.flyermap-secret-env.path];
           };
         };
       };
