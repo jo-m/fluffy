@@ -134,6 +134,10 @@ sudo -u runner podman auto-update
 # NixOS cleanup.
 nixos-rebuild list-generations
 nix-collect-garbage --delete-older-than 30d
+
+# Manually start backup.
+systemctl start borgbackup-job-data.service
+journalctl -feu borgbackup-job-data.service
 ```
 
 ### Debug store size

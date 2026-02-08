@@ -73,5 +73,11 @@ in {
     EnvironmentFile = config.sops.templates.borg-repo.path;
     # Do not set a group in the unit file, run with all the groups the user is a member of.
     Group = lib.mkForce null;
+    # Manually set up as ExecStartPre with + because needs to run as root.
+    ExecStartPre = let
+      script = pkgs.writeShellScript "copy-grafana-db" ''
+        ${pkgs.sqlite}/bin/sqlite3 /var/lib/grafana/data/grafana.db ".backup '/data/grafana.db'"
+      '';
+    in "+${script}";
   };
 }
