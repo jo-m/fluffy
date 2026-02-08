@@ -4,7 +4,7 @@
   pkgs,
   username,
   tld,
-  data-base-dir,
+  dataBaseDir,
   ...
 }: let
   cfg = config.services.fluffy.readeck;
@@ -33,7 +33,7 @@ in {
       extraConfig = ''
         encode
         # Hast its own auth - thus, ratelimit.
-        import fluff_global_rate_limit
+        import fluff-global-rate-limit
         reverse_proxy http://127.0.0.1:${toString cfg.port}
       '';
       # NixOS defaults to /var/log/caddy/access-*.log.
@@ -41,7 +41,7 @@ in {
     };
 
     systemd.tmpfiles.rules = [
-      "d ${data-base-dir}/${cfg.serviceName} 0750 ${username} ${username}"
+      "d ${dataBaseDir}/${cfg.serviceName} 0750 ${username} ${username}"
     ];
 
     home-manager.users."${username}" = {
@@ -69,7 +69,7 @@ in {
             userns = "keep-id";
             podmanArgs = ["--umask=0027"];
             publishPorts = ["127.0.0.1:${toString cfg.port}:8000"];
-            mounts = ["type=bind,src=${data-base-dir}/${cfg.serviceName},dst=/readeck"];
+            mounts = ["type=bind,src=${dataBaseDir}/${cfg.serviceName},dst=/readeck"];
             environments = {
               # https://readeck.org/en/docs/configuration
               READECK_LOG_LEVEL = "info";

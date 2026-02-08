@@ -4,7 +4,7 @@
   pkgs,
   username,
   tld,
-  data-base-dir,
+  dataBaseDir,
   ...
 }: let
   cfg = config.services.fluffy.ferrishare;
@@ -50,7 +50,7 @@ in {
       extraConfig = ''
         encode
         # Public, no auth - thus, ratelimit.
-        import fluff_global_rate_limit
+        import fluff-global-rate-limit
         reverse_proxy http://127.0.0.1:${toString cfg.port}
       '';
       # NixOS defaults to /var/log/caddy/access-*.log.
@@ -58,10 +58,10 @@ in {
     };
 
     systemd.tmpfiles.rules = [
-      "d ${data-base-dir}/${cfg.serviceName} 0750 ${username} ${username}"
-      "d ${data-base-dir}/${cfg.serviceName}/user_templates 0750 ${username} ${username}"
-      "f+ ${data-base-dir}/${cfg.serviceName}/user_templates/legal_notice.html 0640 ${username} ${username} - nope"
-      "f+ ${data-base-dir}/${cfg.serviceName}/user_templates/privacy_policy.html 0640 ${username} ${username} - nope"
+      "d ${dataBaseDir}/${cfg.serviceName} 0750 ${username} ${username}"
+      "d ${dataBaseDir}/${cfg.serviceName}/user_templates 0750 ${username} ${username}"
+      "f+ ${dataBaseDir}/${cfg.serviceName}/user_templates/legal_notice.html 0640 ${username} ${username} - nope"
+      "f+ ${dataBaseDir}/${cfg.serviceName}/user_templates/privacy_policy.html 0640 ${username} ${username} - nope"
     ];
 
     home-manager.users."${username}" = {
@@ -91,7 +91,7 @@ in {
             publishPorts = ["127.0.0.1:${toString cfg.port}:3000"];
             exec = ["--config-file" "/config.toml"];
             mounts = [
-              "type=bind,src=${data-base-dir}/${cfg.serviceName},dst=/app/data"
+              "type=bind,src=${dataBaseDir}/${cfg.serviceName},dst=/app/data"
               "type=bind,src=${configFile},dst=/config.toml,ro"
             ];
           };

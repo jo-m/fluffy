@@ -21,7 +21,7 @@ in {
       extraConfig = ''
         encode
         # Public, no auth - thus, ratelimit.
-        import fluff_global_rate_limit
+        import fluff-global-rate-limit
         root * ${builtins.dirOf ./stfu.html}
         rewrite * /stfu.html
         file_server

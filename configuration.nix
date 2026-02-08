@@ -9,7 +9,7 @@
   username = "runner";
   uid = 1000;
   tld = builtins.getEnv "REMOTE_TLD";
-  data-base-dir = "/data";
+  dataBaseDir = "/data";
 in {
   networking.hostName = hostname;
 
@@ -85,7 +85,7 @@ in {
 
     {
       # This is considered bad practice but I couldn't care less.
-      _module.args = {inherit username uid tld data-base-dir hostname;};
+      _module.args = {inherit username uid tld dataBaseDir hostname;};
     }
   ];
 }

@@ -4,7 +4,7 @@
   pkgs,
   username,
   tld,
-  data-base-dir,
+  dataBaseDir,
   ...
 }: let
   cfg = config.services.fluffy.kitchenowl;
@@ -34,7 +34,7 @@ in {
       extraConfig = ''
         encode
         # Has its own auth - thus, ratelimit.
-        import fluff_global_rate_limit
+        import fluff-global-rate-limit
         reverse_proxy http://127.0.0.1:${toString cfg.port}
       '';
       # NixOS defaults to /var/log/caddy/access-*.log.
@@ -49,8 +49,8 @@ in {
     sops.templates.kitchenowl-secret-env.owner = username;
 
     systemd.tmpfiles.rules = [
-      "d ${data-base-dir}/${cfg.serviceName} 0750 ${username} ${username}"
-      "d ${data-base-dir}/${cfg.serviceName}/upload 0750 ${username} ${username}"
+      "d ${dataBaseDir}/${cfg.serviceName} 0750 ${username} ${username}"
+      "d ${dataBaseDir}/${cfg.serviceName}/upload 0750 ${username} ${username}"
     ];
 
     home-manager.users."${username}" = {
@@ -113,7 +113,7 @@ in {
 
             userns = "";
             podmanArgs = ["--umask=0027"];
-            mounts = ["type=bind,src=${data-base-dir}/${cfg.serviceName},dst=/data"];
+            mounts = ["type=bind,src=${dataBaseDir}/${cfg.serviceName},dst=/data"];
             environments = {
               # https://docs.kitchenowl.org/latest/self-hosting/advanced/
               JWT_REFRESH_TOKEN_EXPIRES = "1440"; # Minutes -> 12h.

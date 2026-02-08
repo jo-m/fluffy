@@ -1,11 +1,11 @@
 {
   username,
   tld,
-  data-base-dir,
+  dataBaseDir,
   config,
   ...
 }: let
-  service-name = "webdav";
+  serviceName = "webdav";
   domain = "webdav";
 in {
   sops.secrets."caddy/webdav-basicauth" = {};
@@ -24,7 +24,7 @@ in {
 
       route {
           webdav {
-              root ${data-base-dir}/${service-name}
+              root ${dataBaseDir}/${serviceName}
               prefix /
           }
       }
@@ -34,6 +34,6 @@ in {
   };
 
   systemd.tmpfiles.rules = [
-    "d ${data-base-dir}/${service-name} 0750 caddy caddy"
+    "d ${dataBaseDir}/${serviceName} 0750 caddy caddy"
   ];
 }

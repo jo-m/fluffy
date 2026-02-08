@@ -6,19 +6,19 @@
   hostname,
   ...
 }: let
-  grafana-domain = "monitor";
-  grafana-port = 20000;
-  prom-port = 20001;
-  prom-node-port = 20002;
+  grafanaDomain = "monitor";
+  grafanaPort = 20000;
+  promPort = 20001;
+  promNodePort = 20002;
 
-  promtail-port = 20003;
-  loki-port = 20004;
+  promtailPort = 20003;
+  lokiPort = 20004;
 in {
-  services.caddy.virtualHosts."${grafana-domain}.${tld}" = {
+  services.caddy.virtualHosts."${grafanaDomain}.${tld}" = {
     extraConfig = ''
       encode
-      authorize with fluff_internal_auth
-      reverse_proxy http://127.0.0.1:${toString grafana-port}
+      authorize with fluff-internal-auth
+      reverse_proxy http://127.0.0.1:${toString grafanaPort}
     '';
     # NixOS defaults to /var/log/caddy/access-*.log.
     logFormat = "output stderr";
@@ -27,10 +27,10 @@ in {
   services.grafana = {
     enable = true;
     settings.server = {
-      domain = "${grafana-domain}.${tld}";
-      http_port = grafana-port;
+      domain = "${grafanaDomain}.${tld}";
+      http_port = grafanaPort;
       http_addr = "127.0.0.1";
-      root_url = "https://${grafana-domain}.${tld}";
+      root_url = "https://${grafanaDomain}.${tld}";
     };
     openFirewall = false;
 
@@ -50,7 +50,7 @@ in {
           name = "Loki";
           type = "loki";
           access = "proxy";
-          url = "http://127.0.0.1:${toString loki-port}";
+          url = "http://127.0.0.1:${toString lokiPort}";
         }
       ];
     };
@@ -63,7 +63,7 @@ in {
       auth_enabled: false
 
       server:
-        http_listen_port: ${toString loki-port}
+        http_listen_port: ${toString lokiPort}
 
       common:
         ring:
@@ -93,7 +93,7 @@ in {
     enable = true;
     configuration = {
       server = {
-        http_listen_port = promtail-port;
+        http_listen_port = promtailPort;
         grpc_listen_port = 0;
       };
       positions = {
@@ -101,7 +101,7 @@ in {
       };
       clients = [
         {
-          url = "http://127.0.0.1:${toString loki-port}/loki/api/v1/push";
+          url = "http://127.0.0.1:${toString lokiPort}/loki/api/v1/push";
         }
       ];
       scrape_configs = [
@@ -132,7 +132,7 @@ in {
   # https://nixos.org/manual/nixos/stable/#module-services-prometheus-exporters
   services.prometheus.exporters.node = {
     enable = true;
-    port = prom-node-port;
+    port = promNodePort;
     openFirewall = false;
     # https://github.com/NixOS/nixpkgs/blob/nixos-24.05/nixos/modules/services/monitoring/prometheus/exporters.nix
     enabledCollectors = ["systemd"];
@@ -147,7 +147,7 @@ in {
     enable = true;
     globalConfig.scrape_interval = "15s";
     listenAddress = "localhost";
-    port = prom-port;
+    port = promPort;
     scrapeConfigs = [
       {
         job_name = "node";

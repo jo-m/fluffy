@@ -4,7 +4,7 @@
   pkgs,
   username,
   tld,
-  data-base-dir,
+  dataBaseDir,
   ...
 }: let
   cfg = config.services.fluffy.traggo;
@@ -33,7 +33,7 @@ in {
     services.caddy.virtualHosts."${cfg.domain}.${tld}" = {
       extraConfig = ''
         encode
-        authorize with fluff_internal_auth
+        authorize with fluff-internal-auth
         reverse_proxy http://127.0.0.1:${toString cfg.port}
       '';
       # NixOS defaults to /var/log/caddy/access-*.log.
@@ -50,7 +50,7 @@ in {
     sops.templates.traggo-secret-env.owner = username;
 
     systemd.tmpfiles.rules = [
-      "d ${data-base-dir}/${cfg.serviceName} 0750 ${username} ${username}"
+      "d ${dataBaseDir}/${cfg.serviceName} 0750 ${username} ${username}"
     ];
 
     home-manager.users."${username}" = {pkgs, ...}: {
@@ -74,7 +74,7 @@ in {
             userns = "";
             podmanArgs = ["--umask=0027"];
             publishPorts = ["127.0.0.1:${toString cfg.port}:3030"];
-            mounts = ["type=bind,src=${data-base-dir}/${cfg.serviceName},dst=/opt/traggo/data"];
+            mounts = ["type=bind,src=${dataBaseDir}/${cfg.serviceName},dst=/opt/traggo/data"];
             environmentFiles = [outerConfig.sops.templates.traggo-secret-env.path];
           };
         };

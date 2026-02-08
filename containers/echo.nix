@@ -4,7 +4,7 @@
   pkgs,
   username,
   tld,
-  data-base-dir,
+  dataBaseDir,
   ...
 }: let
   cfg = config.services.fluffy.echo;
@@ -32,7 +32,7 @@ in {
     services.caddy.virtualHosts."${cfg.domain}.${tld}" = {
       extraConfig = ''
         encode
-        authorize with fluff_internal_auth
+        authorize with fluff-internal-auth
         reverse_proxy http://127.0.0.1:${toString cfg.port}
       '';
       # NixOS defaults to /var/log/caddy/access-*.log.

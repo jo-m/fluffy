@@ -8,7 +8,7 @@
 in {
   sops.secrets."caddy/home-ips" = {};
   sops.templates.caddy-home-ips.content = ''
-    (fluff_home_ips_only) {
+    (fluff-home-ips-only) {
       @denied not remote_ip ${config.sops.placeholder."caddy/home-ips"}
       abort @denied
     }
@@ -54,18 +54,18 @@ in {
       order authorize before basicauth
 
       security {
-        local identity store fluff_auth_db {
+        local identity store fluff-auth-db {
           realm local
           path {$HOME}/.local/share/caddy/users.json
           import ${config.sops.templates.caddy-local-users.path}
         }
 
-        authentication portal fluff_auth_portal {
+        authentication portal fluff-auth-portal {
           crypto default token lifetime 172800 # 48 h
           crypto key sign-verify {env.JWT_SHARED_SECRET}
           crypto key token name fluff_auth
 
-          enable identity store fluff_auth_db
+          enable identity store fluff-auth-db
 
           cookie domain ${tld}
           # See https://github.com/greenpau/caddy-security/issues/58.
@@ -91,7 +91,7 @@ in {
           }
         }
 
-        authorization policy fluff_internal_auth {
+        authorization policy fluff-internal-auth {
           set auth url https://${authPortalSubdomain}.${tld}
 
           crypto key verify {env.JWT_SHARED_SECRET}
@@ -114,14 +114,14 @@ in {
       # Import config files with secrets.
       import ${config.sops.templates.caddy-home-ips.path}
 
-      ${builtins.readFile ./fluff_global_rate_limit.Caddyfile}
+      ${builtins.readFile ./fluff-global-rate-limit.Caddyfile}
     '';
 
     # Auth portal vhost.
     virtualHosts."${authPortalSubdomain}.${tld}" = {
       extraConfig = ''
         encode
-        authenticate with fluff_auth_portal
+        authenticate with fluff-auth-portal
       '';
       # NixOS defaults to /var/log/caddy/access-*.log.
       logFormat = "output stderr";

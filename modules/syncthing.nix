@@ -1,17 +1,17 @@
 {
   pkgs,
-  data-base-dir,
+  dataBaseDir,
   tld,
   config,
   ...
 }: let
-  service-name = "syncthing";
+  serviceName = "syncthing";
   domain = "sync";
 in {
   services.syncthing = {
     enable = true;
     openDefaultPorts = true;
-    dataDir = "${data-base-dir}/${service-name}";
+    dataDir = "${dataBaseDir}/${serviceName}";
 
     overrideFolders = false;
     overrideDevices = false;
@@ -21,7 +21,7 @@ in {
   };
 
   systemd.tmpfiles.rules = [
-    "d ${data-base-dir}/${service-name} 0750 syncthing syncthing"
+    "d ${dataBaseDir}/${serviceName} 0750 syncthing syncthing"
   ];
 
   systemd.services.syncthing.serviceConfig.UMask = "0027";
@@ -31,9 +31,9 @@ in {
 
   services.caddy.virtualHosts."${domain}.${tld}".extraConfig = ''
     encode
-    authorize with fluff_internal_auth
+    authorize with fluff-internal-auth
     # We additionally protect the Syncthing GUI with IP blocking.
-    import fluff_home_ips_only
+    import fluff-home-ips-only
     # https://docs.syncthing.net/users/reverseproxy.html
     reverse_proxy http://127.0.0.1:8384 {
       header_up Host {upstream_hostport}

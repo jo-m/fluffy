@@ -4,7 +4,7 @@
   pkgs,
   username,
   tld,
-  data-base-dir,
+  dataBaseDir,
   ...
 }: let
   cfg = config.services.fluffy.qr;
@@ -33,7 +33,7 @@ in {
       extraConfig = ''
         encode
         # Public, no auth - thus, ratelimit.
-        import fluff_global_rate_limit
+        import fluff-global-rate-limit
         reverse_proxy http://127.0.0.1:${toString cfg.port}
       '';
       # NixOS defaults to /var/log/caddy/access-*.log.

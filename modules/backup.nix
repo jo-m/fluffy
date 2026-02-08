@@ -1,7 +1,7 @@
 {
   inputs,
   config,
-  data-base-dir,
+  dataBaseDir,
   lib,
   pkgs,
   ...
@@ -39,11 +39,11 @@ in {
   #   journalctl -fu borgbackup-job-data.service
   services.borgbackup.jobs."${jobName}" = {
     user = config.users.users."${username}".name;
-    paths = data-base-dir;
+    paths = dataBaseDir;
     exclude = [
-      "${data-base-dir}/syncthing"
-      "${data-base-dir}/lost+found"
-      "${data-base-dir}/readeck/config.toml"
+      "${dataBaseDir}/syncthing"
+      "${dataBaseDir}/lost+found"
+      "${dataBaseDir}/readeck/config.toml"
     ];
     extraCreateArgs = "--verbose --stats";
     encryption = {
