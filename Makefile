@@ -19,10 +19,6 @@ pull-host-key:
 push:
 	nixos-rebuild switch --flake .#fluffy --impure --target-host root@$$REMOTE_IP4
 
-.PHONY: format
-format:
-	nix fmt .
-
 .PHONY: upgrade
 upgrade:
 	nix flake update
@@ -32,4 +28,5 @@ upgrade:
 
 .PHONY: build
 build:
+	nixos-rebuild build --flake .#fluffy-stage0 -L
 	nixos-rebuild build --flake .#fluffy -L
