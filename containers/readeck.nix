@@ -30,7 +30,7 @@ in {
     services.caddy.virtualHosts."${cfg.domain}.${tld}" = {
       extraConfig = ''
         encode
-        # Hast its own auth - thus, ratelimit.
+        # Has its own auth - thus, ratelimit.
         import fluff-global-rate-limit
         reverse_proxy http://127.0.0.1:${toString cfg.port}
       '';
