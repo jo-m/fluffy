@@ -4,6 +4,7 @@
   harden = import ./harden.nix;
   hetzner = import ./hetzner;
   monitoring = import ./monitoring.nix;
+  options = import ./options.nix;
   rootless-podman = import ./rootless-podman.nix;
   ssh = import ./ssh.nix;
   syncthing = import ./syncthing.nix;

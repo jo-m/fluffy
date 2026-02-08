@@ -1,9 +1,5 @@
-{
-  tld,
-  dataBaseDir,
-  config,
-  ...
-}: let
+{config, ...}: let
+  inherit (config.fluffy) data-base-dir tld;
   serviceName = "webdav";
   domain = "webdav";
 in {
@@ -23,7 +19,7 @@ in {
 
       route {
           webdav {
-              root ${dataBaseDir}/${serviceName}
+              root ${data-base-dir}/${serviceName}
               prefix /
           }
       }
@@ -33,6 +29,6 @@ in {
   };
 
   systemd.tmpfiles.rules = [
-    "d ${dataBaseDir}/${serviceName} 0750 caddy caddy"
+    "d ${data-base-dir}/${serviceName} 0750 caddy caddy"
   ];
 }

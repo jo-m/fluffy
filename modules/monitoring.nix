@@ -2,10 +2,11 @@
 {
   config,
   pkgs,
-  tld,
-  hostname,
   ...
 }: let
+  inherit (config.fluffy) tld;
+  hostname = config.networking.hostName;
+
   grafanaDomain = "monitor";
   grafanaPort = 20000;
   promPort = 20001;

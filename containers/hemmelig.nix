@@ -1,11 +1,9 @@
 {
   config,
   lib,
-  username,
-  tld,
-  dataBaseDir,
   ...
 }: let
+  inherit (config.fluffy) username tld data-base-dir;
   cfg = config.services.fluffy.hemmelig;
   outerConfig = config;
   containerLib = import ./lib.nix;
@@ -56,9 +54,9 @@ in {
     sops.templates.hemmelig-secret-env.owner = username;
 
     systemd.tmpfiles.rules = [
-      "d ${dataBaseDir}/${cfg.serviceName} 0750 ${username} ${username}"
-      "d ${dataBaseDir}/${cfg.serviceName}/files 0750 ${username} ${username}"
-      "d ${dataBaseDir}/${cfg.serviceName}/db 0750 ${username} ${username}"
+      "d ${data-base-dir}/${cfg.serviceName} 0750 ${username} ${username}"
+      "d ${data-base-dir}/${cfg.serviceName}/files 0750 ${username} ${username}"
+      "d ${data-base-dir}/${cfg.serviceName}/db 0750 ${username} ${username}"
     ];
 
     home-manager.users."${username}" = _: {
@@ -78,8 +76,8 @@ in {
             user = "root"; # The Hemmelig Dockerfile creates a "node" user which breaks the bind mount permissions.
             publishPorts = ["127.0.0.1:${toString cfg.port}:3000"];
             mounts = [
-              "type=bind,src=${dataBaseDir}/${cfg.serviceName}/files,dst=/var/tmp/hemmelig/upload/files"
-              "type=bind,src=${dataBaseDir}/${cfg.serviceName}/db,dst=/home/node/hemmelig/database/"
+              "type=bind,src=${data-base-dir}/${cfg.serviceName}/files,dst=/var/tmp/hemmelig/upload/files"
+              "type=bind,src=${data-base-dir}/${cfg.serviceName}/db,dst=/home/node/hemmelig/database/"
             ];
             environments = {
               # https://github.com/HemmeligOrg/Hemmelig.app/blob/main/docker-compose.yml

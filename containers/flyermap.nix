@@ -1,11 +1,9 @@
 {
   config,
   lib,
-  username,
-  tld,
-  dataBaseDir,
   ...
 }: let
+  inherit (config.fluffy) username tld data-base-dir;
   cfg = config.services.fluffy.flyermap;
   containerLib = import ./lib.nix;
 in {
@@ -41,7 +39,7 @@ in {
     };
 
     systemd.tmpfiles.rules = [
-      "d ${dataBaseDir}/${cfg.serviceName} 0750 ${username} ${username}"
+      "d ${data-base-dir}/${cfg.serviceName} 0750 ${username} ${username}"
     ];
 
     home-manager.users."${username}" = _: {
@@ -59,7 +57,7 @@ in {
             userns = "keep-id";
             podmanArgs = ["--umask=0027"];
             publishPorts = ["127.0.0.1:${toString cfg.port}:8000"];
-            mounts = ["type=bind,src=${dataBaseDir}/${cfg.serviceName},dst=/data"];
+            mounts = ["type=bind,src=${data-base-dir}/${cfg.serviceName},dst=/data"];
             environments = {
               PORT = "8000";
               # TODO: Move credentials to sops secrets

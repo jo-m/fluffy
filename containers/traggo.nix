@@ -1,11 +1,9 @@
 {
   config,
   lib,
-  username,
-  tld,
-  dataBaseDir,
   ...
 }: let
+  inherit (config.fluffy) username tld data-base-dir;
   cfg = config.services.fluffy.traggo;
   outerConfig = config;
   containerLib = import ./lib.nix;
@@ -50,7 +48,7 @@ in {
     sops.templates.traggo-secret-env.owner = username;
 
     systemd.tmpfiles.rules = [
-      "d ${dataBaseDir}/${cfg.serviceName} 0750 ${username} ${username}"
+      "d ${data-base-dir}/${cfg.serviceName} 0750 ${username} ${username}"
     ];
 
     home-manager.users."${username}" = _: {
@@ -68,7 +66,7 @@ in {
             userns = "";
             podmanArgs = ["--umask=0027"];
             publishPorts = ["127.0.0.1:${toString cfg.port}:3030"];
-            mounts = ["type=bind,src=${dataBaseDir}/${cfg.serviceName},dst=/opt/traggo/data"];
+            mounts = ["type=bind,src=${data-base-dir}/${cfg.serviceName},dst=/opt/traggo/data"];
             environmentFiles = [outerConfig.sops.templates.traggo-secret-env.path];
           };
         };

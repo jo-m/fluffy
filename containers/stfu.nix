@@ -1,9 +1,9 @@
 {
   config,
   lib,
-  tld,
   ...
 }: let
+  inherit (config.fluffy) tld;
   cfg = config.services.fluffy.stfu;
 in {
   options.services.fluffy.stfu = {

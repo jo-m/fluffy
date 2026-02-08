@@ -1,11 +1,9 @@
 {
   config,
   lib,
-  username,
-  tld,
-  dataBaseDir,
   ...
 }: let
+  inherit (config.fluffy) username tld data-base-dir;
   cfg = config.services.fluffy.kitchenowl;
   outerConfig = config;
   containerLib = import ./lib.nix;
@@ -49,8 +47,8 @@ in {
     sops.templates.kitchenowl-secret-env.owner = username;
 
     systemd.tmpfiles.rules = [
-      "d ${dataBaseDir}/${cfg.serviceName} 0750 ${username} ${username}"
-      "d ${dataBaseDir}/${cfg.serviceName}/upload 0750 ${username} ${username}"
+      "d ${data-base-dir}/${cfg.serviceName} 0750 ${username} ${username}"
+      "d ${data-base-dir}/${cfg.serviceName}/upload 0750 ${username} ${username}"
     ];
 
     home-manager.users."${username}" = {config, ...}: let
@@ -97,7 +95,7 @@ in {
 
             userns = "";
             podmanArgs = ["--umask=0027"];
-            mounts = ["type=bind,src=${dataBaseDir}/${cfg.serviceName},dst=/data"];
+            mounts = ["type=bind,src=${data-base-dir}/${cfg.serviceName},dst=/data"];
             environments = {
               # https://docs.kitchenowl.org/latest/self-hosting/advanced/
               JWT_REFRESH_TOKEN_EXPIRES = "1440"; # Minutes -> 12h.

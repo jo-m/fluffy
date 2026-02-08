@@ -1,9 +1,10 @@
 {
+  config,
   inputs,
-  username,
-  uid,
   ...
-}: {
+}: let
+  inherit (config.fluffy) username uid;
+in {
   networking.firewall.interfaces."podman+".allowedUDPPorts = [53];
 
   virtualisation.podman = {

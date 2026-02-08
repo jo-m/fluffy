@@ -2,10 +2,9 @@
   config,
   lib,
   pkgs,
-  username,
-  tld,
   ...
 }: let
+  inherit (config.fluffy) username tld;
   cfg = config.services.fluffy.homer;
   containerLib = import ./lib.nix;
   configFile = pkgs.writeText "homer.yaml" ''

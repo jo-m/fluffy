@@ -1,10 +1,10 @@
 {
   config,
-  dataBaseDir,
   lib,
   pkgs,
   ...
 }: let
+  inherit (config.fluffy) data-base-dir;
   username = "backup";
   jobName = "data";
 in {
@@ -38,11 +38,11 @@ in {
   #   journalctl -fu borgbackup-job-data.service
   services.borgbackup.jobs."${jobName}" = {
     user = config.users.users."${username}".name;
-    paths = dataBaseDir;
+    paths = data-base-dir;
     exclude = [
-      "${dataBaseDir}/syncthing"
-      "${dataBaseDir}/lost+found"
-      "${dataBaseDir}/readeck/config.toml"
+      "${data-base-dir}/syncthing"
+      "${data-base-dir}/lost+found"
+      "${data-base-dir}/readeck/config.toml"
     ];
     extraCreateArgs = "--verbose --stats";
     encryption = {

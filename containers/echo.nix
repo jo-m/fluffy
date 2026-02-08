@@ -1,10 +1,9 @@
 {
   config,
   lib,
-  username,
-  tld,
   ...
 }: let
+  inherit (config.fluffy) username tld;
   cfg = config.services.fluffy.echo;
   containerLib = import ./lib.nix;
 in {

@@ -4,14 +4,15 @@
   modules,
   containers,
   ...
-}: let
-  hostname = "fluffy";
-  username = "runner";
-  uid = 1000;
-  tld = builtins.getEnv "REMOTE_TLD";
-  dataBaseDir = "/data";
-in {
-  networking.hostName = hostname;
+}: {
+  networking.hostName = "fluffy";
+
+  fluffy = {
+    username = "runner";
+    uid = 1000;
+    tld = builtins.getEnv "REMOTE_TLD";
+    data-base-dir = "/data";
+  };
 
   time.timeZone = "Europe/Zurich";
   i18n.defaultLocale = "en_US.UTF-8";
@@ -74,6 +75,7 @@ in {
       harden
       hetzner
       monitoring
+      options
       rootless-podman
       ssh
       syncthing
@@ -82,10 +84,5 @@ in {
 
     # Import all container modules.
     containers
-
-    {
-      # This is considered bad practice but I couldn't care less.
-      _module.args = {inherit username uid tld dataBaseDir hostname;};
-    }
   ];
 }

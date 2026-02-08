@@ -1,15 +1,12 @@
-{
-  dataBaseDir,
-  tld,
-  ...
-}: let
+{config, ...}: let
+  inherit (config.fluffy) data-base-dir tld;
   serviceName = "syncthing";
   domain = "sync";
 in {
   services.syncthing = {
     enable = true;
     openDefaultPorts = true;
-    dataDir = "${dataBaseDir}/${serviceName}";
+    dataDir = "${data-base-dir}/${serviceName}";
 
     overrideFolders = false;
     overrideDevices = false;
@@ -19,7 +16,7 @@ in {
   };
 
   systemd.tmpfiles.rules = [
-    "d ${dataBaseDir}/${serviceName} 0750 syncthing syncthing"
+    "d ${data-base-dir}/${serviceName} 0750 syncthing syncthing"
   ];
 
   systemd.services.syncthing.serviceConfig.UMask = "0027";

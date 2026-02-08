@@ -1,9 +1,9 @@
 {
-  tld,
   config,
   pkgs,
   ...
 }: let
+  inherit (config.fluffy) tld;
   authPortalSubdomain = "auth";
 in {
   sops.secrets."caddy/home-ips" = {};
