@@ -72,7 +72,7 @@ in {
           kvstore:
             store: inmemory
         replication_factor: 1
-        path_prefix: /tmp/loki
+        path_prefix: ${config.services.loki.dataDir}
 
       schema_config:
         configs:
@@ -86,7 +86,7 @@ in {
 
       storage_config:
         filesystem:
-          directory: /tmp/loki/chunks
+          directory: ${config.services.loki.dataDir}/chunks
     '';
   };
 
@@ -96,9 +96,6 @@ in {
       server = {
         http_listen_port = promtailPort;
         grpc_listen_port = 0;
-      };
-      positions = {
-        filename = "/tmp/positions.yaml";
       };
       clients = [
         {
