@@ -3,7 +3,7 @@
 Features:
 
 - Various apps running as rootless podman containers
-- Caddy reverse proxy, automatic TLS, rate limiting
+- Apps behind caddy reverse proxy (automatic TLS, unified login, rate limiting)
 - Dashboard (Homer)
 - Webdav server for Joplin sync
 - Syncthing
