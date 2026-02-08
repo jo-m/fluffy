@@ -45,7 +45,6 @@ in {
       "${data-base-dir}/lost+found"
       "${data-base-dir}/readeck/config.toml"
     ];
-    preHook = "set -x";
     extraCreateArgs = "--verbose --stats";
     encryption = {
       mode = "repokey-blake2";
@@ -56,7 +55,7 @@ in {
       BORG_REMOTE_PATH = "borg1";
     };
     compression = "auto,zstd";
-    startAt = "daily";
+    startAt = "03:00";
     prune.keep = {
       within = "1d"; # Keep all archives from the last day
       daily = 7;
@@ -88,14 +87,7 @@ in {
       Type = "oneshot";
       ExecStart = let
         script = pkgs.writeShellScript "check-backup-status" ''
-          status="$(systemctl show borgbackup-job-${jobName}.service --property=Result)"
-          if [ "$status" = "Result=success" ]; then
-            exit 0
-          fi
-          echo "Last invocation result:"
-          echo "$status"
-          echo "Timer invocation timer trigger:"
-          systemctl status borgbackup-job-${jobName}.service
+          systemctl show borgbackup-job-${jobName}.service --property=Result
         '';
       in "${script}";
     };
@@ -105,7 +97,7 @@ in {
     description = "Timer for backup status check";
     wantedBy = ["timers.target"];
     timerConfig = {
-      OnCalendar = "hourly";
+      OnCalendar = "04:00";
       Persistent = true;
     };
   };
