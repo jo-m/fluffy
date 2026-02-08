@@ -80,4 +80,33 @@ in {
       '';
     in "+${script}";
   };
+
+  # Periodic monitoring job to check backup status
+  systemd.services."backup-status-check" = {
+    description = "Check backup job status";
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = let
+        script = pkgs.writeShellScript "check-backup-status" ''
+          status="$(systemctl show borgbackup-job-${jobName}.service --property=Result)"
+          if [ "$status" = "Result=success" ]; then
+            exit 0
+          fi
+          echo "Last invocation result:"
+          echo "$status"
+          echo "Timer invocation timer trigger:"
+          systemctl status borgbackup-job-${jobName}.service
+        '';
+      in "${script}";
+    };
+  };
+
+  systemd.timers."backup-status-check" = {
+    description = "Timer for backup status check";
+    wantedBy = ["timers.target"];
+    timerConfig = {
+      OnCalendar = "hourly";
+      Persistent = true;
+    };
+  };
 }
