@@ -7,6 +7,7 @@
   ...
 }: let
   cfg = config.services.fluffy.flyermap;
+  containerLib = import ./lib.nix;
 in {
   options.services.fluffy.flyermap = {
     enable = lib.mkEnableOption "Flyermap flyer management service" // {default = true;};
@@ -48,13 +49,7 @@ in {
       virtualisation.quadlet.containers = {
         "${cfg.serviceName}" = {
           autoStart = true;
-          # https://www.freedesktop.org/software/systemd/man/latest/systemd.service.html#Options
-          serviceConfig = {
-            Restart = "always";
-            RestartSec = "100ms";
-            RestartSteps = "10";
-            RestartMaxDelaySec = "60s";
-          };
+          serviceConfig = containerLib.ServiceConfig;
           # https://docs.podman.io/en/latest/markdown/podman-systemd.unit.5.html
           containerConfig = {
             image = "ghcr.io/jo-m/flyermap:latest";

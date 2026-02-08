@@ -8,6 +8,7 @@
 }: let
   cfg = config.services.fluffy.kitchenowl;
   outerConfig = config;
+  containerLib = import ./lib.nix;
 in {
   options.services.fluffy.kitchenowl = {
     enable = lib.mkEnableOption "Kitchenowl recipe and grocery manager" // {default = true;};
@@ -60,13 +61,7 @@ in {
       virtualisation.quadlet.containers = {
         "${cfg.serviceName}-frontend" = {
           autoStart = true;
-          # https://www.freedesktop.org/software/systemd/man/latest/systemd.service.html#Options
-          serviceConfig = {
-            Restart = "always";
-            RestartSec = "100ms";
-            RestartSteps = "10";
-            RestartMaxDelaySec = "60s";
-          };
+          serviceConfig = containerLib.ServiceConfig;
           unitConfig = {
             After = [
               "${cfg.serviceName}-backend.service"
@@ -93,13 +88,7 @@ in {
         };
         "${cfg.serviceName}-backend" = {
           autoStart = true;
-          # https://www.freedesktop.org/software/systemd/man/latest/systemd.service.html#Options
-          serviceConfig = {
-            Restart = "always";
-            RestartSec = "100ms";
-            RestartSteps = "10";
-            RestartMaxDelaySec = "60s";
-          };
+          serviceConfig = containerLib.ServiceConfig;
           # https://docs.podman.io/en/latest/markdown/podman-systemd.unit.5.html
           containerConfig = {
             image = "docker.io/tombursch/kitchenowl-backend:latest";

@@ -8,6 +8,7 @@
   ...
 }: let
   cfg = config.services.fluffy.ferrishare;
+  containerLib = import ./lib.nix;
   configFile = pkgs.writeText "config.toml" ''
     app_name = "FluffyShare"
     interface = "0.0.0.0:3000"
@@ -69,13 +70,7 @@ in {
       virtualisation.quadlet.containers = {
         "${cfg.serviceName}" = {
           autoStart = true;
-          # https://www.freedesktop.org/software/systemd/man/latest/systemd.service.html#Options
-          serviceConfig = {
-            Restart = "always";
-            RestartSec = "100ms";
-            RestartSteps = "10";
-            RestartMaxDelaySec = "60s";
-          };
+          serviceConfig = containerLib.ServiceConfig;
           # https://docs.podman.io/en/latest/markdown/podman-systemd.unit.5.html
           containerConfig = {
             image = "ghcr.io/tobiasmarschner/ferrishare:1";

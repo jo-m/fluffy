@@ -7,6 +7,7 @@
   ...
 }: let
   cfg = config.services.fluffy.homer;
+  containerLib = import ./lib.nix;
   configFile = pkgs.writeText "homer.yaml" ''
     ---
     # https://github.com/bastienwirtz/homer/blob/main/docs/configuration.md
@@ -180,13 +181,7 @@ in {
       virtualisation.quadlet.containers = {
         "${cfg.serviceName}" = {
           autoStart = true;
-          # https://www.freedesktop.org/software/systemd/man/latest/systemd.service.html#Options
-          serviceConfig = {
-            Restart = "always";
-            RestartSec = "100ms";
-            RestartSteps = "10";
-            RestartMaxDelaySec = "60s";
-          };
+          serviceConfig = containerLib.ServiceConfig;
           # https://docs.podman.io/en/latest/markdown/podman-systemd.unit.5.html
           containerConfig = {
             image = "docker.io/b4bz/homer:latest";

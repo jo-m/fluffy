@@ -6,6 +6,7 @@
   ...
 }: let
   cfg = config.services.fluffy.qr;
+  containerLib = import ./lib.nix;
 in {
   options.services.fluffy.qr = {
     enable = lib.mkEnableOption "QR code generator service" // {default = true;};
@@ -43,13 +44,7 @@ in {
       virtualisation.quadlet.containers = {
         "${cfg.serviceName}" = {
           autoStart = true;
-          # https://www.freedesktop.org/software/systemd/man/latest/systemd.service.html#Options
-          serviceConfig = {
-            Restart = "always";
-            RestartSec = "100ms";
-            RestartSteps = "10";
-            RestartMaxDelaySec = "60s";
-          };
+          serviceConfig = containerLib.ServiceConfig;
           containerConfig = {
             image = "ghcr.io/lyqht/mini-qr:latest";
             autoUpdate = "registry";
