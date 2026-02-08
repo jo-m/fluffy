@@ -153,6 +153,19 @@ nix path-info --closure-size --human-readable ./result
 
 ## TODO
 
-- [ ] Monitoring for failed backups (notifications)
+- [ ] Monitoring/Alerts for:
+  - [x] CPU
+  - [x] Disk
+  - [x] Container update logs
+  - [x] Caddy 400/500 responses
+  - [ ] Adjust/test container update and backup monitoring
+- [x] Add auth portal
+- [x] Ensure Grafana data/settings are backed up
+
+### More apps (maybe later)
+
 - [ ] https://github.com/alextselegidis/easyappointments
-- [ ] Ensure Podman auto-update works (`systemctl --machine=runner@.host status podman-auto-update.service; journalctl -u podman-auto-update.service`)
+- [ ] https://timetagger.app/
+- [ ] https://www.fizzy.do/
+- [ ] https://github.com/endurain-project/endurain
+- [ ] https://github.com/gchq/CyberChef
