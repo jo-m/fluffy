@@ -4,7 +4,6 @@
   pkgs,
   username,
   tld,
-  dataBaseDir,
   ...
 }: let
   cfg = config.services.fluffy.homer;
@@ -176,7 +175,7 @@ in {
       logFormat = "output stderr";
     };
 
-    home-manager.users."${username}" = {pkgs, ...}: {
+    home-manager.users."${username}" = _: {
       # https://seiarotg.github.io/quadlet-nix/nixos-options.html
       virtualisation.quadlet.containers = {
         "${cfg.serviceName}" = {

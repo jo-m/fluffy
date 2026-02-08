@@ -43,7 +43,7 @@
     };
   in {
     nixosConfigurations.fluffy-stage0 = nixpkgs.lib.nixosSystem {
-      specialArgs = specialArgs;
+      inherit specialArgs;
 
       modules = [
         ./configuration-stage0.nix
@@ -52,7 +52,7 @@
     };
 
     nixosConfigurations.fluffy = nixpkgs.lib.nixosSystem {
-      specialArgs = specialArgs;
+      inherit specialArgs;
 
       modules = [
         ./configuration.nix

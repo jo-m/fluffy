@@ -1,8 +1,6 @@
 {
-  pkgs,
   dataBaseDir,
   tld,
-  config,
   ...
 }: let
   serviceName = "syncthing";

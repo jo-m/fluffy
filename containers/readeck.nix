@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  pkgs,
   username,
   tld,
   dataBaseDir,
@@ -44,11 +43,7 @@ in {
       "d ${dataBaseDir}/${cfg.serviceName} 0750 ${username} ${username}"
     ];
 
-    home-manager.users."${username}" = {
-      pkgs,
-      config,
-      ...
-    }: {
+    home-manager.users."${username}" = _: {
       # https://seiarotg.github.io/quadlet-nix/nixos-options.html
       virtualisation.quadlet.containers = {
         "${cfg.serviceName}" = {

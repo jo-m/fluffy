@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  pkgs,
   username,
   tld,
   dataBaseDir,
@@ -53,11 +52,7 @@ in {
       "d ${dataBaseDir}/${cfg.serviceName}/upload 0750 ${username} ${username}"
     ];
 
-    home-manager.users."${username}" = {
-      pkgs,
-      config,
-      ...
-    }: let
+    home-manager.users."${username}" = {config, ...}: let
       inherit (config.virtualisation.quadlet) networks;
     in {
       # https://seiarotg.github.io/quadlet-nix/nixos-options.html

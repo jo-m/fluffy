@@ -1,9 +1,9 @@
 # https://ryanseipp.com/post/hardening-nixos/
-{pkgs, ...}: {
-  environment.systemPackages = with pkgs; [
-    # # Comment out for auditing (`lynis audit system`).
-    # lynis
-  ];
+_: {
+  # environment.systemPackages = with pkgs; [
+  #   # Comment out for auditing (`lynis audit system`).
+  #   lynis
+  # ];
 
   boot.kernel.sysctl = {
     "fs.protected_fifos" = 2;

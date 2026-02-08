@@ -1,10 +1,8 @@
 {
   config,
   lib,
-  pkgs,
   username,
   tld,
-  dataBaseDir,
   ...
 }: let
   cfg = config.services.fluffy.qr;
@@ -40,11 +38,7 @@ in {
       logFormat = "output stderr";
     };
 
-    home-manager.users."${username}" = {
-      pkgs,
-      config,
-      ...
-    }: {
+    home-manager.users."${username}" = _: {
       # https://seiarotg.github.io/quadlet-nix/nixos-options.html
       virtualisation.quadlet.containers = {
         "${cfg.serviceName}" = {

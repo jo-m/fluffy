@@ -1,8 +1,4 @@
-{
-  config,
-  lib,
-  ...
-}: {
+{...}: {
   imports = [
     ./echo.nix
     ./ferrishare.nix

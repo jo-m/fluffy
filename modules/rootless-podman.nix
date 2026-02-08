@@ -31,7 +31,7 @@
   users.users."${username}" = {
     initialHashedPassword = "!";
     isNormalUser = true;
-    uid = uid;
+    inherit uid;
     group = username;
     extraGroups = ["users"];
 
@@ -46,11 +46,7 @@
     autoUpdate.enable = true;
   };
 
-  home-manager.users."${username}" = {
-    pkgs,
-    config,
-    ...
-  }: {
+  home-manager.users."${username}" = {...}: {
     home.stateVersion = "25.05";
     home.packages = [];
     imports = [inputs.quadlet-nix.homeManagerModules.quadlet];

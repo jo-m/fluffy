@@ -1,8 +1,6 @@
 {
-  pkgs,
   lib,
   modules,
-  containers,
   ...
 }: {
   system.stateVersion = "25.05";

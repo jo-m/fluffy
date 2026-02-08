@@ -64,11 +64,7 @@ in {
       "f+ ${dataBaseDir}/${cfg.serviceName}/user_templates/privacy_policy.html 0640 ${username} ${username} - nope"
     ];
 
-    home-manager.users."${username}" = {
-      pkgs,
-      config,
-      ...
-    }: {
+    home-manager.users."${username}" = _: {
       # https://seiarotg.github.io/quadlet-nix/nixos-options.html
       virtualisation.quadlet.containers = {
         "${cfg.serviceName}" = {
