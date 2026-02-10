@@ -1,4 +1,4 @@
-_: {
+{lib, ...}: {
   services.openssh = {
     enable = true;
     allowSFTP = false;
@@ -57,6 +57,11 @@ _: {
     maxretry = 5;
     bantime-increment.enable = true;
   };
+
+  # https://www.openwall.com/lists/oss-security/2025/12/28/4
+  systemd.generators.systemd-ssh-generator = "/dev/null";
+  systemd.sockets.sshd-unix-local.enable = lib.mkForce false;
+  systemd.sockets.sshd-vsock.enable = lib.mkForce false;
 
   users.users.root.openssh.authorizedKeys.keys = [
     # https://github.com/jo-m.keys
