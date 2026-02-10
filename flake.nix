@@ -12,11 +12,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    microvm = {
-      url = "github:microvm-nix/microvm.nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -32,7 +27,6 @@
     nixpkgs,
     disko,
     home-manager,
-    microvm,
     sops-nix,
     quadlet-nix,
     ...
@@ -67,20 +61,6 @@
         sops-nix.nixosModules.sops
       ];
     };
-
-    nixosConfigurations.fluffy-vm = nixpkgs.lib.nixosSystem {
-      inherit specialArgs;
-
-      modules = [
-        ./configuration-vm.nix
-        microvm.nixosModules.microvm
-        home-manager.nixosModules.home-manager
-        quadlet-nix.nixosModules.quadlet
-      ];
-    };
-
-    packages.${hostSystem}.fluffy-vm =
-      self.nixosConfigurations.fluffy-vm.config.microvm.declaredRunner;
 
     formatter.${hostSystem} = nixpkgs.legacyPackages.${hostSystem}.alejandra;
 

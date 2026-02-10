@@ -11,29 +11,6 @@ Features:
 - Automatic Borg backups to rsync.net
 - Secrets provisioning and even secret env vars
 
-## Local VM Testing
-
-Run a local VM with the fluffy configuration using [microvm.nix](https://github.com/microvm-nix/microvm.nix):
-
-```bash
-nix run .#fluffy-vm
-```
-
-The VM runs with QEMU (2GB RAM, 2 vCPUs) and has port forwarding:
-
-| Host Port | Guest Port | Service |
-|-----------|------------|---------|
-| 2222      | 22         | SSH     |
-| 8080      | 80         | HTTP    |
-| 8443      | 443        | HTTPS   |
-
-```bash
-# SSH into the VM
-ssh -p 2222 localhost
-```
-
-Note: Containers are not included in the VM by default as they require sops secrets. The VM includes the base modules (ssh, harden, rootless-podman) for testing.
-
 ## Deployment
 
 Prerequisites on the machine you run the deployment from:
