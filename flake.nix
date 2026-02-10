@@ -35,7 +35,6 @@
       inherit inputs;
       inherit (self) outputs;
       modules = import ./modules;
-      containers = import ./containers;
     };
     hostSystem = "x86_64-linux";
     pkgs = import inputs.nixpkgs {
