@@ -21,7 +21,23 @@ All names in Nix code must follow:
 ## Project Structure
 
 - `flake.nix` - Flake definition with devShell and NixOS configurations
-- `configuration.nix` - Main NixOS configuration
+- `configuration.nix` - Main NixOS configuration (Hetzner production)
+- `configuration-vm.nix` - MicroVM configuration for local testing
 - `modules/` - NixOS modules
 - `containers/` - Container definitions (quadlet-nix)
 - `scripts.nix` - Development scripts (format, lint, fix)
+
+## Local VM Testing
+
+Run a local VM with the fluffy configuration using microvm.nix:
+
+```bash
+nix run .#fluffy-vm
+```
+
+The VM has port forwarding configured:
+- SSH: `ssh -p 2222 localhost`
+- HTTP: `localhost:8080`
+- HTTPS: `localhost:8443`
+
+Note: Containers are not included in the VM by default as they require sops secrets.
