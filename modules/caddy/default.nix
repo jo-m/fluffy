@@ -79,15 +79,19 @@ in {
             logo description "Logo"
 
             links {
-              "Portal" https://${tld}/ icon "las la-star"
+              "Dashboard" https://${tld}/ icon "las la-star"
               "Whoami" "/whoami" icon "las la-user"
             }
           }
 
           transform user {
+            exact match sub webadmin
+            block
+          }
+
+          transform user {
             match origin local
             action add role authp/user
-            action add role authp/admin
           }
         }
 
@@ -96,13 +100,20 @@ in {
 
           crypto key verify {env.JWT_SHARED_SECRET}
           crypto key token name fluff_auth
+          set token sources cookie
 
-          set user identity email
+          set user identity sub
 
           acl rule {
-            comment Allow users only
+            comment Allow fluff-users only
             match role fluff-user
-            allow stop log info
+            allow stop
+          }
+
+          acl rule {
+            comment Log all others
+            match any
+            deny stop counter log error
           }
 
           inject headers with claims
