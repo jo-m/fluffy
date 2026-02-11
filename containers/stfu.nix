@@ -7,15 +7,13 @@
   cfg = config.services.fluffy.stfu;
 in {
   options.services.fluffy.stfu = {
-    enable = lib.mkEnableOption "STFU static page" // {default = true;};
-
     domain = lib.mkOption {
       type = lib.types.str;
       description = "Domain for Caddy reverse proxy";
     };
   };
 
-  config = lib.mkIf cfg.enable {
+  config = {
     services.caddy.virtualHosts."${cfg.domain}.${tld}" = {
       extraConfig = ''
         encode

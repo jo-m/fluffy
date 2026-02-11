@@ -8,8 +8,6 @@
   containerLib = import ./lib.nix;
 in {
   options.services.fluffy.utils = {
-    enable = lib.mkEnableOption "Utils subdomain for small tools" // {default = true;};
-
     domain = lib.mkOption {
       type = lib.types.str;
       description = "Domain for Caddy reverse proxy";
@@ -29,7 +27,7 @@ in {
     };
   };
 
-  config = lib.mkIf cfg.enable {
+  config = {
     services.caddy.virtualHosts."${cfg.domain}.${tld}" = {
       extraConfig = ''
         encode

@@ -8,8 +8,6 @@
   containerLib = import ./lib.nix;
 in {
   options.services.fluffy.qr = {
-    enable = lib.mkEnableOption "QR code generator service" // {default = true;};
-
     serviceName = lib.mkOption {
       type = lib.types.str;
       description = "Systemd service name for the container";
@@ -26,7 +24,7 @@ in {
     };
   };
 
-  config = lib.mkIf cfg.enable {
+  config = {
     services.caddy.virtualHosts."${cfg.domain}.${tld}" = {
       extraConfig = ''
         encode
