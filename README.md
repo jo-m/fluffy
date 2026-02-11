@@ -138,7 +138,6 @@ nix-collect-garbage --delete-older-than 30d
 # Manually start backup.
 systemctl start borgbackup-job-data.service
 journalctl -feu borgbackup-job-data.service
-systemctl start backup-status-check.service
 ```
 
 ### Debug store size
