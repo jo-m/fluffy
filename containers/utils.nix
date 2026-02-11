@@ -6,6 +6,7 @@
   inherit (config.fluffy) username tld;
   cfg = config.services.fluffy.utils;
   containerLib = import ./lib.nix;
+  stfuHtml = ./stfu.html;
 in {
   options.services.fluffy.utils = {
     domain = lib.mkOption {
@@ -13,17 +14,9 @@ in {
       description = "Domain for Caddy reverse proxy";
     };
 
-    cyberchef = {
-      serviceName = lib.mkOption {
-        type = lib.types.str;
-        default = "cyberchef";
-        description = "Systemd service name for the CyberChef container";
-      };
-
-      port = lib.mkOption {
-        type = lib.types.port;
-        description = "Internal container port for CyberChef";
-      };
+    cyberchef.port = lib.mkOption {
+      type = lib.types.port;
+      description = "Internal container port for CyberChef";
     };
   };
 
@@ -34,9 +27,15 @@ in {
         import fluff-global-rate-limit
 
         redir /cc /cc/
-
         handle_path /cc/* {
           reverse_proxy http://127.0.0.1:${toString cfg.cyberchef.port}
+        }
+
+        redir /stfu /stfu/
+        handle_path /stfu/* {
+          root * ${builtins.dirOf stfuHtml}
+          rewrite * /stfu.html
+          file_server
         }
 
         handle {
@@ -48,13 +47,13 @@ in {
 
     home-manager.users."${username}" = _: {
       virtualisation.quadlet.containers = {
-        "${cfg.cyberchef.serviceName}" = {
+        cyberchef = {
           autoStart = true;
           serviceConfig = containerLib.ServiceConfig;
           containerConfig = {
             image = "ghcr.io/gchq/cyberchef:latest";
             autoUpdate = "registry";
-            name = cfg.cyberchef.serviceName;
+            name = "cyberchef";
 
             userns = "";
             publishPorts = ["127.0.0.1:${toString cfg.cyberchef.port}:80"];

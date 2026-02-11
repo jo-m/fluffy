@@ -167,7 +167,6 @@ nix path-info --closure-size --human-readable ./result
 - [ ] https://timetagger.app/
 - [ ] https://www.fizzy.do/
 - [ ] https://github.com/endurain-project/endurain
-- [ ] https://github.com/gchq/CyberChef
 - [ ] https://github.com/louislam/uptime-kuma
 - [ ] [services.webdav](https://search.nixos.org/options?channel=25.11&query=services.webdav) instead of Caddy webdav
 - [ ] [Radicale](https://radicale.org/v3.html) CalDAV/CardDAV
