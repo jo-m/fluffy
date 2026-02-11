@@ -152,19 +152,25 @@ nix path-info --closure-size --human-readable ./result
 
 ## TODO
 
-- [ ] Monitoring/Alerts for:
+- [x] Monitoring/Alerts for:
   - [x] CPU
   - [x] Disk
   - [x] Container update logs
   - [x] Caddy 400/500 responses
-  - [ ] Adjust/test container update and backup monitoring
+  - [x] Adjust/test container update and backup monitoring
 - [x] Add auth portal
 - [x] Ensure Grafana data/settings are backed up
 
-### More apps (maybe later)
+### More apps (maybe)
 
 - [ ] https://github.com/alextselegidis/easyappointments
 - [ ] https://timetagger.app/
 - [ ] https://www.fizzy.do/
 - [ ] https://github.com/endurain-project/endurain
 - [ ] https://github.com/gchq/CyberChef
+- [ ] https://github.com/louislam/uptime-kuma
+- [ ] [services.webdav](https://search.nixos.org/options?channel=25.11&query=services.webdav) instead of Caddy webdav
+- [ ] [Radicale](https://radicale.org/v3.html) CalDAV/CardDAV
+- [ ] https://docs.paperless-ngx.com/
+- [ ] https://forgejo.org/
+- [ ] Pastebin
