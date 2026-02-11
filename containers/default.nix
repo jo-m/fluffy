@@ -10,6 +10,7 @@
     ./readeck.nix
     ./stfu.nix
     ./traggo.nix
+    ./utils.nix
   ];
 
   config = {
@@ -60,6 +61,10 @@
       };
       stfu = {
         domain = "stfu";
+      };
+      utils = {
+        domain = "utils";
+        cyberchef.port = 30110;
       };
     };
   };
