@@ -61,7 +61,7 @@ in {
         }
 
         authentication portal fluff-auth-portal {
-          crypto default token lifetime 172800 # 48 h
+          crypto default token lifetime 604800 # 1 Week
           crypto key sign-verify {env.JWT_SHARED_SECRET}
           crypto key token name fluff_auth
 
@@ -69,7 +69,7 @@ in {
 
           cookie domain ${tld}
           # See https://github.com/greenpau/caddy-security/issues/58.
-          cookie lifetime 31536000
+          cookie lifetime 604800 # 1 Week
 
           ui {
             theme basic
