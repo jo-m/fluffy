@@ -28,9 +28,17 @@ in {
     services.caddy.virtualHosts."${cfg.domain}.${tld}" = {
       extraConfig = ''
         encode
-        # Has its own auth - thus, ratelimit.
-        import fluff-global-rate-limit
-        reverse_proxy http://127.0.0.1:${toString cfg.port}
+
+        # API is public (for app access), rate limited.
+        handle /api/* {
+          import fluff-global-rate-limit
+          reverse_proxy http://127.0.0.1:${toString cfg.port}
+        }
+        # Everything else behind auth portal.
+        handle {
+          authorize with fluff-internal-auth
+          reverse_proxy http://127.0.0.1:${toString cfg.port}
+        }
       '';
       # NixOS defaults to /var/log/caddy/access-*.log.
       logFormat = "output stderr";
