@@ -103,9 +103,10 @@ in {
           set token sources cookie
 
           set user identity sub
+          inject headers with claims
 
           acl rule {
-            comment Allow fluff-users only
+            comment Allow fluff-user role
             match role fluff-user
             allow stop
           }
@@ -115,8 +116,35 @@ in {
             match any
             deny stop counter log error
           }
+        }
 
+        authorization policy fluff-auth-policy-flyers {
+          set auth url https://${authPortalSubdomain}.${tld}
+
+          crypto key verify {env.JWT_SHARED_SECRET}
+          crypto key token name fluff_auth
+          set token sources cookie
+
+          set user identity sub
           inject headers with claims
+
+          acl rule {
+            comment Allow fluff-user role
+            match role fluff-user
+            allow stop
+          }
+
+          acl rule {
+            comment Allow fluff-flyers-user role
+            match role fluff-flyers-user
+            allow stop
+          }
+
+          acl rule {
+            comment Log all others
+            match any
+            deny stop counter log error
+          }
         }
       }
     '';

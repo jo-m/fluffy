@@ -5,7 +5,6 @@
 }: let
   inherit (config.fluffy) username tld data-base-dir;
   cfg = config.services.fluffy.flyermap;
-  outerConfig = config;
   containerLib = import ./lib.nix;
 in {
   options.services.fluffy.flyermap = {
@@ -29,19 +28,12 @@ in {
     services.caddy.virtualHosts."${cfg.domain}.${tld}" = {
       extraConfig = ''
         encode
-        # Has its own auth - thus, ratelimit.
-        import fluff-global-rate-limit
+        authorize with fluff-auth-policy-flyers
         reverse_proxy http://127.0.0.1:${toString cfg.port}
       '';
       # NixOS defaults to /var/log/caddy/access-*.log.
       logFormat = "output stderr";
     };
-
-    sops.secrets."flyermap/users" = {};
-    sops.templates.flyermap-secret-env.content = ''
-      FLYERMAP_USERS=${outerConfig.sops.placeholder."flyermap/users"}
-    '';
-    sops.templates.flyermap-secret-env.owner = username;
 
     systemd.tmpfiles.rules = [
       "d ${data-base-dir}/${cfg.serviceName} 0750 ${username} ${username}"
@@ -66,7 +58,6 @@ in {
             environments = {
               PORT = "8000";
             };
-            environmentFiles = [outerConfig.sops.templates.flyermap-secret-env.path];
           };
         };
       };
