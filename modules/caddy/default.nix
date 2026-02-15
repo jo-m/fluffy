@@ -6,6 +6,14 @@
   inherit (config.fluffy) tld;
   authPortalSubdomain = "auth";
 in {
+  fluffy.podfather.external-apps.AUTH = {
+    name = "Auth";
+    icon = "🔒";
+    category = "Infrastructure";
+    description = "Auth Portal";
+    url = "https://${authPortalSubdomain}.${tld}/whoami";
+  };
+
   sops.secrets."caddy/home-ips" = {};
   sops.templates.caddy-home-ips.content = ''
     (fluff-home-ips-only) {

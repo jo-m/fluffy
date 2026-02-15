@@ -66,6 +66,13 @@ in {
             publishPorts = ["127.0.0.1:${toString cfg.port}:3030"];
             mounts = ["type=bind,src=${data-base-dir}/${cfg.serviceName},dst=/opt/traggo/data"];
             environmentFiles = [outerConfig.sops.templates.traggo-secret-env.path];
+            labels = containerLib.podfatherLabels {
+              name = "Traggo";
+              icon = "⏱️";
+              category = "Apps";
+              description = "Time Tracking";
+              url = "https://${cfg.domain}.${tld}/";
+            };
           };
         };
       };

@@ -51,6 +51,13 @@ in {
 
     home-manager.users."${username}" = {config, ...}: let
       inherit (config.virtualisation.quadlet) networks;
+      labels = containerLib.podfatherLabels {
+        name = "Kitchenowl";
+        icon = "🍽️";
+        category = "Apps";
+        description = "Groceries & Recipes";
+        url = "https://${cfg.domain}.${tld}/";
+      };
     in {
       # https://seiarotg.github.io/quadlet-nix/nixos-options.html
       virtualisation.quadlet.networks."${cfg.serviceName}".networkConfig.name = cfg.serviceName;
@@ -80,6 +87,7 @@ in {
             };
             publishPorts = ["127.0.0.1:${toString cfg.port}:80"];
             networks = [networks."${cfg.serviceName}".ref];
+            inherit labels;
           };
         };
         "${cfg.serviceName}-backend" = {
@@ -103,6 +111,7 @@ in {
             };
             environmentFiles = [outerConfig.sops.templates.kitchenowl-secret-env.path];
             networks = [networks."${cfg.serviceName}".ref];
+            inherit labels;
           };
         };
       };

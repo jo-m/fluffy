@@ -49,6 +49,13 @@ in {
 
             userns = "keep-id";
             publishPorts = ["127.0.0.1:${toString cfg.port}:8080"];
+            labels = containerLib.podfatherLabels {
+              name = "Echo";
+              icon = "🌐";
+              category = "Infrastructure";
+              description = "HTTP Connection Info";
+              url = "https://${cfg.domain}.${tld}/";
+            };
           };
         };
       };

@@ -21,6 +21,13 @@ in {
   };
 
   config = {
+    fluffy.podfather.external-apps.STFU = {
+      name = "STFU";
+      icon = "🔇";
+      category = "Utilities";
+      url = "https://${cfg.domain}.${tld}/stfu/";
+    };
+
     services.caddy.virtualHosts."${cfg.domain}.${tld}" = {
       extraConfig = ''
         encode
@@ -57,6 +64,13 @@ in {
 
             userns = "";
             publishPorts = ["127.0.0.1:${toString cfg.cyberchef.port}:80"];
+            labels = containerLib.podfatherLabels {
+              name = "CyberChef";
+              icon = "👨‍🍳";
+              category = "Utilities";
+              description = "Swiss Army Knife";
+              url = "https://${cfg.domain}.${tld}/cc/";
+            };
           };
         };
       };

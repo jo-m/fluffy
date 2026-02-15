@@ -87,6 +87,13 @@ in {
               SECRET_MAX_TEXT_SIZE = "512";
             };
             environmentFiles = [outerConfig.sops.templates.hemmelig-secret-env.path];
+            labels = containerLib.podfatherLabels {
+              name = "Hemmelig";
+              icon = "🗝️";
+              category = "Sharing";
+              description = "Secrets Sharing";
+              url = "https://${cfg.domain}.${tld}/";
+            };
           };
         };
       };

@@ -1,4 +1,3 @@
-# here
 (fluff-global-rate-limit) {
 	rate_limit {
 		zone fluff-ratelimit-global-60s {

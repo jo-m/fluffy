@@ -25,3 +25,7 @@ All names in Nix code must follow:
 - `modules/` - NixOS modules
 - `containers/` - Container definitions (quadlet-nix)
 - `scripts.nix` - Development scripts (format, lint, fix)
+
+## Hints
+
+- The dashboard is powered by Podfather, which discovers containers via labels. When adding a new container, use `containerLib.podfatherLabels { ... }` in `containerConfig.labels` (see `containers/lib.nix`). For non-container services, register them via `fluffy.podfather.external-apps` in `modules/podfather.nix`.

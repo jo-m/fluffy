@@ -64,6 +64,13 @@ in {
             podmanArgs = ["--umask=0027"];
             publishPorts = ["127.0.0.1:${toString cfg.port}:8000"];
             mounts = ["type=bind,src=${data-base-dir}/${cfg.serviceName},dst=/readeck"];
+            labels = containerLib.podfatherLabels {
+              name = "Readeck";
+              icon = "📑";
+              category = "Apps";
+              description = "Bookmarks";
+              url = "https://${cfg.domain}.${tld}/";
+            };
             environments = {
               # https://readeck.org/en/docs/configuration
               READECK_LOG_LEVEL = "info";

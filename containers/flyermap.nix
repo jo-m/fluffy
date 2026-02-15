@@ -58,6 +58,12 @@ in {
             environments = {
               PORT = "8000";
             };
+            labels = containerLib.podfatherLabels {
+              name = "Flyermap";
+              icon = "🗺️";
+              category = "Apps";
+              url = "https://${cfg.domain}.${tld}/";
+            };
           };
         };
       };

@@ -16,6 +16,7 @@
       hetzner
       monitoring
       options
+      podfather
       rootless-podman
       ssh
       syncthing

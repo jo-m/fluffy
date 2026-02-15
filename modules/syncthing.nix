@@ -3,6 +3,14 @@
   serviceName = "syncthing";
   domain = "sync";
 in {
+  fluffy.podfather.external-apps.SYNCTHING = {
+    name = "Syncthing GUI";
+    icon = "🔄";
+    category = "Apps";
+    description = "Only from home IP";
+    url = "https://${domain}.${tld}/";
+  };
+
   services.syncthing = {
     enable = true;
     openDefaultPorts = true;

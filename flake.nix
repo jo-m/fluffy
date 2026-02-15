@@ -37,8 +37,14 @@
       modules = import ./modules;
     };
     hostSystem = "x86_64-linux";
+    overlays = [
+      (final: _prev: {
+        podfather = final.callPackage ./pkgs/podfather.nix {};
+      })
+    ];
     pkgs = import inputs.nixpkgs {
       system = hostSystem;
+      inherit overlays;
     };
   in {
     nixosConfigurations.fluffy-stage0 = nixpkgs.lib.nixosSystem {
@@ -54,6 +60,7 @@
       inherit specialArgs;
 
       modules = [
+        {nixpkgs.overlays = overlays;}
         ./configuration.nix
         disko.nixosModules.disko
         home-manager.nixosModules.home-manager

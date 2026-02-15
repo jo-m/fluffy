@@ -83,6 +83,13 @@ in {
               "type=bind,src=${data-base-dir}/${cfg.serviceName},dst=/app/data"
               "type=bind,src=${outerConfig.sops.templates.ferrishare-config.path},dst=/config.toml,ro"
             ];
+            labels = containerLib.podfatherLabels {
+              name = "Ferrishare";
+              icon = "📤";
+              category = "Sharing";
+              description = "Public File Sharing";
+              url = "https://${cfg.domain}.${tld}/";
+            };
           };
         };
       };

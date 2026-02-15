@@ -4,7 +4,6 @@
     ./ferrishare.nix
     ./flyermap.nix
     ./hemmelig.nix
-    ./homer.nix
     ./kitchenowl.nix
     ./qr.nix
     ./readeck.nix
@@ -23,10 +22,6 @@
         serviceName = "ferrishare";
         domain = "files";
         port = 30020;
-      };
-      homer = {
-        serviceName = "homer";
-        port = 30030;
       };
       kitchenowl = {
         serviceName = "kitchenowl";

@@ -15,6 +15,14 @@
   promtailPort = 20003;
   lokiPort = 20004;
 in {
+  fluffy.podfather.external-apps.GRAFANA = {
+    name = "Grafana";
+    icon = "📈";
+    category = "Infrastructure";
+    description = "Metrics & Logs";
+    url = "https://${grafanaDomain}.${tld}/";
+  };
+
   services.caddy.virtualHosts."${grafanaDomain}.${tld}" = {
     extraConfig = ''
       encode

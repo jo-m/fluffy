@@ -49,6 +49,13 @@ in {
 
             userns = "";
             publishPorts = ["127.0.0.1:${toString cfg.port}:8080"];
+            labels = containerLib.podfatherLabels {
+              name = "QR";
+              icon = "📱";
+              category = "Utilities";
+              description = "Generate QR Codes";
+              url = "https://${cfg.domain}.${tld}/";
+            };
           };
         };
       };

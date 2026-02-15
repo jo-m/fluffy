@@ -4,7 +4,7 @@ Features:
 
 - Various apps running as rootless podman containers
 - Apps behind caddy reverse proxy (automatic TLS, unified login, rate limiting)
-- Dashboard (Homer)
+- Dashboard (Podfather)
 - Webdav server for Joplin sync
 - Syncthing
 - Logging/monitoring (Prometheus, Grafana, Loki)
@@ -173,3 +173,4 @@ nix path-info --closure-size --human-readable ./result
 - [ ] https://docs.paperless-ngx.com/
 - [ ] https://forgejo.org/
 - [ ] Pastebin
+- [ ] Google Forms alternative
