@@ -95,7 +95,7 @@ in {
           }
         }
 
-        authorization policy fluff-internal-auth {
+        authorization policy fluff-auth-policy {
           set auth url https://${authPortalSubdomain}.${tld}
 
           crypto key verify {env.JWT_SHARED_SECRET}

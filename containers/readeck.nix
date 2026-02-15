@@ -36,7 +36,7 @@ in {
         }
         # Everything else behind auth portal.
         handle {
-          authorize with fluff-internal-auth
+          authorize with fluff-auth-policy
           reverse_proxy http://127.0.0.1:${toString cfg.port}
         }
       '';

@@ -26,7 +26,7 @@ in {
 
   services.caddy.virtualHosts."${domain}.${tld}".extraConfig = ''
     encode
-    authorize with fluff-internal-auth
+    authorize with fluff-auth-policy
     # We additionally protect the Syncthing GUI with IP blocking.
     import fluff-home-ips-only
     # https://docs.syncthing.net/users/reverseproxy.html
