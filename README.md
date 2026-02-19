@@ -173,4 +173,9 @@ nix path-info --closure-size --human-readable ./result
 - [ ] https://docs.paperless-ngx.com/
 - [ ] https://forgejo.org/
 - [ ] Pastebin
+- [ ] https://github.com/Kozea/Radicale CalDAV/CardDAV
+- [ ] https://github.com/SinTan1729/chhoto-url
+- [ ] Headscale
+- [ ] Puter
+- [ ] https://github.com/lukevella/rallly
 - [ ] Google Forms alternative
