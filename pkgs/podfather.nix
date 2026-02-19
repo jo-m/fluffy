@@ -2,24 +2,27 @@
   lib,
   buildGoModule,
   fetchFromGitHub,
-}:
-buildGoModule {
-  pname = "podfather";
-  version = "0.2.0";
+}: let
+  name = "podfather";
+  version = "0.1.1";
+in
+  buildGoModule {
+    pname = name;
+    inherit version;
 
-  src = fetchFromGitHub {
-    owner = "jo-m";
-    repo = "podfather";
-    rev = "v0.1.0";
-    hash = "sha256-zjF/OvgXky4D96YSIEXEGBQ84gEr7fOA9oxYBIA50hE=";
-  };
+    src = fetchFromGitHub {
+      owner = "jo-m";
+      repo = name;
+      rev = "v${version}";
+      hash = "sha256-YIutnwp8F7OWDb/lotLPy6wR2f0bhD7vBOHQC6QYhEg=";
+    };
 
-  vendorHash = null;
+    vendorHash = null;
 
-  meta = {
-    description = " A simple web dashboard for Podman 🦭 ";
-    homepage = "https://github.com/jo-m/podfather";
-    license = lib.licenses.mit;
-    mainProgram = "podfather";
-  };
-}
+    meta = {
+      description = " A simple web dashboard for Podman 🦭 ";
+      homepage = "https://github.com/jo-m/${name}";
+      license = lib.licenses.mit;
+      mainProgram = name;
+    };
+  }
