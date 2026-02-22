@@ -160,11 +160,11 @@ nix path-info --closure-size --human-readable ./result
   - [x] Adjust/test container update and backup monitoring
 - [x] Add auth portal
 - [x] Ensure Grafana data/settings are backed up
+- [ ] Maybe add https://github.com/JasonLovesDoggo/caddy-defender
 
 ### More apps (maybe)
 
 - [ ] https://github.com/alextselegidis/easyappointments
-- [ ] https://timetagger.app/
 - [ ] https://www.fizzy.do/
 - [ ] https://github.com/endurain-project/endurain
 - [ ] https://github.com/louislam/uptime-kuma
@@ -172,8 +172,6 @@ nix path-info --closure-size --human-readable ./result
 - [ ] [Radicale](https://radicale.org/v3.html) CalDAV/CardDAV
 - [ ] https://docs.paperless-ngx.com/
 - [ ] https://forgejo.org/
-- [ ] Pastebin
-- [ ] https://github.com/Kozea/Radicale CalDAV/CardDAV
 - [ ] https://github.com/SinTan1729/chhoto-url
 - [ ] Headscale
 - [ ] Puter
