@@ -4,7 +4,7 @@
   fetchFromGitHub,
 }: let
   name = "podfather";
-  version = "0.1.2";
+  version = "0.1.3";
 in
   buildGoModule {
     pname = name;
@@ -14,7 +14,7 @@ in
       owner = "jo-m";
       repo = name;
       rev = "v${version}";
-      hash = "sha256-LfjqIac3+8R+qx6yY/hwC93RgcAgZ6J1uzEpDnQgKcc=";
+      hash = "sha256-q6zkyNny1sLnU/8f9z7vQLB8coYMGPmhYNFM3Bdj9xc=";
     };
 
     vendorHash = null;
