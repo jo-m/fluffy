@@ -1,29 +1,22 @@
-{
-  lib,
-  modules,
-  ...
-}: {
+{...}: {
   sops.defaultSopsFile = ./secrets.yaml;
   sops.age.sshKeyPaths = ["/etc/ssh/ssh_host_ed25519_key"];
 
-  imports = lib.flatten [
-    ./configuration-stage0.nix
+  imports =
+    [
+      ./configuration-stage0.nix
 
-    (with modules; [
-      backup
-      caddy
-      harden
-      hetzner
-      monitoring
-      options
-      podfather
-      rootless-podman
-      ssh
-      syncthing
-      webdav
-    ])
-
-    # Import all container modules.
-    (import ./containers)
-  ];
+      ./modules/backup.nix
+      ./modules/caddy
+      ./modules/harden.nix
+      ./modules/hetzner
+      ./modules/monitoring.nix
+      ./modules/options.nix
+      ./modules/podfather.nix
+      ./modules/rootless-podman.nix
+      ./modules/ssh.nix
+      ./modules/syncthing.nix
+      ./modules/webdav.nix
+    ]
+    ++ [./containers];
 }

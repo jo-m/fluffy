@@ -34,7 +34,6 @@
     specialArgs = {
       inherit inputs;
       inherit (self) outputs;
-      modules = import ./modules;
     };
     hostSystem = "x86_64-linux";
     overlays = [
