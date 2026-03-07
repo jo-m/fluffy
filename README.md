@@ -133,7 +133,7 @@ sudo -u runner podman auto-update
 
 # NixOS cleanup.
 nixos-rebuild list-generations
-nix-collect-garbage --delete-older-than 30d
+nix-collect-garbage --delete-older-than 5d
 
 # Manually start backup.
 systemctl start borgbackup-job-data.service
