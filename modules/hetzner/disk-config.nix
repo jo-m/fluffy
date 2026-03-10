@@ -14,10 +14,10 @@
         partitions = {
           boot = {
             size = "1M";
-            type = "EF02"; # for grub MBR
+            type = "EF02";
           };
           ESP = {
-            size = "1G";
+            size = "256M";
             type = "EF00";
             content = {
               type = "filesystem";
@@ -43,7 +43,7 @@
         lvs = {
           # System (NixOS) & home (container storage).
           root = {
-            size = "15G";
+            size = "20G";
             content = {
               type = "filesystem";
               format = "ext4";
