@@ -5,6 +5,11 @@
     ./disk-config.nix
   ];
 
+  # Disable the massive firmware blob package.
+  hardware.enableRedistributableFirmware = false;
+  # We want the microcode though.
+  hardware.cpu.amd.updateMicrocode = true;
+
   boot = {
     # Use predictable network interface names.
     kernelParams = ["net.ifnames=0"];
