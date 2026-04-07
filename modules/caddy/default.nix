@@ -44,11 +44,11 @@ in {
         # https://github.com/mholt/caddy-ratelimit
         "github.com/mholt/caddy-ratelimit@v0.1.1-0.20260116163719-b8d8c9a9d99e"
         # https://github.com/mholt/caddy-webdav
-        "github.com/mholt/caddy-ratelimit@v0.1.1-0.20260116163719-b8d8c9a9d99e"
+        "github.com/mholt/caddy-webdav@v0.0.0-20260127042217-fa2f366b0d75"
         # https://github.com/greenpau/caddy-security
         "github.com/greenpau/caddy-security@v1.1.61"
       ];
-      hash = "sha256-FwMmjsnReJNFNP0JpwGHCYKjYZQvV+2VRay5X/VD11w=";
+      hash = "sha256-nPdVKwO4996ZrjSXnYUOBbSvDxEQ/Lagv4Q0kPPyR5M=";
     };
 
     environmentFile = config.sops.templates.caddy-env-file.path;
