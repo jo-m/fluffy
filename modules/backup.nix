@@ -43,6 +43,11 @@ in {
       "${data-base-dir}/syncthing"
       "${data-base-dir}/lost+found"
       "${data-base-dir}/readeck/config.toml"
+
+      "${data-base-dir}/cartomancer/*.sqlite"
+      "${data-base-dir}/cartomancer/*.sqlite-shm"
+      "${data-base-dir}/cartomancer/*.sqlite-wal"
+      "${data-base-dir}/cartomancer/maps"
     ];
     extraCreateArgs = "--verbose --stats";
     encryption = {

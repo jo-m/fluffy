@@ -3,8 +3,9 @@
 Features:
 
 - Various apps running as rootless podman containers
+- Containers self-update
 - Apps behind caddy reverse proxy (automatic TLS, unified login, rate limiting)
-- Dashboard (Podfather)
+- Dashboard ([Podfather](https://github.com/jo-m/podfather))
 - Webdav server for Joplin sync
 - Syncthing
 - Logging/monitoring (Prometheus, Grafana, Loki)
@@ -106,9 +107,9 @@ ssh $NIX_SSHOPTS root@$REMOTE_IP4
 
 ```bash
 # Status
-systemctl status --user --machine=runner@.host readeck.service
+systemctl status --user --machine=runner@.host cartomancer.service
 # Logs
-sudo -u runner journalctl --user -efu readeck
+sudo -u runner journalctl --user -efu cartomancer
 ```
 
 ## Notes

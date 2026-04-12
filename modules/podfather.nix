@@ -28,7 +28,7 @@ in {
     port = lib.mkOption {
       type = lib.types.port;
       description = "Port for the Podfather web dashboard";
-      default = 30120;
+      default = 29999;
     };
 
     base-path = lib.mkOption {
