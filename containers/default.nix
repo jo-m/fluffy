@@ -9,7 +9,7 @@
     ./readeck.nix
     ./traggo.nix
     ./utils.nix
-    ./cartomancer.nix
+    # ./cartomancer.nix
   ];
 
   config = {
@@ -58,11 +58,11 @@
         domain = "utils";
         cyberchef.port = 30110;
       };
-      cartomancer = {
-        serviceName = "cartomancer";
-        domain = "cartomancer";
-        port = 30120;
-      };
+      # cartomancer = {
+      #   serviceName = "cartomancer";
+      #   domain = "cartomancer";
+      #   port = 30120;
+      # };
     };
   };
 }
