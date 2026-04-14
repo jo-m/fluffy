@@ -11,6 +11,11 @@
     "vm.swappiness" = 25;
   };
 
+  zramSwap = {
+    enable = true;
+    algorithm = "zstd";
+  };
+
   # Try to save some space.
   documentation = {
     enable = false;
