@@ -73,6 +73,8 @@ in {
               LOG_PRETTY = "false";
               APP_REGISTRATION_ENABLED = "false";
               JOBS_MAX_PARALLEL = "1";
+              MAX_CONCURRENT_REQS = "10";
+              MAX_CONCURRENT_BACKLOG = "100";
             };
             memory = "2g";
             environmentFiles = [outerConfig.sops.templates.cartomancer-secret-env.path];
