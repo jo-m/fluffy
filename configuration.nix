@@ -15,6 +15,7 @@
     ./modules/rootless-podman.nix
     ./modules/ssh.nix
     ./modules/syncthing.nix
+    ./modules/system.nix
     ./modules/webdav.nix
 
     ./containers
