@@ -139,6 +139,11 @@ nix-collect-garbage --delete-older-than 5d
 # Manually start backup.
 systemctl start borgbackup-job-data.service
 journalctl -feu borgbackup-job-data.service
+
+# Cartomancer management
+cd /
+sudo -u runner podman exec cartomancer /cartomancer genjwtsecret
+sudo -u runner podman exec cartomancer /cartomancer setpass test@example.org
 ```
 
 ### Debug store size
