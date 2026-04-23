@@ -22,9 +22,10 @@ push:
 .PHONY: upgrade
 upgrade:
 	nix flake update
-	$(MAKE) push
+	$(MAKE) build
 	git add flake.lock
 	git commit -m 'upgrade'
+	$(MAKE) push
 
 .PHONY: build
 build:
