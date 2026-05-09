@@ -63,7 +63,7 @@ in {
             name = "cyberchef";
 
             userns = "";
-            publishPorts = ["127.0.0.1:${toString cfg.cyberchef.port}:80"];
+            publishPorts = ["127.0.0.1:${toString cfg.cyberchef.port}:8080"];
             labels = containerLib.podfatherLabels {
               name = "CyberChef";
               icon = "👨‍🍳";
