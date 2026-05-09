@@ -39,6 +39,7 @@
     overlays = [
       (final: _prev: {
         podfather = final.callPackage ./pkgs/podfather.nix {};
+        prometheus-podman-exporter = final.callPackage ./pkgs/prometheus-podman-exporter.nix {};
       })
     ];
     pkgs = import inputs.nixpkgs {

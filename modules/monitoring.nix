@@ -172,6 +172,14 @@ in {
           }
         ];
       }
+      {
+        job_name = "podman";
+        static_configs = [
+          {
+            targets = ["localhost:${toString config.fluffy.prometheus-podman-exporter.port}"];
+          }
+        ];
+      }
     ];
   };
 }

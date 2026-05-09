@@ -12,6 +12,7 @@
     ./modules/monitoring.nix
     ./modules/options.nix
     ./modules/podfather.nix
+    ./modules/prometheus-podman-exporter.nix
     ./modules/rootless-podman.nix
     ./modules/ssh.nix
     ./modules/syncthing.nix
