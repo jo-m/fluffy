@@ -7,6 +7,9 @@
 in {
   networking.firewall.interfaces."podman+".allowedUDPPorts = [53];
 
+  # The unprivileged user needs access to nix for home-manager, but no one else.
+  nix.settings.allowed-users = [username];
+
   virtualisation.podman = {
     enable = true;
     autoPrune.enable = true;
