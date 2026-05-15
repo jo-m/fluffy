@@ -28,19 +28,6 @@ in {
   config = {
     services.caddy.virtualHosts."${cfg.domain}.${tld}" = {
       extraConfig = ''
-        # Separate rate limiting for login endpoint.
-        handle /api/sessions/login {
-          rate_limit {
-            zone cartomancer-login-per-host-1m {
-              key {http.request.remote.host}
-              events 10
-              window 1m
-            }
-            log_key
-          }
-          reverse_proxy http://127.0.0.1:${toString cfg.port}
-        }
-
         reverse_proxy http://127.0.0.1:${toString cfg.port}
       '';
       # NixOS defaults to /var/log/caddy/access-*.log.
@@ -88,6 +75,7 @@ in {
               JOBS_MAX_PARALLEL = "1";
               MAX_CONCURRENT_REQS = "20";
               MAX_CONCURRENT_BACKLOG = "100";
+              APP_RATE_LIMIT_TRUSTED_PROXIES = "1";
             };
             environmentFiles = [outerConfig.sops.templates.cartomancer-secret-env.path];
             labels = containerLib.podfatherLabels {
