@@ -48,7 +48,7 @@ in {
         # https://github.com/greenpau/caddy-security
         "github.com/greenpau/caddy-security@v1.1.62"
       ];
-      hash = "sha256-gpU/A9NKJbEwfvsiG05/G/K8W78qYNao5slt0AR5ySQ=";
+      hash = "sha256-sHcLH5E8ZrmVPz9MFH5ZGULIRAs/GGUMNFZT0C35izM=";
     };
 
     environmentFile = config.sops.templates.caddy-env-file.path;
