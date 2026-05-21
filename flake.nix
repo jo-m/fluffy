@@ -38,6 +38,7 @@
     hostSystem = "x86_64-linux";
     overlays = [
       (final: _prev: {
+        fogdb = final.callPackage ./pkgs/fogdb.nix {};
         podfather = final.callPackage ./pkgs/podfather.nix {};
         prometheus-podman-exporter = final.callPackage ./pkgs/prometheus-podman-exporter.nix {};
       })

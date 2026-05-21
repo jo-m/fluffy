@@ -7,6 +7,7 @@
 
     ./modules/backup.nix
     ./modules/caddy
+    ./modules/fogdb.nix
     ./modules/harden.nix
     ./modules/hetzner
     ./modules/monitoring.nix

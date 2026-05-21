@@ -48,6 +48,9 @@ in {
       "${data-base-dir}/cartomancer/*.sqlite-shm"
       "${data-base-dir}/cartomancer/*.sqlite-wal"
       "${data-base-dir}/cartomancer/maps"
+
+      "${data-base-dir}/fogdb/*.sqlite-shm"
+      "${data-base-dir}/fogdb/*.sqlite-wal"
     ];
     extraCreateArgs = "--verbose --stats";
     encryption = {
