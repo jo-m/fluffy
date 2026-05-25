@@ -34,14 +34,26 @@ in {
       logFormat = "output stderr";
     };
 
+    sops.secrets."cartomancer/APP_EXTERNAL_BASE_URL" = {};
     sops.secrets."cartomancer/APP_INIT_ADMIN_EMAIL" = {};
     sops.secrets."cartomancer/SESSION_JWT_SECRET" = {};
     sops.secrets."cartomancer/APP_EMAIL_JWT_SECRET" = {};
+    sops.secrets."cartomancer/MAIL_SMTP_HOST" = {};
+    sops.secrets."cartomancer/MAIL_SMTP_PORT" = {};
+    sops.secrets."cartomancer/MAIL_FROM" = {};
+    sops.secrets."cartomancer/MAIL_AUTH_USERNAME" = {};
+    sops.secrets."cartomancer/MAIL_AUTH_PASSWORD" = {};
 
     sops.templates.cartomancer-secret-env.content = ''
+      APP_EXTERNAL_BASE_URL=${outerConfig.sops.placeholder."cartomancer/APP_EXTERNAL_BASE_URL"}
       APP_INIT_ADMIN_EMAIL=${outerConfig.sops.placeholder."cartomancer/APP_INIT_ADMIN_EMAIL"}
       SESSION_JWT_SECRET=${outerConfig.sops.placeholder."cartomancer/SESSION_JWT_SECRET"}
       APP_EMAIL_JWT_SECRET=${outerConfig.sops.placeholder."cartomancer/APP_EMAIL_JWT_SECRET"}
+      MAIL_SMTP_HOST=${outerConfig.sops.placeholder."cartomancer/MAIL_SMTP_HOST"}
+      MAIL_SMTP_PORT=${outerConfig.sops.placeholder."cartomancer/MAIL_SMTP_PORT"}
+      MAIL_FROM=${outerConfig.sops.placeholder."cartomancer/MAIL_FROM"}
+      MAIL_AUTH_USERNAME=${outerConfig.sops.placeholder."cartomancer/MAIL_AUTH_USERNAME"}
+      MAIL_AUTH_PASSWORD=${outerConfig.sops.placeholder."cartomancer/MAIL_AUTH_PASSWORD"}
     '';
     sops.templates.cartomancer-secret-env.owner = username;
 
@@ -71,7 +83,7 @@ in {
             environments = {
               LOG_PRETTY = "true";
               LOG_LEVEL = "DEBUG";
-              APP_REGISTRATION_ENABLED = "false";
+              APP_REGISTRATION_ENABLED = "true";
               JOBS_MAX_PARALLEL = "1";
               MAX_CONCURRENT_REQS = "20";
               MAX_CONCURRENT_BACKLOG = "100";
