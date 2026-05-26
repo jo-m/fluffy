@@ -88,6 +88,7 @@ in {
               MAX_CONCURRENT_REQS = "20";
               MAX_CONCURRENT_BACKLOG = "100";
               APP_RATE_LIMIT_TRUSTED_PROXIES = "1";
+              SOPS_FINGERPRINT = containerLib.sopsFingerprint;
             };
             environmentFiles = [outerConfig.sops.templates.cartomancer-secret-env.path];
             labels = containerLib.podfatherLabels {

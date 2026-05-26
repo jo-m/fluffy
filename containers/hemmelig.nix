@@ -85,6 +85,7 @@ in {
               SECRET_FILE_SIZE = "1";
               SECRET_FORCED_LANGUAGE = "en";
               SECRET_MAX_TEXT_SIZE = "512";
+              SOPS_FINGERPRINT = containerLib.sopsFingerprint;
             };
             environmentFiles = [outerConfig.sops.templates.hemmelig-secret-env.path];
             labels = containerLib.podfatherLabels {

@@ -8,6 +8,13 @@
     RestartMaxDelaySec = "60s";
   };
 
+  # Hash of the encrypted sops secrets file. Inject into a container's
+  # environments/labels so that any secret change alters the generated
+  # systemd unit text, causing sd-switch to restart the container. Without
+  # this, edits to secrets.yaml only change the rendered file's contents
+  # while its path stays stable, so the unit hash is unchanged.
+  sopsFingerprint = builtins.hashFile "sha256" ../secrets.yaml;
+
   # Generate podfather app discovery labels for a container.
   # Takes an attrset with: name (required), icon, category, sort-index, description, url (all optional).
   # Returns a list of "ch.jo-m.go.podfather.app.<field>=<value>" strings.

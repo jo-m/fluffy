@@ -108,6 +108,7 @@ in {
               DISABLE_ONBOARDING = "false";
               OPEN_REGISTRATION = "false";
               STORAGE_PATH = "/data";
+              SOPS_FINGERPRINT = containerLib.sopsFingerprint;
             };
             environmentFiles = [outerConfig.sops.templates.kitchenowl-secret-env.path];
             networks = [networks."${cfg.serviceName}".ref];

@@ -83,6 +83,9 @@ in {
               "type=bind,src=${data-base-dir}/${cfg.serviceName},dst=/app/data"
               "type=bind,src=${outerConfig.sops.templates.ferrishare-config.path},dst=/config.toml,ro"
             ];
+            environments = {
+              SOPS_FINGERPRINT = containerLib.sopsFingerprint;
+            };
             labels = containerLib.podfatherLabels {
               name = "Ferrishare";
               icon = "📤";
