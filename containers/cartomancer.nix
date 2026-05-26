@@ -84,7 +84,7 @@ in {
               LOG_PRETTY = "true";
               LOG_LEVEL = "DEBUG";
               APP_REGISTRATION_ENABLED = "true";
-              JOBS_MAX_PARALLEL = "1";
+              JOBS_MAX_PARALLEL = "2";
               MAX_CONCURRENT_REQS = "20";
               MAX_CONCURRENT_BACKLOG = "100";
               APP_RATE_LIMIT_TRUSTED_PROXIES = "1";
