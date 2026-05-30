@@ -12,7 +12,6 @@
   promPort = 20001;
   promNodePort = 20002;
 
-  promtailPort = 20003;
   lokiPort = 20004;
 in {
   fluffy.podfather.external-apps.GRAFANA = {
@@ -100,63 +99,7 @@ in {
       storage_config:
         filesystem:
           directory: ${config.services.loki.dataDir}/chunks
-
-      # TODO(promtail-removal): remove this whole limits_config block once
-      # promtail is gone and the "bit_" prefix is dropped; the default
-      # discover_service_name list already includes "job".
-      limits_config:
-        discover_service_name:
-          - service_name
-          - service
-          - app
-          - application
-          - name
-          - app_kubernetes_io_name
-          - container
-          - container_name
-          - k8s_container_name
-          - component
-          - workload
-          - job
-          - bit_job
     '';
-  };
-
-  services.promtail = {
-    enable = true;
-    configuration = {
-      server = {
-        http_listen_port = promtailPort;
-        grpc_listen_port = 0;
-      };
-      clients = [
-        {
-          url = "http://127.0.0.1:${toString lokiPort}/loki/api/v1/push";
-        }
-      ];
-      scrape_configs = [
-        {
-          job_name = "journal";
-          journal = {
-            max_age = "12h";
-            labels = {
-              job = "systemd-journal";
-              host = hostname;
-            };
-          };
-          relabel_configs = [
-            {
-              source_labels = ["__journal__systemd_unit"];
-              target_label = "unit";
-            }
-            {
-              source_labels = ["__journal__systemd_user_unit"];
-              target_label = "user_unit";
-            }
-          ];
-        }
-      ];
-    };
   };
 
   services.fluent-bit = {
@@ -181,22 +124,16 @@ in {
           # The list-of-strings form ("KEY VALUE") matches fluent-bit's classic
           # config and is more reliable than the YAML map form for the modify
           # filter.
-          #
-          # TODO(promtail-removal): drop the "bit_" prefix from label keys here
-          # and in the loki output below once promtail is gone, so fluent-bit
-          # writes the canonical job/host/unit/user_unit labels. The prefix
-          # exists only to keep its Loki streams distinct from promtail's
-          # during the parallel-run period.
           {
             name = "modify";
             match = "journal.*";
             add = [
-              "bit_job systemd-journal"
-              "bit_host ${hostname}"
+              "job systemd-journal"
+              "host ${hostname}"
             ];
             rename = [
-              "SYSTEMD_UNIT bit_unit"
-              "SYSTEMD_USER_UNIT bit_user_unit"
+              "SYSTEMD_UNIT unit"
+              "SYSTEMD_USER_UNIT user_unit"
             ];
           }
           # Keep only the message body and the label fields. Drops all the
@@ -207,10 +144,10 @@ in {
             match = "journal.*";
             allowlist_key = [
               "MESSAGE"
-              "bit_job"
-              "bit_host"
-              "bit_unit"
-              "bit_user_unit"
+              "job"
+              "host"
+              "unit"
+              "user_unit"
             ];
           }
         ];
@@ -221,11 +158,11 @@ in {
             host = "localhost";
             port = lokiPort;
             match = "journal.*";
-            labels = "bit_job=$bit_job, bit_host=$bit_host, bit_unit=$bit_unit, bit_user_unit=$bit_user_unit";
+            labels = "job=$job, host=$host, unit=$unit, user_unit=$user_unit";
             # Strip the label fields from the record so only MESSAGE remains;
             # combined with drop_single_key=raw, the log line shipped to Loki
             # is the bare message string (matching promtail's output).
-            remove_keys = "bit_job,bit_host,bit_unit,bit_user_unit";
+            remove_keys = "job,host,unit,user_unit";
             drop_single_key = "raw";
           }
         ];
