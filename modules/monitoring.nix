@@ -100,6 +100,25 @@ in {
       storage_config:
         filesystem:
           directory: ${config.services.loki.dataDir}/chunks
+
+      # TODO(promtail-removal): remove this whole limits_config block once
+      # promtail is gone and the "bit_" prefix is dropped; the default
+      # discover_service_name list already includes "job".
+      limits_config:
+        discover_service_name:
+          - service_name
+          - service
+          - app
+          - application
+          - name
+          - app_kubernetes_io_name
+          - container
+          - container_name
+          - k8s_container_name
+          - component
+          - workload
+          - job
+          - bit_job
     '';
   };
 
@@ -139,6 +158,87 @@ in {
       ];
     };
   };
+
+  services.fluent-bit = {
+    enable = true;
+    # Must be >= service.grace below.
+    graceLimit = 30;
+    settings = {
+      pipeline = {
+        inputs = [
+          # https://docs.fluentbit.io/manual/data-pipeline/inputs/systemd
+          {
+            name = "systemd";
+            db = "\${STATE_DIRECTORY}/systemd.db";
+            tag = "journal.*";
+            # Read historical journal entries on first start; the DB resumes
+            # position across restarts.
+            read_from_tail = "off";
+            strip_underscores = "on";
+          }
+        ];
+        filters = [
+          # The list-of-strings form ("KEY VALUE") matches fluent-bit's classic
+          # config and is more reliable than the YAML map form for the modify
+          # filter.
+          #
+          # TODO(promtail-removal): drop the "bit_" prefix from label keys here
+          # and in the loki output below once promtail is gone, so fluent-bit
+          # writes the canonical job/host/unit/user_unit labels. The prefix
+          # exists only to keep its Loki streams distinct from promtail's
+          # during the parallel-run period.
+          {
+            name = "modify";
+            match = "journal.*";
+            add = [
+              "bit_job systemd-journal"
+              "bit_host ${hostname}"
+            ];
+            rename = [
+              "SYSTEMD_UNIT bit_unit"
+              "SYSTEMD_USER_UNIT bit_user_unit"
+            ];
+          }
+          # Keep only the message body and the label fields. Drops all the
+          # extra journal metadata (PRIORITY, SYSTEMD_*, BOOT_ID, etc.) so the
+          # log line shipped to Loki matches promtail's shape.
+          {
+            name = "record_modifier";
+            match = "journal.*";
+            allowlist_key = [
+              "MESSAGE"
+              "bit_job"
+              "bit_host"
+              "bit_unit"
+              "bit_user_unit"
+            ];
+          }
+        ];
+        outputs = [
+          # https://docs.fluentbit.io/manual/data-pipeline/outputs/loki#fluent-bit.yaml
+          {
+            name = "loki";
+            host = "localhost";
+            port = lokiPort;
+            match = "journal.*";
+            labels = "bit_job=$bit_job, bit_host=$bit_host, bit_unit=$bit_unit, bit_user_unit=$bit_user_unit";
+            # Strip the label fields from the record so only MESSAGE remains;
+            # combined with drop_single_key=raw, the log line shipped to Loki
+            # is the bare message string (matching promtail's output).
+            remove_keys = "bit_job,bit_host,bit_unit,bit_user_unit";
+            drop_single_key = "raw";
+          }
+        ];
+      };
+      service = {
+        grace = 5;
+      };
+    };
+  };
+
+  # The fluent-bit module uses DynamicUser without StateDirectory,
+  # so ${STATE_DIRECTORY} is unset and the systemd input's db path breaks.
+  systemd.services.fluent-bit.serviceConfig.StateDirectory = "fluent-bit";
 
   # https://nixos.org/manual/nixos/stable/#module-services-prometheus-exporters
   services.prometheus.exporters.node = {
