@@ -1,7 +1,7 @@
 {lib, ...}: {
   services.openssh = {
     enable = true;
-    allowSFTP = false;
+    allowSFTP = true;
     ports = [4721];
 
     # Only generate an ed25519 host key.
