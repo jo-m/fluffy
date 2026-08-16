@@ -6,8 +6,8 @@
 }: let
   pname = "fogdb";
   # Upstream has no tagged releases; pin to a specific commit on main.
-  version = "0-unstable-2026-05-21";
-  rev = "fe44c91309374467305372671e05963a707aa52a";
+  version = "0-unstable-2026-08-16";
+  rev = "ebbc79f5083bbda992d120324bbb9d08ac2a9bbf";
 in
   buildGo126Module {
     inherit pname version;
@@ -16,10 +16,10 @@ in
       owner = "jo-m";
       repo = "fogDB";
       inherit rev;
-      hash = "sha256-0hyPKT67cls3WktlKfHc9AYbtamPwK87JjONFhyS2Xk=";
+      hash = "sha256-rSjjmKX5YhbZLoR9l0ldwX4zBqDnu2gNOxWj4KjTBrE=";
     };
 
-    vendorHash = "sha256-KYN1DK5yUAZi1/n1/x+B7T65/+zavrku2aCqamMff9w=";
+    vendorHash = "sha256-SgXinTQ/0xJv5b1dbfdzKPdw7cIEYrY3LlfmU0vhTSI=";
 
     # Only build the main binary; skip lint/test tooling listed in go.mod's `tool` block.
     subPackages = ["."];
