@@ -29,8 +29,16 @@ in {
       extraConfig = ''
         encode
 
-        # API is public (for app access), rate limited.
+        # API is public (for app/OPDS access), rate limited.
         handle /api/* {
+          import fluff-global-rate-limit
+          reverse_proxy http://127.0.0.1:${toString cfg.port}
+        }
+        handle /opds {
+          import fluff-global-rate-limit
+          reverse_proxy http://127.0.0.1:${toString cfg.port}
+        }
+        handle /opds/* {
           import fluff-global-rate-limit
           reverse_proxy http://127.0.0.1:${toString cfg.port}
         }
