@@ -81,8 +81,8 @@ in {
             mounts = ["type=bind,src=${data-base-dir}/${cfg.serviceName},dst=/data"];
             exec = "serve";
             environments = {
-              LOG_PRETTY = "true";
-              LOG_LEVEL = "DEBUG";
+              LOG_PRETTY = "false";
+              LOG_LEVEL = "INFO";
               APP_REGISTRATION_ENABLED = "true";
               JOBS_MAX_PARALLEL = "2";
               MAX_CONCURRENT_REQS = "20";
