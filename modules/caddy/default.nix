@@ -42,13 +42,13 @@ in {
       plugins = [
         # To update: Put entire git rev after @, build, correct version will be in the error message.
         # https://github.com/mholt/caddy-ratelimit
-        "github.com/mholt/caddy-ratelimit@v0.1.1-0.20260521172720-16aecbbcb8ca"
+        "github.com/mholt/caddy-ratelimit@v0.1.1-0.20260612195517-5625512f24f6"
         # https://github.com/mholt/caddy-webdav
         "github.com/mholt/caddy-webdav@v0.0.0-20260127042217-fa2f366b0d75"
         # https://github.com/greenpau/caddy-security
-        "github.com/greenpau/caddy-security@v1.1.62"
+        "github.com/greenpau/caddy-security@v1.1.64"
       ];
-      hash = "sha256-xGJv308xcpdiQ85c1iZtC7XW1BCDTapEAkDEaU+QdJ0=";
+      hash = "sha256-vzQZIbFz2yuqoD1m7ngY0zgLXy2xTzH/ELB0w19Oenc=";
     };
 
     environmentFile = config.sops.templates.caddy-env-file.path;
