@@ -52,7 +52,7 @@
       inherit specialArgs;
 
       modules = [
-        ./configuration-stage0.nix
+        ./fluffy-configuration-stage0.nix
         disko.nixosModules.disko
       ];
     };
@@ -62,7 +62,7 @@
 
       modules = [
         {nixpkgs.overlays = overlays;}
-        ./configuration.nix
+        ./fluffy-configuration.nix
         disko.nixosModules.disko
         home-manager.nixosModules.home-manager
         quadlet-nix.nixosModules.quadlet

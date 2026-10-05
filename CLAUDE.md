@@ -21,7 +21,7 @@ All names in Nix code must follow:
 ## Project Structure
 
 - `flake.nix` - Flake definition with devShell and NixOS configurations
-- `configuration.nix` - Main NixOS configuration
+- `fluffy-configuration.nix` - Main NixOS configuration
 - `modules/` - NixOS modules
 - `containers/` - Container definitions (quadlet-nix)
 - `scripts.nix` - Development scripts (format, lint, fix)

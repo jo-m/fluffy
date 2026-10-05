@@ -3,7 +3,7 @@ _: {
   nixpkgs.hostPlatform = "x86_64-linux";
 
   imports = [
-    ./modules/hetzner
-    ./modules/ssh.nix
+    ./fluffy/hetzner
+    ./fluffy/ssh.nix
   ];
 }
