@@ -1,34 +1,13 @@
 {...}: {
   imports = [
-    ./echo.nix
-    ./ferrishare.nix
-    ./flyermap.nix
-    ./hemmelig.nix
-    ./kitchenowl.nix
     ./qr.nix
     ./readeck.nix
     ./traggo.nix
-    ./utils.nix
     ./cartomancer.nix
   ];
 
   config = {
     services.fluffy = {
-      echo = {
-        serviceName = "echo";
-        domain = "echo";
-        port = 30010;
-      };
-      ferrishare = {
-        serviceName = "ferrishare";
-        domain = "files";
-        port = 30020;
-      };
-      kitchenowl = {
-        serviceName = "kitchenowl";
-        domain = "kitchen";
-        port = 30040;
-      };
       qr = {
         serviceName = "qr";
         domain = "qr";
@@ -39,24 +18,10 @@
         domain = "readeck";
         port = 30070;
       };
-      hemmelig = {
-        serviceName = "hemmelig";
-        domain = "secrets";
-        port = 30080;
-      };
       traggo = {
         serviceName = "traggo";
         domain = "track";
         port = 30090;
-      };
-      flyermap = {
-        serviceName = "flyermap";
-        domain = "flyers";
-        port = 30100;
-      };
-      utils = {
-        domain = "utils";
-        cyberchef.port = 30110;
       };
       cartomancer = {
         serviceName = "cartomancer";
