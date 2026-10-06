@@ -1,6 +1,4 @@
 {pkgs, ...}: {
-  networking.hostName = "fluffy";
-
   time.timeZone = "Europe/Zurich";
   i18n.defaultLocale = "en_US.UTF-8";
   console.keyMap = "us";
@@ -10,6 +8,9 @@
   boot.kernel.sysctl = {
     "vm.swappiness" = 25;
   };
+
+  # Stop spamming dmesg with this.
+  networking.firewall.logRefusedConnections = false;
 
   zramSwap = {
     enable = true;

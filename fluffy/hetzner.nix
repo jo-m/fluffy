@@ -2,7 +2,6 @@
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
     (modulesPath + "/profiles/qemu-guest.nix")
-    ./disk-config.nix
   ];
 
   # Disable the massive firmware blob package.
@@ -21,9 +20,6 @@
 
   # https://community.hetzner.com/tutorials/install-and-configure-ntp
   networking.timeServers = ["ntp1.hetzner.de" "ntp2.hetzner.com" "ntp3.hetzner.net"];
-
-  # Stop spamming dmesg with this.
-  networking.firewall.logRefusedConnections = false;
 
   networking.useNetworkd = true;
   systemd.network.enable = true;
