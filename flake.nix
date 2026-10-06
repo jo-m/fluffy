@@ -20,6 +20,11 @@
     quadlet-nix = {
       url = "github:SEIAROTg/quadlet-nix";
     };
+
+    lanzaboote = {
+      url = "github:nix-community/lanzaboote/v1.2.0";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs @ {
@@ -29,6 +34,7 @@
     home-manager,
     sops-nix,
     quadlet-nix,
+    lanzaboote,
     ...
   }: let
     specialArgs = {
@@ -67,6 +73,21 @@
         home-manager.nixosModules.home-manager
         quadlet-nix.nixosModules.quadlet
         sops-nix.nixosModules.sops
+      ];
+    };
+
+    nixosConfigurations.foggy-stage0 = nixpkgs.lib.nixosSystem {
+      modules = [
+        ./foggy-configuration-stage0.nix
+        disko.nixosModules.disko
+      ];
+    };
+
+    nixosConfigurations.foggy-stage1 = nixpkgs.lib.nixosSystem {
+      modules = [
+        ./foggy-configuration-stage1.nix
+        disko.nixosModules.disko
+        lanzaboote.nixosModules.lanzaboote
       ];
     };
 
