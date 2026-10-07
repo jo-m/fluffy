@@ -1,11 +1,5 @@
+# https://github.com/nix-community/disko/tree/master/example
 {lib, ...}: {
-  # TODO: enable this?
-  # fileSystems."/tmp" = {
-  #   device = "tmpfs";
-  #   fsType = "tmpfs";
-  #   options = ["size=512M"];
-  # };
-
   disko.devices = {
     disk = {
       main = {
@@ -30,10 +24,12 @@
               content = {
                 type = "luks";
                 name = "crypted";
-                extraOpenArgs = [];
                 settings = {
-                  keyFile = "-"; # Askpass.
+                  keyFile = "-"; # Askpass (empty).
                   allowDiscards = true;
+                  crypttabExtraOpts = [
+                    "try-empty-password"
+                  ];
                 };
                 content = {
                   type = "filesystem";

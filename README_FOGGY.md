@@ -5,17 +5,17 @@ Acer NUC VN1502G N150.
 
 ## Installation
 
-### Preparation
+Note:
+I attempted to set up full disk encryption with TPM2 unlock, but the AMI Aptio UEFI on this hardware
+does not allow to enroll custom keys ("Key management" option missing), and without secure boot, it's pointless.
+Thus, we go without FDE and without secure boot.
 
-The secrets file from fluffy is reused.
-
-1. First, secure boot needs to be configured in UEFI setup so we can enroll our own keys.
+1. First, secure boot needs to be disabled in UEFI setup.
    1. A boot medium which is signed with standard keys needs to be present (e.g. Windows, or Ubuntu installer).
       If you end up at the "secure boot failed" prompt, secure boot options are greyed out in setup.
    2. Boot into UEFI setup.
-      1. DEL on boot to enter UEFI setup in advanced mode (F2 = user mode), see https://community.acer.com/de/discussion/735337/... maybe?
    3. (Set an admin password in UEFI setup)
-   4. Set "Secure Boot: Disabled" and "Secure Boot Mode: Custom"
+   4. Set "Secure Boot: Disabled".
 2. Boot from NixOS live CD (GUI).
 3. Connect to WiFi or Ethernet.
 4. Open a terminal.
@@ -28,7 +28,7 @@ Now, we continue from the remote machine which will provision NixOS:
 
 ```fish
 # Store the IP of the target machine into a variable.
-set FOGGY_REMOTE_IP4 10.0.0.159
+set FOGGY_REMOTE_IP4 10.42.0.244
 # Test SSH.
 ssh-keygen -R $FOGGY_REMOTE_IP4
 ssh nixos@$FOGGY_REMOTE_IP4
@@ -43,26 +43,15 @@ NIX_SSHOPTS= SSH_PORT=22 nix run github:nix-community/nixos-anywhere -- \
 # The system will reboot when completed.
 ```
 
-### Stage 1 (Secure boot)
+### Full setup
 
 ```fish
-set FOGGY_REMOTE_IP4 10.42.0.242 # TODO: Assume LAN IP
-# Generate secure boot keys.
-ssh -p 4721 root@$FOGGY_REMOTE_IP4 sbctl create-keys
-# And install lanzaboote.
-nixos-rebuild switch --flake .#foggy-stage1 --target-host root@$FOGGY_REMOTE_IP4
-# Verify it worked.
-ssh -p 4721 root@$FOGGY_REMOTE_IP4 sbctl verify
-#
-ssh -p 4721 root@$FOGGY_REMOTE_IP4 sbctl enroll-keys --microsoft
+ssh -p 4721 root@$FOGGY_REMOTE_IP4
+nixos-rebuild switch --flake .#foggy --target-host root@$FOGGY_REMOTE_IP4
 ```
-
-Now, we can enroll keys and enable secure (https://nix-community.github.io/lanzaboote/getting-started/enable-secure-boot.html).
 
 # TODO
 
 - [ ] Newest kernel
-- [ ] Remove empty keyslot
-- [ ] Provision TPM2 keyslot
 - [ ] Minimize
 - [ ] Systemd-sysusers

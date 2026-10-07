@@ -6,14 +6,6 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.systemd-boot.editor = false;
 
-  environment.systemPackages = with pkgs; [
-    sbctl # To generate secure boot keys.
-    efitools
-    fwupd
-  ];
-
-  services.fwupd.enable = true;
-
   imports = [
     ./foggy/disk-config.nix
     ./foggy/hardware-configuration.nix
