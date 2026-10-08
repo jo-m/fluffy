@@ -29,5 +29,7 @@ upgrade:
 
 .PHONY: build
 build:
-	nixos-rebuild build --flake .#fluffy-stage0 -L
-	nixos-rebuild build --flake .#fluffy -L
+	nixos-rebuild build -L --flake .#fluffy-stage0
+	nixos-rebuild build -L --flake .#fluffy
+	nixos-rebuild build -L --flake .#foggy-stage0
+	nixos-rebuild build -L --flake .#foggy

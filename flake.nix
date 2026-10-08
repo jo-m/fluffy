@@ -81,8 +81,11 @@
       inherit specialArgs;
 
       modules = [
+        {nixpkgs.overlays = overlays;}
         ./foggy-configuration.nix
         disko.nixosModules.disko
+        home-manager.nixosModules.home-manager
+        quadlet-nix.nixosModules.quadlet
         sops-nix.nixosModules.sops
       ];
     };

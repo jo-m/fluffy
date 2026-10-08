@@ -9,6 +9,7 @@
   lvm2,
   systemd,
 }: let
+  # TODO: Update to v2.0
   pname = "prometheus-podman-exporter";
   version = "1.21.0";
 in

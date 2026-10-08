@@ -4,5 +4,14 @@
 
   imports = [
     ./foggy-configuration-stage0.nix
+
+    ./common/harden.nix
+    ./common/options.nix
+    ./common/prometheus-podman-exporter.nix
+    ./common/system.nix
+    ./common/rootless-podman.nix
+
+    ./foggy/minimize.nix
+    ./foggy/fwupd.nix
   ];
 }

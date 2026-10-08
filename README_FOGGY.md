@@ -27,8 +27,6 @@ Thus, we go without FDE and without secure boot.
 Now, we continue from the remote machine which will provision NixOS:
 
 ```fish
-# Store the IP of the target machine into a variable.
-set FOGGY_REMOTE_IP4 10.42.0.244
 # Test SSH.
 ssh-keygen -R $FOGGY_REMOTE_IP4
 ssh nixos@$FOGGY_REMOTE_IP4
@@ -52,6 +50,11 @@ nixos-rebuild switch --flake .#foggy --target-host root@$FOGGY_REMOTE_IP4
 
 # TODO
 
-- [ ] Newest kernel
-- [ ] Minimize
-- [ ] Systemd-sysusers
+- [ ] Update prometheus-podman-exporter to v2.0
+- [ ] Test fwupd
+- [ ] Syncthing
+- [ ] Immich?
+- [ ] Monitoring
+- [ ] Teddycloud
+- [ ] Caddy?
+- [ ] mDNS
