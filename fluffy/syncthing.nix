@@ -1,5 +1,5 @@
 {config, ...}: let
-  inherit (config.fluffy) data-base-dir tld;
+  inherit (config.custom) data-base-dir tld;
   serviceName = "syncthing";
   domain = "sync";
 in {

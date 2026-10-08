@@ -6,7 +6,7 @@
   pkgs,
   ...
 }: let
-  inherit (config.fluffy) username data-base-dir;
+  inherit (config.custom) username data-base-dir;
   serviceName = "fogdb";
   dataDir = "${data-base-dir}/${serviceName}";
   dbPath = "${dataDir}/db.sqlite";

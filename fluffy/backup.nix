@@ -4,7 +4,7 @@
   pkgs,
   ...
 }: let
-  inherit (config.fluffy) data-base-dir;
+  inherit (config.custom) data-base-dir;
   username = "backup";
   jobName = "data";
 in {

@@ -9,10 +9,10 @@
   pkgs,
   ...
 }: let
-  inherit (config.fluffy) username;
-  cfg = config.fluffy.prometheus-podman-exporter;
+  inherit (config.custom) username;
+  cfg = config.custom.prometheus-podman-exporter;
 in {
-  options.fluffy.prometheus-podman-exporter = {
+  options.custom.prometheus-podman-exporter = {
     enable = lib.mkOption {
       type = lib.types.bool;
       description = "Enable the Prometheus Podman exporter user service.";

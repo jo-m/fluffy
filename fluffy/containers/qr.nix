@@ -3,7 +3,7 @@
   lib,
   ...
 }: let
-  inherit (config.fluffy) username tld;
+  inherit (config.custom) username tld;
   cfg = config.services.fluffy.qr;
   containerLib = import ./lib.nix;
 in {

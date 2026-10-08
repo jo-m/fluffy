@@ -3,7 +3,7 @@
   lib,
   ...
 }: let
-  inherit (config.fluffy) username tld data-base-dir;
+  inherit (config.custom) username tld data-base-dir;
   cfg = config.services.fluffy.readeck;
   containerLib = import ./lib.nix;
 in {

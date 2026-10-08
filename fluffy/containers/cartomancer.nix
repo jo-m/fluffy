@@ -3,7 +3,7 @@
   lib,
   ...
 }: let
-  inherit (config.fluffy) username tld data-base-dir;
+  inherit (config.custom) username tld data-base-dir;
   cfg = config.services.fluffy.cartomancer;
   outerConfig = config;
   containerLib = import ./lib.nix;

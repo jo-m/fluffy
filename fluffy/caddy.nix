@@ -3,7 +3,7 @@
   pkgs,
   ...
 }: let
-  inherit (config.fluffy) tld;
+  inherit (config.custom) tld;
   authPortalSubdomain = "auth";
 in {
   fluffy.podfather.external-apps.AUTH = {

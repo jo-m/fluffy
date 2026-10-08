@@ -3,7 +3,7 @@
   inputs,
   ...
 }: let
-  inherit (config.fluffy) username uid;
+  inherit (config.custom) username uid;
 in {
   networking.firewall.interfaces."podman+".allowedUDPPorts = [53];
 

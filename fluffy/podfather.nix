@@ -4,7 +4,7 @@
   pkgs,
   ...
 }: let
-  inherit (config.fluffy) username tld;
+  inherit (config.custom) username tld;
   cfg = config.fluffy.podfather;
 
   # Convert external-apps attrset to PODFATHER_APP_<KEY>_<FIELD> env var list.

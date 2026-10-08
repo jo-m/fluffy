@@ -5,17 +5,18 @@
   imports = [
     ./fluffy-configuration-stage0.nix
 
+    ./common/harden.nix
+    ./common/options.nix
+    ./common/system.nix
+
     ./fluffy/backup.nix
-    ./fluffy/caddy
+    ./fluffy/caddy.nix
     ./fluffy/fogdb.nix
-    ./fluffy/harden.nix
     ./fluffy/monitoring.nix
-    ./fluffy/options.nix
     ./fluffy/podfather.nix
     ./fluffy/prometheus-podman-exporter.nix
     ./fluffy/rootless-podman.nix
     ./fluffy/syncthing.nix
-    ./fluffy/system.nix
     ./fluffy/webdav.nix
 
     ./fluffy/containers

@@ -4,7 +4,7 @@
   pkgs,
   ...
 }: let
-  inherit (config.fluffy) tld;
+  inherit (config.custom) tld;
   hostname = config.networking.hostName;
 
   grafanaDomain = "monitor";
@@ -218,7 +218,7 @@ in {
         job_name = "podman";
         static_configs = [
           {
-            targets = ["localhost:${toString config.fluffy.prometheus-podman-exporter.port}"];
+            targets = ["localhost:${toString config.custom.prometheus-podman-exporter.port}"];
           }
         ];
       }

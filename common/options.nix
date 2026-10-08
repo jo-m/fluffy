@@ -1,5 +1,5 @@
 {lib, ...}: {
-  options.fluffy = {
+  options.custom = {
     username = lib.mkOption {
       type = lib.types.str;
       description = "Primary unprivileged user which will run containers.";
