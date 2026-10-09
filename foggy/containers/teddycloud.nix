@@ -3,7 +3,7 @@
   lib,
   ...
 }: let
-  inherit (config.custom) username data-base-dir;
+  inherit (config.custom) username data-base-dir domain;
   cfg = config.services.foggy.teddycloud;
   containerLib = import ../../common/containers-lib.nix;
 in {
@@ -14,20 +14,32 @@ in {
       default = "teddycloud";
     };
 
+    port = lib.mkOption {
+      type = lib.types.port;
+      description = "Internal container port";
+    };
+
     tonieApiAddr = lib.mkOption {
       type = lib.types.str;
       description = "Public IP address teddycloud will listen on";
       default = "10.0.0.13";
     };
-
-    port = lib.mkOption {
-      type = lib.types.port;
-      description = "Internal container port";
-    };
   };
 
   config = {
-    # Allow this container to listen publicly on :443.
+    services.caddy.virtualHosts."${domain}:8443" = {
+      extraConfig = ''
+        bind ${config.services.foggy.caddy.bindIP}
+        tls internal
+        encode
+        reverse_proxy http://127.0.0.1:${toString cfg.port}
+      '';
+      logFormat = ''
+        output stderr
+      '';
+    };
+
+    # Allow unprivileged users to listen on :443.
     networking.firewall.allowedTCPPorts = [443];
     boot.kernel.sysctl = {
       "net.ipv4.ip_unprivileged_port_start" = 443;
@@ -65,6 +77,12 @@ in {
               "type=bind,src=${data-base-dir}/${cfg.serviceName}/cache,dst=/teddycloud/data/cache" # img cache for content images
               "type=bind,src=${data-base-dir}/${cfg.serviceName}/plugins,dst=/teddycloud/data/www/plugins" # location to store web plugins for teddyCloud
             ];
+            labels = containerLib.podfatherLabels {
+              name = "Teddycloud";
+              icon = "🧸";
+              category = "Apps";
+              url = "https://${domain}:8443";
+            };
           };
         };
       };

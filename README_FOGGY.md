@@ -3,6 +3,8 @@
 Counterpart to Fluffy: Foggy 🌫️ because it's on the ground.
 Acer NUC VN1502G N150.
 
+https://foggy.local/
+
 ## Installation
 
 Note:
@@ -48,7 +50,7 @@ ssh -p 4721 root@$FOGGY_REMOTE_IP4
 nixos-rebuild switch --flake .#foggy --target-host root@$FOGGY_REMOTE_IP4
 ```
 
-### Teddiecloud
+### Teddycloud
 
 ```bash
 # Status
@@ -62,10 +64,12 @@ sudo -u runner journalctl --user -efu teddycloud
 # TODO
 
 - [ ] Update prometheus-podman-exporter to v2.0
-- [ ] Test fwupd
+- [x] Test fwupd
 - [ ] Syncthing
 - [ ] Immich?
 - [ ] Monitoring
-- [ ] Teddycloud
-- [ ] Caddy?
-- [ ] mDNS
+- [x] Teddycloud
+- [x] Caddy with subdomains
+- [x] mDNS
+- [ ] Basic Auth
+- [ ] Move content (README etc) from dockerapps repo

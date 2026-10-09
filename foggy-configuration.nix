@@ -1,16 +1,19 @@
-{...}: {
+{config, ...}: {
   sops.defaultSopsFile = ./secrets.yaml;
   sops.age.sshKeyPaths = ["/etc/ssh/ssh_host_ed25519_key"];
+  custom.domain = "${config.networking.hostName}.local";
 
   imports = [
     ./foggy-configuration-stage0.nix
 
     ./common/harden.nix
     ./common/options.nix
+    ./common/podfather.nix
     ./common/prometheus-podman-exporter.nix
     ./common/rootless-podman.nix
     ./common/system.nix
 
+    ./foggy/caddy.nix
     ./foggy/fwupd.nix
     ./foggy/minimize.nix
 

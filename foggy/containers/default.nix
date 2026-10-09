@@ -6,7 +6,6 @@
   config = {
     services.foggy = {
       teddycloud = {
-        # domain = "teddycloud";
         port = 30010;
       };
     };
