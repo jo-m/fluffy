@@ -5,7 +5,7 @@
 }: let
   inherit (config.custom) username tld;
   cfg = config.services.fluffy.qr;
-  containerLib = import ./lib.nix;
+  containerLib = import ../../common/containers-lib.nix;
 in {
   options.services.fluffy.qr = {
     serviceName = lib.mkOption {

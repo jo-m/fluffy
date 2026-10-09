@@ -5,7 +5,7 @@
 }: let
   inherit (config.custom) username tld data-base-dir;
   cfg = config.services.fluffy.readeck;
-  containerLib = import ./lib.nix;
+  containerLib = import ../../common/containers-lib.nix;
 in {
   options.services.fluffy.readeck = {
     serviceName = lib.mkOption {

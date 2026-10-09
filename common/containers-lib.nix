@@ -13,7 +13,7 @@
   # systemd unit text, causing sd-switch to restart the container. Without
   # this, edits to secrets.yaml only change the rendered file's contents
   # while its path stays stable, so the unit hash is unchanged.
-  sopsFingerprint = builtins.hashFile "sha256" ../../secrets.yaml;
+  sopsFingerprint = builtins.hashFile "sha256" ../secrets.yaml;
 
   # Generate podfather app discovery labels for a container.
   # Takes an attrset with: name (required), icon, category, sort-index, description, url (all optional).

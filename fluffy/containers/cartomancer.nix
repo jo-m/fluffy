@@ -6,7 +6,7 @@
   inherit (config.custom) username tld data-base-dir;
   cfg = config.services.fluffy.cartomancer;
   outerConfig = config;
-  containerLib = import ./lib.nix;
+  containerLib = import ../../common/containers-lib.nix;
 in {
   options.services.fluffy.cartomancer = {
     serviceName = lib.mkOption {
