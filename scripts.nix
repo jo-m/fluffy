@@ -1,4 +1,12 @@
 {pkgs}: let
+  ssh-fluffy = pkgs.writeShellScriptBin "ssh-fluffy" ''
+    ${pkgs.openssh}/bin/ssh -p $SSH_PORT root@$REMOTE_IP4 "$@"
+  '';
+
+  ssh-foggy = pkgs.writeShellScriptBin "ssh-foggy" ''
+    ${pkgs.openssh}/bin/ssh -p $SSH_PORT root@$FOGGY_REMOTE_IP4 "$@"
+  '';
+
   format = pkgs.writeShellScriptBin "format" ''
     set -xeou pipefail
 
@@ -78,6 +86,8 @@ in
   pkgs.symlinkJoin {
     name = "scripts";
     paths = [
+      ssh-fluffy
+      ssh-foggy
       format
       lint
       fix

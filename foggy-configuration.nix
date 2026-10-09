@@ -8,10 +8,12 @@
     ./common/harden.nix
     ./common/options.nix
     ./common/prometheus-podman-exporter.nix
-    ./common/system.nix
     ./common/rootless-podman.nix
+    ./common/system.nix
 
-    ./foggy/minimize.nix
     ./foggy/fwupd.nix
+    ./foggy/minimize.nix
+
+    ./foggy/containers
   ];
 }

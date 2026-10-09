@@ -48,6 +48,17 @@ ssh -p 4721 root@$FOGGY_REMOTE_IP4
 nixos-rebuild switch --flake .#foggy --target-host root@$FOGGY_REMOTE_IP4
 ```
 
+### Teddiecloud
+
+```bash
+# Status
+systemctl status --user --machine=runner@.host teddycloud.service
+systemctl stop --user --machine=runner@.host teddycloud.service
+systemctl start --user --machine=runner@.host teddycloud.service
+# Logs
+sudo -u runner journalctl --user -efu teddycloud
+```
+
 # TODO
 
 - [ ] Update prometheus-podman-exporter to v2.0
