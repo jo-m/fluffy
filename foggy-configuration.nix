@@ -15,6 +15,7 @@
     ./common/system.nix
 
     ./foggy/caddy.nix
+    ./foggy/fogdb.nix
     ./foggy/fwupd.nix
     ./foggy/minimize.nix
     ./foggy/monitoring-grafana.nix

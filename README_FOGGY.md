@@ -68,7 +68,7 @@ sudo -u runner journalctl --user -efu teddycloud
 - [ ] Syncthing
 - [ ] Immich?
 - [x] Monitoring
-- [ ] Move fogdb
+- [x] Move fogdb
 - [ ] Dedupe lokiPort var
 - [x] Teddycloud
 - [x] Caddy with subdomains
