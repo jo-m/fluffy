@@ -6,6 +6,7 @@
     ./fluffy-configuration-stage0.nix
 
     ./common/harden.nix
+    ./common/monitoring.nix
     ./common/options.nix
     ./common/podfather.nix
     ./common/system.nix
@@ -13,7 +14,7 @@
     ./fluffy/backup.nix
     ./fluffy/caddy.nix
     ./fluffy/fogdb.nix
-    ./fluffy/monitoring.nix
+    ./fluffy/monitoring-grafana.nix
     ./fluffy/prometheus-podman-exporter.nix
     ./fluffy/rootless-podman.nix
     ./fluffy/syncthing.nix
