@@ -1,7 +1,7 @@
 {config, ...}: let
-  inherit (config.custom) data-base-dir tld;
+  inherit (config.custom) data-base-dir domain;
   serviceName = "webdav";
-  domain = "webdav";
+  subdomain = "webdav";
 in {
   sops.secrets."caddy/webdav-basicauth" = {};
   sops.templates.caddy-webdav-basicauth.content = ''
@@ -11,7 +11,7 @@ in {
   '';
   sops.templates.caddy-webdav-basicauth.owner = "caddy";
 
-  services.caddy.virtualHosts."${domain}.${tld}" = {
+  services.caddy.virtualHosts."${subdomain}.${domain}" = {
     extraConfig = ''
       encode
 

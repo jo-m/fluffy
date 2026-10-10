@@ -3,7 +3,7 @@
   lib,
   ...
 }: let
-  inherit (config.custom) username tld data-base-dir;
+  inherit (config.custom) username domain data-base-dir;
   cfg = config.services.fluffy.cartomancer;
   outerConfig = config;
   containerLib = import ../../common/containers-lib.nix;
@@ -14,9 +14,9 @@ in {
       description = "Systemd service name for the container";
     };
 
-    domain = lib.mkOption {
+    subdomain = lib.mkOption {
       type = lib.types.str;
-      description = "Domain for Caddy reverse proxy";
+      description = "Subdomain for Caddy reverse proxy";
     };
 
     port = lib.mkOption {
@@ -26,7 +26,7 @@ in {
   };
 
   config = {
-    services.caddy.virtualHosts."${cfg.domain}.${tld}" = {
+    services.caddy.virtualHosts."${cfg.subdomain}.${domain}" = {
       extraConfig = ''
         reverse_proxy http://127.0.0.1:${toString cfg.port}
       '';
@@ -95,7 +95,7 @@ in {
               name = "Cartomancer";
               icon = "🪄";
               category = "Apps";
-              url = "https://${cfg.domain}.${tld}/";
+              url = "https://${cfg.subdomain}.${domain}/";
             };
           };
         };

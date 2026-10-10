@@ -4,10 +4,10 @@
   pkgs,
   ...
 }: let
-  inherit (config.custom) tld;
+  inherit (config.custom) domain;
   hostname = config.networking.hostName;
 
-  grafanaDomain = "monitor";
+  grafanaSubdomain = "monitor";
   grafanaPort = 20000;
   promPort = 20001;
   promNodePort = 20002;
@@ -19,10 +19,10 @@ in {
     icon = "📈";
     category = "Infrastructure";
     description = "Metrics & Logs";
-    url = "https://${grafanaDomain}.${tld}/";
+    url = "https://${grafanaSubdomain}.${domain}/";
   };
 
-  services.caddy.virtualHosts."${grafanaDomain}.${tld}" = {
+  services.caddy.virtualHosts."${grafanaSubdomain}.${domain}" = {
     extraConfig = ''
       encode
       authorize with fluff-auth-policy
@@ -36,10 +36,10 @@ in {
     enable = true;
     settings = {
       server = {
-        domain = "${grafanaDomain}.${tld}";
+        domain = "${grafanaSubdomain}.${domain}";
         http_port = grafanaPort;
         http_addr = "127.0.0.1";
-        root_url = "https://${grafanaDomain}.${tld}";
+        root_url = "https://${grafanaSubdomain}.${domain}";
       };
       # Since NixOS 26.05 there is no longer a default
       # and hardcoding it is fine for our case (no secrets in the db).

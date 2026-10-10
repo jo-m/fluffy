@@ -3,7 +3,7 @@
   pkgs,
   ...
 }: let
-  inherit (config.custom) tld;
+  inherit (config.custom) domain;
   authPortalSubdomain = "auth";
 in {
   fluffy.podfather.external-apps.AUTH = {
@@ -11,7 +11,7 @@ in {
     icon = "🔒";
     category = "Infrastructure";
     description = "Auth Portal";
-    url = "https://${authPortalSubdomain}.${tld}/whoami";
+    url = "https://${authPortalSubdomain}.${domain}/whoami";
   };
 
   sops.secrets."caddy/home-ips" = {};
@@ -75,7 +75,7 @@ in {
 
           enable identity store fluff-auth-db
 
-          cookie domain ${tld}
+          cookie domain ${domain}
           # See https://github.com/greenpau/caddy-security/issues/58.
           cookie lifetime 3024000 # 35d
 
@@ -87,7 +87,7 @@ in {
             logo description "Logo"
 
             links {
-              "Dashboard" https://${tld}/ icon "las la-star"
+              "Dashboard" https://${domain}/ icon "las la-star"
               "Whoami" "/whoami" icon "las la-user"
             }
           }
@@ -104,7 +104,7 @@ in {
         }
 
         authorization policy fluff-auth-policy {
-          set auth url https://${authPortalSubdomain}.${tld}
+          set auth url https://${authPortalSubdomain}.${domain}
 
           crypto key verify {env.JWT_SHARED_SECRET}
           crypto key token name fluff_auth
@@ -127,7 +127,7 @@ in {
         }
 
         authorization policy fluff-auth-policy-flyers {
-          set auth url https://${authPortalSubdomain}.${tld}
+          set auth url https://${authPortalSubdomain}.${domain}
 
           crypto key verify {env.JWT_SHARED_SECRET}
           crypto key token name fluff_auth
@@ -165,7 +165,7 @@ in {
     '';
 
     # Auth portal vhost.
-    virtualHosts."${authPortalSubdomain}.${tld}" = {
+    virtualHosts."${authPortalSubdomain}.${domain}" = {
       extraConfig = ''
         encode
         authenticate with fluff-auth-portal

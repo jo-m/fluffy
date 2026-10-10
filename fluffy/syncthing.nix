@@ -1,14 +1,14 @@
 {config, ...}: let
-  inherit (config.custom) data-base-dir tld;
+  inherit (config.custom) data-base-dir domain;
   serviceName = "syncthing";
-  domain = "sync";
+  subdomain = "sync";
 in {
   fluffy.podfather.external-apps.SYNCTHING = {
     name = "Syncthing GUI";
     icon = "🔄";
     category = "Apps";
     description = "Only from home IP";
-    url = "https://${domain}.${tld}/";
+    url = "https://${subdomain}.${domain}/";
   };
 
   services.syncthing = {
@@ -32,7 +32,7 @@ in {
   # Don't create default ~/Sync folder
   systemd.services.syncthing.environment.STNODEFAULTFOLDER = "true";
 
-  services.caddy.virtualHosts."${domain}.${tld}".extraConfig = ''
+  services.caddy.virtualHosts."${subdomain}.${domain}".extraConfig = ''
     encode
     authorize with fluff-auth-policy
     # We additionally protect the Syncthing GUI with IP blocking.

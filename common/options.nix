@@ -12,10 +12,10 @@
       default = 1000;
     };
 
-    tld = lib.mkOption {
+    domain = lib.mkOption {
       type = lib.types.str;
       description = "Top-level domain for services";
-      default = builtins.getEnv "REMOTE_TLD";
+      default = builtins.getEnv "REMOTE_DOMAIN";
     };
 
     data-base-dir = lib.mkOption {

@@ -10,22 +10,22 @@
     services.fluffy = {
       qr = {
         serviceName = "qr";
-        domain = "qr";
+        subdomain = "qr";
         port = 30060;
       };
       readeck = {
         serviceName = "readeck";
-        domain = "readeck";
+        subdomain = "readeck";
         port = 30070;
       };
       traggo = {
         serviceName = "traggo";
-        domain = "track";
+        subdomain = "track";
         port = 30090;
       };
       cartomancer = {
         serviceName = "cartomancer";
-        domain = "cartomancer";
+        subdomain = "cartomancer";
         port = 30120;
       };
     };

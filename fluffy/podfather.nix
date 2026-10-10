@@ -4,7 +4,7 @@
   pkgs,
   ...
 }: let
-  inherit (config.custom) username tld;
+  inherit (config.custom) username domain;
   cfg = config.fluffy.podfather;
 
   # Convert external-apps attrset to PODFATHER_APP_<KEY>_<FIELD> env var list.
@@ -83,7 +83,7 @@ in {
   };
 
   config = {
-    services.caddy.virtualHosts."${tld}" = {
+    services.caddy.virtualHosts."${domain}" = {
       extraConfig = ''
         encode
         authorize with fluff-auth-policy

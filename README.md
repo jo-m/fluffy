@@ -60,7 +60,7 @@ sops secrets.yaml
 ; AAAA Records
 @	3600	IN	AAAA	:::::::
 ; CNAME Records
-*	3600	IN	CNAME	${REMOTE_TLD}.
+*	3600	IN	CNAME	${REMOTE_DOMAIN}.
 ```
 
 ### Bootstrapping

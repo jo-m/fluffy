@@ -3,7 +3,7 @@
   lib,
   ...
 }: let
-  inherit (config.custom) username tld data-base-dir;
+  inherit (config.custom) username domain data-base-dir;
   cfg = config.services.fluffy.traggo;
   outerConfig = config;
   containerLib = import ../../common/containers-lib.nix;
@@ -14,9 +14,9 @@ in {
       description = "Systemd service name for the container";
     };
 
-    domain = lib.mkOption {
+    subdomain = lib.mkOption {
       type = lib.types.str;
-      description = "Domain for Caddy reverse proxy";
+      description = "Subdomain for Caddy reverse proxy";
     };
 
     port = lib.mkOption {
@@ -26,7 +26,7 @@ in {
   };
 
   config = {
-    services.caddy.virtualHosts."${cfg.domain}.${tld}" = {
+    services.caddy.virtualHosts."${cfg.subdomain}.${domain}" = {
       extraConfig = ''
         encode
         authorize with fluff-auth-policy
@@ -74,7 +74,7 @@ in {
               icon = "⏱️";
               category = "Apps";
               description = "Time Tracking";
-              url = "https://${cfg.domain}.${tld}/";
+              url = "https://${cfg.subdomain}.${domain}/";
             };
           };
         };

@@ -3,7 +3,7 @@
   lib,
   ...
 }: let
-  inherit (config.custom) username tld;
+  inherit (config.custom) username domain;
   cfg = config.services.fluffy.qr;
   containerLib = import ../../common/containers-lib.nix;
 in {
@@ -13,9 +13,9 @@ in {
       description = "Systemd service name for the container";
     };
 
-    domain = lib.mkOption {
+    subdomain = lib.mkOption {
       type = lib.types.str;
-      description = "Domain for Caddy reverse proxy";
+      description = "Subdomain for Caddy reverse proxy";
     };
 
     port = lib.mkOption {
@@ -25,7 +25,7 @@ in {
   };
 
   config = {
-    services.caddy.virtualHosts."${cfg.domain}.${tld}" = {
+    services.caddy.virtualHosts."${cfg.subdomain}.${domain}" = {
       extraConfig = ''
         encode
         # Public, no auth - thus, ratelimit.
@@ -54,7 +54,7 @@ in {
               icon = "📱";
               category = "Utilities";
               description = "Generate QR Codes";
-              url = "https://${cfg.domain}.${tld}/";
+              url = "https://${cfg.subdomain}.${domain}/";
             };
           };
         };
