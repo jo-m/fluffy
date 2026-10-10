@@ -4,7 +4,7 @@
   pkgs,
   ...
 }: let
-  inherit (config.custom) username domain;
+  inherit (config.custom) username;
   cfg = config.services.podfather;
 
   # Convert external-apps attrset to PODFATHER_APP_<KEY>_<FIELD> env var list.

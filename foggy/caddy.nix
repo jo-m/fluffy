@@ -5,7 +5,6 @@
   ...
 }: let
   inherit (config.custom) domain;
-  cfg = config.services.foggy.caddy;
 in {
   options.services.foggy.caddy = {
     bindIP = lib.mkOption {

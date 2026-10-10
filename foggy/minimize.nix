@@ -1,11 +1,4 @@
-{
-  modulesPath,
-  lib,
-  config,
-  ...
-}: let
-  inherit (config.custom) username;
-in {
+_: {
   # TODO: Once our NixOS is new enough to include https://github.com/nikstur/userborn/issues/7,
   #       we can enable it again.
   # imports = [

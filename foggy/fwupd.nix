@@ -1,3 +1,3 @@
-{pkgs, ...}: {
+_: {
   services.fwupd.enable = true;
 }
