@@ -28,4 +28,4 @@ All names in Nix code must follow:
 
 ## Hints
 
-- The dashboard is powered by Podfather, which discovers containers via labels. When adding a new container, use `containerLib.podfatherLabels { ... }` in `containerConfig.labels` (see `containers/lib.nix`). For non-container services, register them via `fluffy.podfather.external-apps` in `modules/podfather.nix`.
+- The dashboard is powered by Podfather, which discovers containers via labels. When adding a new container, use `containerLib.podfatherLabels { ... }` in `containerConfig.labels` (see `containers/lib.nix`). For non-container services, register them via `services.podfather.external-apps` in `modules/podfather.nix`.

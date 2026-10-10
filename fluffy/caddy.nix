@@ -6,7 +6,7 @@
   inherit (config.custom) domain;
   authPortalSubdomain = "auth";
 in {
-  fluffy.podfather.external-apps.AUTH = {
+  services.podfather.external-apps.AUTH = {
     name = "Auth";
     icon = "🔒";
     category = "Infrastructure";
@@ -171,6 +171,16 @@ in {
         authenticate with fluff-auth-portal
       '';
       # NixOS defaults to /var/log/caddy/access-*.log.
+      logFormat = "output stderr";
+    };
+
+    # Podfather portal.
+    virtualHosts."${domain}" = {
+      extraConfig = ''
+        encode
+        authorize with fluff-auth-policy
+        reverse_proxy http://127.0.0.1:${toString config.services.podfather.port}
+      '';
       logFormat = "output stderr";
     };
   };

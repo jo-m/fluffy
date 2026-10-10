@@ -7,13 +7,13 @@
 
     ./common/harden.nix
     ./common/options.nix
+    ./common/podfather.nix
     ./common/system.nix
 
     ./fluffy/backup.nix
     ./fluffy/caddy.nix
     ./fluffy/fogdb.nix
     ./fluffy/monitoring.nix
-    ./fluffy/podfather.nix
     ./fluffy/prometheus-podman-exporter.nix
     ./fluffy/rootless-podman.nix
     ./fluffy/syncthing.nix

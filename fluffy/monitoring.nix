@@ -14,7 +14,7 @@
 
   lokiPort = 20004;
 in {
-  fluffy.podfather.external-apps.GRAFANA = {
+  services.podfather.external-apps.GRAFANA = {
     name = "Grafana";
     icon = "📈";
     category = "Infrastructure";

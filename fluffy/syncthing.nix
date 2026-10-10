@@ -3,7 +3,7 @@
   serviceName = "syncthing";
   subdomain = "sync";
 in {
-  fluffy.podfather.external-apps.SYNCTHING = {
+  services.podfather.external-apps.SYNCTHING = {
     name = "Syncthing GUI";
     icon = "🔄";
     category = "Apps";

@@ -5,7 +5,7 @@
   ...
 }: let
   inherit (config.custom) username domain;
-  cfg = config.fluffy.podfather;
+  cfg = config.services.podfather;
 
   # Convert external-apps attrset to PODFATHER_APP_<KEY>_<FIELD> env var list.
   externalAppEnvVars = lib.concatLists (lib.mapAttrsToList (key: app: let
@@ -24,7 +24,7 @@
     ++ optionalVar "URL" app.url)
   cfg.external-apps);
 in {
-  options.fluffy.podfather = {
+  options.services.podfather = {
     port = lib.mkOption {
       type = lib.types.port;
       description = "Port for the Podfather web dashboard";
@@ -83,15 +83,6 @@ in {
   };
 
   config = {
-    services.caddy.virtualHosts."${domain}" = {
-      extraConfig = ''
-        encode
-        authorize with fluff-auth-policy
-        reverse_proxy http://127.0.0.1:${toString cfg.port}
-      '';
-      logFormat = "output stderr";
-    };
-
     home-manager.users."${username}" = _: {
       systemd.user.services.podfather = {
         Unit = {
