@@ -6,6 +6,7 @@
   inherit (config.custom) username data-base-dir domain;
   cfg = config.services.foggy.teddycloud;
   containerLib = import ../../common/containers-lib.nix;
+  externalPort = 8443;
 in {
   options.services.foggy.teddycloud = {
     serviceName = lib.mkOption {
@@ -27,7 +28,7 @@ in {
   };
 
   config = {
-    services.caddy.virtualHosts."${domain}:8443" = {
+    services.caddy.virtualHosts."${domain}:${toString externalPort}" = {
       extraConfig = ''
         bind ${config.services.foggy.caddy.bindIP}
         tls internal
@@ -39,8 +40,9 @@ in {
       '';
     };
 
+    networking.firewall.allowedTCPPorts = [443 externalPort];
+
     # Allow unprivileged users to listen on :443.
-    networking.firewall.allowedTCPPorts = [443];
     boot.kernel.sysctl = {
       "net.ipv4.ip_unprivileged_port_start" = 443;
     };
@@ -81,7 +83,7 @@ in {
               name = "Teddycloud";
               icon = "🧸";
               category = "Apps";
-              url = "https://${domain}:8443";
+              url = "https://${domain}:${toString externalPort}";
             };
           };
         };

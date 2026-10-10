@@ -7,6 +7,7 @@
     ./foggy-configuration-stage0.nix
 
     ./common/harden.nix
+    ./common/monitoring.nix
     ./common/options.nix
     ./common/podfather.nix
     ./common/prometheus-podman-exporter.nix
@@ -16,6 +17,7 @@
     ./foggy/caddy.nix
     ./foggy/fwupd.nix
     ./foggy/minimize.nix
+    ./foggy/monitoring-grafana.nix
 
     ./foggy/containers
   ];
