@@ -50,6 +50,11 @@ ssh -p 4721 root@$FOGGY_REMOTE_IP4
 nixos-rebuild switch --flake .#foggy --target-host root@$FOGGY_REMOTE_IP4
 ```
 
+### Manual steps after initial setup
+
+- Syncthing devices and shares
+- Grafana setup (default: admin:admin)
+
 ### Teddycloud
 
 ```bash
@@ -65,8 +70,8 @@ sudo -u runner journalctl --user -efu teddycloud
 
 - [ ] Update prometheus-podman-exporter to v2.0
 - [x] Test fwupd
-- [ ] Syncthing
-- [ ] Immich?
+- [x] Syncthing
+- [ ] Backup
 - [x] Monitoring
 - [x] Move fogdb
 - [ ] Dedupe lokiPort var
@@ -75,3 +80,4 @@ sudo -u runner journalctl --user -efu teddycloud
 - [x] mDNS
 - [ ] Basic Auth
 - [ ] Move content (README etc) from dockerapps repo
+- [ ] Immich?

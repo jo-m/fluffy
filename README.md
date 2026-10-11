@@ -85,8 +85,6 @@ make push
 
 - Readeck user
 - Syncthing devices and shares
-- Disable registration on Hemmelig
-- Kitchenowl setup
 - Grafana setup (default: admin:admin)
 
 ### SSH access
