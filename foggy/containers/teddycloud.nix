@@ -1,12 +1,35 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }: let
   inherit (config.custom) username data-base-dir domain;
   cfg = config.services.foggy.teddycloud;
   containerLib = import ../../common/containers-lib.nix;
   externalPort = 8443;
+
+  # pasta copies the host addresses and routes into the container netns exactly
+  # once, when the container starts (pasta --config-net). systemd-networkd
+  # reports the link as online once it has carrier and the static address,
+  # which is before DHCP has installed the default route. If podman starts the
+  # container in that window, the netns ends up without a default route and the
+  # container has no egress until restarted.
+  waitForDefaultRoute = pkgs.writeShellApplication {
+    name = "wait-for-default-route";
+    runtimeInputs = [pkgs.iproute2];
+    text = ''
+      waited=0
+      until [ -n "$(ip -4 route show default)" ]; do
+        if [ "$waited" -ge 600 ]; then
+          echo "no IPv4 default route after 600s; giving up" >&2
+          exit 1
+        fi
+        sleep 1
+        waited=$((waited + 1))
+      done
+    '';
+  };
 in {
   options.services.foggy.teddycloud = {
     serviceName = lib.mkOption {
@@ -56,7 +79,11 @@ in {
       virtualisation.quadlet.containers = {
         "${cfg.serviceName}" = {
           autoStart = true;
-          serviceConfig = containerLib.ServiceConfig;
+          serviceConfig =
+            containerLib.ServiceConfig
+            // {
+              ExecStartPre = lib.getExe waitForDefaultRoute;
+            };
           # https://docs.podman.io/en/latest/markdown/podman-systemd.unit.5.html
           containerConfig = {
             image = "ghcr.io/toniebox-reverse-engineering/teddycloud:latest";
