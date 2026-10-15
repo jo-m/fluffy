@@ -80,4 +80,5 @@ sudo -u runner journalctl --user -efu teddycloud
 - [x] mDNS
 - [ ] Basic Auth
 - [ ] Move content (README etc) from dockerapps repo
+- [x] Split networki.nix file (stage0)
 - [ ] Immich?

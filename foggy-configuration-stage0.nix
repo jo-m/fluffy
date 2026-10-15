@@ -9,7 +9,7 @@
   imports = [
     ./foggy/disk-config.nix
     ./foggy/hardware-configuration.nix
-    ./foggy/network.nix
+    ./foggy/network-stage0.nix
     ./common/ssh.nix
   ];
 }

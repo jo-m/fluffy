@@ -19,6 +19,7 @@
     ./foggy/fwupd.nix
     ./foggy/minimize.nix
     ./foggy/monitoring-grafana.nix
+    ./foggy/network.nix
     ./foggy/syncthing.nix
 
     ./foggy/containers
