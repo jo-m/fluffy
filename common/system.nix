@@ -40,6 +40,12 @@
     };
   };
 
+  # Don't copy nixpkgs source to hosts.
+  nixpkgs.flake = {
+    setFlakeRegistry = false;
+    setNixPath = false;
+  };
+
   environment.systemPackages = with pkgs; [
     btop
     sqlite-interactive
