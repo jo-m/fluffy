@@ -22,7 +22,7 @@ Prerequisites on the machine you run the deployment from:
 
 ### Secrets
 
-[Secrets](secrets.yaml) are managed and deployed with [sops-nix](.sops.yaml).
+[Secrets](secrets-fluffy.yaml) are managed and deployed with [sops-nix](.sops.yaml).
 The `age` master key is pulled from KeePassXC via `git-credential-keepassxc`.
 On the host, secrets are decrypted using the SSH host key.
 
@@ -41,7 +41,7 @@ print-age-pub-key | read AGE_USER_KEY
 yq -i e ".keys.users.me=\"$AGE_USER_KEY\"" .sops.yaml
 
 # Edit secrets.
-sops secrets.yaml
+sops secrets-fluffy.yaml
 ```
 
 ### Server provisioning

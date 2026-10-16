@@ -1,5 +1,5 @@
 {config, ...}: {
-  sops.defaultSopsFile = ./secrets.yaml;
+  sops.defaultSopsFile = ./secrets-fluffy.yaml;
   sops.age.sshKeyPaths = ["/etc/ssh/ssh_host_ed25519_key"];
   custom.domain = "${config.networking.hostName}.local";
 

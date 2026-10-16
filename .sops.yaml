@@ -4,7 +4,7 @@ keys:
   hosts:
     fluffy: &fluffy "age15ss6xsumnwzfk248yzgtw4whd27k6ft8efwagdyp9pnk56y879lqj8hdxz"
 creation_rules:
-  - path_regex: secrets.yaml$
+  - path_regex: secrets-fluffy.yaml$
     key_groups:
       - age:
           - *me

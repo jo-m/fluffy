@@ -13,7 +13,7 @@ pull-host-key:
 	# Pull the host pub key and encrypt the secrets with it.
 	REMOTE_HOST_KEY=$$(ssh $$NIX_SSHOPTS root@$$REMOTE_IP4 cat /etc/ssh/ssh_host_ed25519_key.pub | ssh-to-age) \
 		&& yq -i e ".keys.hosts.fluffy=\"$$REMOTE_HOST_KEY\"" .sops.yaml
-	sops updatekeys secrets.yaml
+	sops updatekeys secrets-fluffy.yaml
 
 .PHONY: push
 push:
