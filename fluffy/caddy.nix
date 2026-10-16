@@ -46,9 +46,9 @@ in {
         # https://github.com/mholt/caddy-webdav
         "github.com/mholt/caddy-webdav@v0.0.0-20260127042217-fa2f366b0d75"
         # https://github.com/greenpau/caddy-security
-        "github.com/greenpau/caddy-security@v1.1.64"
+        "github.com/greenpau/caddy-security@v1.4.1"
       ];
-      hash = "sha256-vzQZIbFz2yuqoD1m7ngY0zgLXy2xTzH/ELB0w19Oenc=";
+      hash = "sha256-H+KzrtC9z+LVbH6AqwBrXYypD4E938Cr+km2+Ow9Ir4=";
     };
 
     environmentFile = config.sops.templates.caddy-env-file.path;

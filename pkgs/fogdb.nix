@@ -6,8 +6,8 @@
 }: let
   pname = "fogdb";
   # Upstream has no tagged releases; pin to a specific commit on main.
-  version = "0-unstable-2026-08-16";
-  rev = "ebbc79f5083bbda992d120324bbb9d08ac2a9bbf";
+  version = "0-unstable-2026-10-16";
+  rev = "48a1b408bee249eaa6ef416d0ba478bc17453a4d";
 in
   buildGo126Module {
     inherit pname version;
