@@ -1,5 +1,5 @@
 {config, ...}: {
-  sops.defaultSopsFile = ./secrets-fluffy.yaml;
+  sops.defaultSopsFile = ./secrets-foggy.yaml;
   sops.age.sshKeyPaths = ["/etc/ssh/ssh_host_ed25519_key"];
   custom.domain = "${config.networking.hostName}.local";
 
@@ -21,6 +21,7 @@
     ./foggy/monitoring-grafana.nix
     ./foggy/network.nix
     ./foggy/syncthing.nix
+    ./foggy/wireguard.nix
 
     ./foggy/containers
   ];

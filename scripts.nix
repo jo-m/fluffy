@@ -82,6 +82,34 @@
       --label "B (''${short_b})" \
       "$tmp_a" "$tmp_b" || true
   '';
+
+  gen-wgkeys = pkgs.writeShellScriptBin "gen-wgkeys" ''
+    set -euo pipefail
+
+    wg="${pkgs.wireguard-tools}/bin/wg"
+    sops="${pkgs.sops}/bin/sops"
+
+    # WireGuard keys are base64, which needs no escaping inside a JSON string.
+    set_secret() {
+      local file="$1" path="$2" value="$3"
+      "$sops" set "$file" "$path" "\"$value\""
+    }
+
+    foggy_privkey="$("$wg" genkey)"
+    fluffy_privkey="$("$wg" genkey)"
+    foggy_pubkey="$(printf '%s' "$foggy_privkey" | "$wg" pubkey)"
+    fluffy_pubkey="$(printf '%s' "$fluffy_privkey" | "$wg" pubkey)"
+
+    # Each host stores its own private key encrypted, and the peer's public
+    # key in the clear (`_unencrypted` suffix), so the peer key can be read
+    # without decrypting the file.
+    set_secret secrets-foggy.yaml '["wireguard"]["private-key"]' "$foggy_privkey"
+    set_secret secrets-foggy.yaml '["wireguard"]["fluffy-pubkey_unencrypted"]' "$fluffy_pubkey"
+    set_secret secrets-fluffy.yaml '["wireguard"]["private-key"]' "$fluffy_privkey"
+    set_secret secrets-fluffy.yaml '["wireguard"]["foggy-pubkey_unencrypted"]' "$foggy_pubkey"
+
+    echo "Updated wireguard keys in secrets-foggy.yaml and secrets-fluffy.yaml"
+  '';
 in
   pkgs.symlinkJoin {
     name = "scripts";
@@ -92,5 +120,6 @@ in
       lint
       fix
       diff-versions
+      gen-wgkeys
     ];
   }

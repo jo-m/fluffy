@@ -18,6 +18,7 @@
     ./fluffy/monitoring-grafana.nix
     ./fluffy/syncthing.nix
     ./fluffy/webdav.nix
+    ./fluffy/wireguard.nix
 
     ./fluffy/containers
   ];

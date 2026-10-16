@@ -46,7 +46,8 @@ NIX_SSHOPTS= SSH_PORT=22 nix run github:nix-community/nixos-anywhere -- \
 ### Full setup
 
 ```fish
-ssh -p 4721 root@$FOGGY_REMOTE_IP4
+make pull-host-key-foggy
+gen-wgkeys
 nixos-rebuild switch --flake .#foggy --target-host root@$FOGGY_REMOTE_IP4
 ```
 

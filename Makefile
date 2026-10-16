@@ -15,6 +15,13 @@ pull-host-key:
 		&& yq -i e ".keys.hosts.fluffy=\"$$REMOTE_HOST_KEY\"" .sops.yaml
 	sops updatekeys secrets-fluffy.yaml
 
+.PHONY: pull-host-key-foggy
+pull-host-key-foggy:
+	# Pull foggy's host pub key and allow it to decrypt the wireguard secrets.
+	REMOTE_HOST_KEY=$$(ssh $$NIX_SSHOPTS root@$$FOGGY_REMOTE_IP4 cat /etc/ssh/ssh_host_ed25519_key.pub | ssh-to-age) \
+		&& yq -i e ".keys.hosts.foggy=\"$$REMOTE_HOST_KEY\"" .sops.yaml
+	sops updatekeys secrets-foggy.yaml
+
 .PHONY: push
 push:
 	nixos-rebuild switch --flake .#fluffy --impure --target-host root@$$REMOTE_IP4
