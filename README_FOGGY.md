@@ -69,8 +69,7 @@ sudo -u runner journalctl --user -efu teddycloud
 
 # TODO
 
-- [ ] Backup
-- [ ] Dedupe lokiPort var
+- [x] Backup
 - [ ] Basic Auth
 - [ ] Move content (README etc) from dockerapps repo
 - [ ] Immich?

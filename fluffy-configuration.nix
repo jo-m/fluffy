@@ -12,6 +12,7 @@
   imports = [
     ./fluffy-configuration-stage0.nix
 
+    ./common/backup.nix
     ./common/harden.nix
     ./common/monitoring.nix
     ./common/options.nix
@@ -21,7 +22,6 @@
     ./common/system.nix
     ./common/wireguard.nix
 
-    ./fluffy/backup.nix
     ./fluffy/caddy.nix
     ./fluffy/monitoring-grafana.nix
     ./fluffy/syncthing.nix

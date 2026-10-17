@@ -13,6 +13,7 @@
   imports = [
     ./foggy-configuration-stage0.nix
 
+    ./common/backup.nix
     ./common/harden.nix
     ./common/monitoring.nix
     ./common/options.nix

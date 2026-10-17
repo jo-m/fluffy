@@ -40,17 +40,15 @@ in {
     user = config.users.users."${username}".name;
     paths = data-base-dir;
     exclude = [
-      "${data-base-dir}/syncthing"
       "${data-base-dir}/lost+found"
-      "${data-base-dir}/readeck/config.toml"
+      "${data-base-dir}/syncthing" # Backed up on laptop.
+      "${data-base-dir}/readeck/config.toml" # Contains secret key.
 
+      # Cartomancer creates daily a .backup file which is not excluded here.
       "${data-base-dir}/cartomancer/*.sqlite"
       "${data-base-dir}/cartomancer/*.sqlite-shm"
       "${data-base-dir}/cartomancer/*.sqlite-wal"
       "${data-base-dir}/cartomancer/maps"
-
-      "${data-base-dir}/fogdb/*.sqlite-shm"
-      "${data-base-dir}/fogdb/*.sqlite-wal"
     ];
     extraCreateArgs = "--verbose --stats";
     encryption = {
@@ -70,6 +68,7 @@ in {
       monthly = 12;
       yearly = 5;
     };
+    extraPruneArgs = ["--save-space" "--list"];
     repo = ""; # We set this below instead.
   };
 
