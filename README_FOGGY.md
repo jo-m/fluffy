@@ -69,17 +69,8 @@ sudo -u runner journalctl --user -efu teddycloud
 
 # TODO
 
-- [ ] Update prometheus-podman-exporter to v2.0
-- [x] Test fwupd
-- [x] Syncthing
 - [ ] Backup
-- [x] Monitoring
-- [x] Move fogdb
 - [ ] Dedupe lokiPort var
-- [x] Teddycloud
-- [x] Caddy with subdomains
-- [x] mDNS
 - [ ] Basic Auth
 - [ ] Move content (README etc) from dockerapps repo
-- [x] Split networki.nix file (stage0)
 - [ ] Immich?

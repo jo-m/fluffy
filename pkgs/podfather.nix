@@ -1,12 +1,14 @@
 {
   lib,
   buildGoModule,
+  go_1_27,
   fetchFromGitHub,
 }: let
   name = "podfather";
-  version = "0.1.5";
+  version = "0.1.6";
 in
-  buildGoModule {
+  # TODO: Remove the override once nixpkgs default Go is new enough.
+  (buildGoModule.override {go = go_1_27;}) {
     pname = name;
     inherit version;
 
@@ -14,7 +16,7 @@ in
       owner = "jo-m";
       repo = name;
       rev = "v${version}";
-      hash = "sha256-N95GoOhQK8XwLGIJdR69sOvYuKw1dVI8z0gMgl+JE2A=";
+      hash = "sha256-ld72WIe5KebVloHQ3ku0Y/nOJvewWDh4w81UTGbp4EE=";
     };
 
     vendorHash = null;

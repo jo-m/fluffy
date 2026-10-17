@@ -6,12 +6,10 @@
   btrfs-progs,
   gpgme,
   libassuan,
-  lvm2,
   systemd,
 }: let
-  # TODO: Update to v2.0
   pname = "prometheus-podman-exporter";
-  version = "1.21.0";
+  version = "2.0.0";
 in
   buildGoModule {
     inherit pname version;
@@ -20,7 +18,7 @@ in
       owner = "containers";
       repo = pname;
       rev = "v${version}";
-      hash = "sha256-HY9ZOooAlIF3vb7ZENpRGvW5074PQS8yrfFXG39/Ycw=";
+      hash = "sha256-713r7COiEEO+zGVQPhFoWPpr9ILYxABQrRshvF9bfVU=";
     };
 
     # Upstream vendors all dependencies and builds with `-mod=vendor`.
@@ -28,10 +26,10 @@ in
     proxyVendor = false;
 
     nativeBuildInputs = [pkg-config];
-    buildInputs = [btrfs-progs gpgme libassuan lvm2 systemd];
+    buildInputs = [btrfs-progs gpgme libassuan systemd];
 
-    # Mirrors the build tags selected by hack/{systemd,btrfs,btrfs_installed}_tag.sh
-    # when systemd headers and full btrfs (with version.h) are available.
+    # Mirrors the build tags selected by hack/{systemd,btrfs_installed}_tag.sh
+    # when systemd and btrfs headers are available.
     tags = ["systemd"];
 
     ldflags = [
