@@ -4,6 +4,7 @@
     ./readeck.nix
     ./traggo.nix
     ./cartomancer.nix
+    ./kanboard.nix
   ];
 
   config = {
@@ -27,6 +28,11 @@
         serviceName = "cartomancer";
         subdomain = "cartomancer";
         port = 30120;
+      };
+      kanboard = {
+        serviceName = "kanboard";
+        subdomain = "kanboard";
+        port = 30130;
       };
     };
   };
