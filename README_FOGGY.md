@@ -56,7 +56,7 @@ nixos-rebuild switch --flake .#foggy --target-host root@$FOGGY_REMOTE_IP4
 - Syncthing devices and shares
 - Grafana setup (default: admin:admin)
 
-### Teddycloud
+## Teddycloud
 
 ```bash
 # Status
@@ -67,9 +67,80 @@ systemctl start --user --machine=runner@.host teddycloud.service
 sudo -u runner journalctl --user -efu teddycloud
 ```
 
-# TODO
+### Toniebox setup
+
+Pins on Box:
+- TxD Orange
+- Rxd Red
+- GND Brown
+
+Pins on UART adapter:
+- TdX Red
+- Rxd Orange
+- GND Brown
+
+http://localhost:2344/web/tonieboxes/boxsetup/esp32/legacy
+
+```bash
+# extract firmware
+esptool.py -b 921600 read_flash 0x0 0x800000 certs/tb.esp32.bin
+
+# enter teddycloud
+docker exec -it teddycloud /bin/bash
+cd /teddycloud
+
+# extract certficates from firmware
+mkdir certs/client/esp32
+mkdir certs/client/REPLACE_WITH_MAC # REPLACE_WITH_MAC: lo:we:rc:as:ee
+teddycloud --esp32-extract certs/tb.esp32.bin --destination certs/client/esp32
+
+# Copy box certificates to teddyCloud
+cp certs/client/esp32/CLIENT.DER certs/client/REPLACE_WITH_MAC/client.der
+cp certs/client/esp32/PRIVATE.DER certs/client/REPLACE_WITH_MAC/private.der
+cp certs/client/esp32/CA.DER certs/client/REPLACE_WITH_MAC/ca.der
+
+# In case of first Toniebox setup for TeddyCloud
+cp certs/client/REPLACE_WITH_MAC/client.der certs/client/client.der
+cp certs/client/REPLACE_WITH_MAC/private.der certs/client/private.der
+cp certs/client/REPLACE_WITH_MAC/ca.der certs/client/ca.der
+
+# Copy certificates to temporary dir
+mkdir certs/client/esp32-fakeca
+cp certs/client/esp32/CLIENT.DER certs/client/esp32-fakeca/
+cp certs/client/esp32/PRIVATE.DER certs/client/esp32-fakeca/
+cp certs/server/ca.der certs/client/esp32-fakeca/CA.DER
+
+# Flash CA replacement for TeddyCloud
+
+# copy firmware backup
+cp certs/tb.esp32.bin certs/tb.esp32.fakeca.bin
+
+# inject new CA into firmware
+teddycloud --esp32-inject certs/tb.esp32.fakeca.bin --source certs/client/esp32-fakeca
+# modify IP/hostname (optional)
+teddycloud --esp32-hostpatch certs/tb.esp32.fakeca.bin --hostname 10.0.0.13
+
+# flash firmware with new CA
+esptool.py -b 921600 write_flash 0x0 tb.esp32.fakeca.bin
+```
+
+UART Output:
+
+```
+ESP-ROM:esp32s3-20210327
+Build:Mar 27 2021
+rst:0xf (BROWNOUT_RST),boot:0x8 (SPI_FAST_FLASH_BOOT)
+SPIWP:0xee
+mode:DIO, clock div:1
+load:0x3fcd0108,len:0x118
+load:0x403b6000,len:0xb90
+load:0x403ba000,len:0x27f4
+entry 0x403b61c4
+```
+
+## TODO
 
 - [x] Backup
 - [x] Basic Auth
-- [ ] Move content (README etc) from dockerapps repo
+- [x] Move content (README etc) from dockerapps repo
 - [ ] Immich?
