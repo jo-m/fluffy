@@ -70,6 +70,6 @@ sudo -u runner journalctl --user -efu teddycloud
 # TODO
 
 - [x] Backup
-- [ ] Basic Auth
+- [x] Basic Auth
 - [ ] Move content (README etc) from dockerapps repo
 - [ ] Immich?

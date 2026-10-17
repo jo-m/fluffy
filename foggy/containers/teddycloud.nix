@@ -6,6 +6,7 @@
 }: let
   inherit (config.custom) username data-base-dir domain;
   cfg = config.services.foggy.teddycloud;
+  wireguard = config.services.wireguard;
   containerLib = import ../../common/containers-lib.nix;
   externalPort = 8443;
 
@@ -40,7 +41,7 @@ in {
 
     port = lib.mkOption {
       type = lib.types.port;
-      description = "Internal container port";
+      description = "Host port to publish the web UI on, both on localhost and the WireGuard address";
     };
 
     tonieApiAddr = lib.mkOption {
@@ -64,6 +65,8 @@ in {
     };
 
     networking.firewall.allowedTCPPorts = [443 externalPort];
+    # Only the tunnel partner may reach the web UI port directly (the LAN uses Caddy on :8443).
+    networking.firewall.interfaces."${wireguard.iface}".allowedTCPPorts = [cfg.port];
 
     # Allow unprivileged users to listen on :443.
     boot.kernel.sysctl = {
@@ -94,6 +97,7 @@ in {
             podmanArgs = ["--umask=0027"];
             publishPorts = [
               "127.0.0.1:${toString cfg.port}:80" # Web interface.
+              "${wireguard.address}:${toString cfg.port}:80" # Web interface, for fluffy's Caddy over the tunnel.
               "${cfg.tonieApiAddr}:443:443" # API, needs to directly expose port 443 on static IP.
             ];
             mounts = [

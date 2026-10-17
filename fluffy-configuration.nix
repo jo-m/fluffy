@@ -25,6 +25,7 @@
     ./fluffy/caddy.nix
     ./fluffy/monitoring-grafana.nix
     ./fluffy/syncthing.nix
+    ./fluffy/teddycloud.nix
     ./fluffy/webdav.nix
 
     ./fluffy/containers

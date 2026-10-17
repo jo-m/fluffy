@@ -38,6 +38,10 @@ in {
   services.caddy = {
     enable = true;
 
+    # caddy-security cannot re-provision its local identity store through a reload
+    # ("identity file ... already belongs to a security runtime"), so force restart instead.
+    enableReload = false;
+
     package = pkgs.caddy.withPlugins {
       plugins = [
         # To update: Put entire git rev after @, build, correct version will be in the error message.
