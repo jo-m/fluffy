@@ -38,6 +38,7 @@
     hostSystem = "x86_64-linux";
     overlays = [
       (final: _prev: {
+        prometheus-bthome-exporter = final.callPackage ./pkgs/prometheus-bthome-exporter {};
         fogdb = final.callPackage ./pkgs/fogdb.nix {};
         podfather = final.callPackage ./pkgs/podfather.nix {};
         prometheus-podman-exporter = final.callPackage ./pkgs/prometheus-podman-exporter.nix {};
@@ -92,10 +93,17 @@
 
     formatter.${hostSystem} = nixpkgs.legacyPackages.${hostSystem}.alejandra;
 
+    packages.${hostSystem} = {
+      prometheus-bthome-exporter = pkgs.prometheus-bthome-exporter;
+    };
+
     devShells.${hostSystem}.default = pkgs.mkShell {
       buildInputs = with pkgs; [
         # Scripts
         (import ./scripts.nix {inherit pkgs;})
+
+        # BLE monitoring
+        prometheus-bthome-exporter
 
         # Secrets handling
         age

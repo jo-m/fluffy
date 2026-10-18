@@ -146,3 +146,5 @@ entry 0x403b61c4
 - [x] Move content (README etc) from dockerapps repo
 - [ ] Immich?
 - [ ] Bind to ::1 instead of 127.0.0.1
+- [ ] General cleanup
+- [ ] sudo -> run0
