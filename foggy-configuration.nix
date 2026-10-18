@@ -31,7 +31,6 @@
     ./foggy/caddy.nix
     ./foggy/fogdb.nix
     ./foggy/fwupd.nix
-    ./foggy/hass.nix
     ./foggy/minimize.nix
     ./foggy/monitoring-grafana.nix
     ./foggy/network.nix
