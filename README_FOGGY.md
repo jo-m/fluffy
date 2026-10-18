@@ -55,6 +55,7 @@ nixos-rebuild switch --flake .#foggy --target-host root@$FOGGY_REMOTE_IP4
 
 - Syncthing devices and shares
 - Grafana setup (default: admin:admin)
+- Home assistant setup
 
 ## Teddycloud
 
@@ -144,3 +145,7 @@ entry 0x403b61c4
 - [x] Basic Auth
 - [x] Move content (README etc) from dockerapps repo
 - [ ] Immich?
+- [ ] Bind to ::1 instead of 127.0.0.1
+- [ ] Hass
+  - [ ] Backup
+  - [ ] Roborock
