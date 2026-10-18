@@ -9,6 +9,12 @@
     listen-port = 39277;
   };
 
+  # Not so much space here.
+  services.prometheus = {
+    retentionTime = "1y";
+    extraFlags = ["--storage.tsdb.retention.size=1GB"];
+  };
+
   imports = [
     ./fluffy-configuration-stage0.nix
 

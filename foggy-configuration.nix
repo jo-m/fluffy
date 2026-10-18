@@ -10,6 +10,11 @@
     peer-endpoint = "${builtins.getEnv "REMOTE_DOMAIN"}:39277";
   };
 
+  services.prometheus = {
+    retentionTime = "5y";
+    extraFlags = ["--storage.tsdb.retention.size=20GB"];
+  };
+
   imports = [
     ./foggy-configuration-stage0.nix
 

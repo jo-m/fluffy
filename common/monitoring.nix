@@ -1,6 +1,7 @@
 # Monitoring.
 {
   config,
+  lib,
   pkgs,
   ...
 }: let
@@ -136,6 +137,7 @@ in {
   services.prometheus = {
     enable = true;
     globalConfig.scrape_interval = "15s";
+    retentionTime = lib.mkDefault "2y";
     listenAddress = "localhost";
     port = promPort;
     scrapeConfigs = [
