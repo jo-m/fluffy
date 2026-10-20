@@ -14,7 +14,7 @@
 
     domain = lib.mkOption {
       type = lib.types.str;
-      description = "Top-level domain for services";
+      description = "Domain name or IP address under which services are reachable";
       default = builtins.getEnv "REMOTE_DOMAIN";
     };
 

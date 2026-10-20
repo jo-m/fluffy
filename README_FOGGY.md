@@ -3,7 +3,7 @@
 Counterpart to Fluffy: Foggy 🌫️ because it's on the ground.
 Acer NUC VN1502G N150.
 
-https://foggy.local/
+https://10.0.0.160/
 
 ## Installation
 

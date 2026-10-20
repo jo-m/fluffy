@@ -1,7 +1,7 @@
-{config, ...}: {
+{...}: {
   sops.defaultSopsFile = ./secrets-foggy.yaml;
   sops.age.sshKeyPaths = ["/etc/ssh/ssh_host_ed25519_key"];
-  custom.domain = "${config.networking.hostName}.local";
+  custom.domain = "10.0.0.160"; # mDNS sucks.
 
   hardware.bluetooth.enable = true;
   custom.prometheus-bthome-exporter.enable = true;
