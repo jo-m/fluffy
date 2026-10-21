@@ -5,6 +5,13 @@ _: {
   #   lynis
   # ];
 
+  # TODO: Remove once upstream NixOS is up to date.
+  # https://emudhra.we-have-a-problem.com/
+  security.pki.caCertificateBlacklist = [
+    "Comodo AAA Services root"
+    "emSign ECC Root CA - G3"
+  ];
+
   boot.kernel.sysctl = {
     "fs.protected_fifos" = 2;
     "fs.protected_regular" = 2;
