@@ -35,7 +35,11 @@ in {
   services.caddy.virtualHosts."${domain}:${toString externalPort}" = {
     extraConfig = ''
       bind ${config.services.foggy.caddy.bindIP}
-      tls internal
+      tls {
+        issuer internal {
+          ca foggy
+        }
+      }
       encode
       # https://docs.syncthing.net/users/reverseproxy.html
       reverse_proxy http://127.0.0.1:8384 {

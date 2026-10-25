@@ -19,7 +19,11 @@ in {
   services.caddy.virtualHosts."${domain}:${toString grafanaExternalPort}" = {
     extraConfig = ''
       bind ${config.services.foggy.caddy.bindIP}
-      tls internal
+      tls {
+        issuer internal {
+          ca foggy
+        }
+      }
       encode
       reverse_proxy http://127.0.0.1:${toString grafanaPort}
     '';

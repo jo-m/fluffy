@@ -110,6 +110,62 @@
 
     echo "Updated wireguard keys in secrets-foggy.yaml and secrets-fluffy.yaml"
   '';
+
+  gen-foggy-ca = pkgs.writeShellScriptBin "gen-foggy-ca" ''
+    set -euo pipefail
+
+    if [[ $# -ne 0 ]]; then
+      echo "Usage: gen-foggy-ca" >&2
+      echo "Regenerates the Foggy CA and stores the new key in secrets-foggy.yaml." >&2
+      exit 2
+    fi
+
+    repo_root="$(${pkgs.git}/bin/git rev-parse --show-toplevel)"
+    cd "$repo_root"
+
+    if [[ ! -f foggy/caddy.nix ]]; then
+      echo "gen-foggy-ca must be run inside the fluffy repository." >&2
+      exit 1
+    fi
+
+    tmpdir="$(mktemp -d)"
+    key="$tmpdir/ca.key"
+    cert="$tmpdir/ca.crt"
+    cleanup() {
+      ${pkgs.coreutils}/bin/shred -u "$key" 2>/dev/null || true
+      rm -rf "$tmpdir"
+    }
+    trap cleanup EXIT
+
+    ${pkgs.openssl}/bin/openssl req -x509 -new -newkey ec \
+      -pkeyopt ec_paramgen_curve:P-256 -nodes \
+      -keyout "$key" -out "$cert" \
+      -days 36500 -sha256 \
+      -subj "/CN=Foggy Local CA/O=Fluffy" \
+      -addext "basicConstraints=critical,CA:TRUE" \
+      -addext "keyUsage=critical,keyCertSign,cRLSign" \
+      -addext "subjectKeyIdentifier=hash"
+
+    # sops set expects a JSON value, so encode the PEM as a JSON string.
+    key_json="$(${pkgs.jq}/bin/jq -Rs . < "$key")"
+    ${pkgs.sops}/bin/sops set secrets-foggy.yaml \
+      '["caddy"]["pki-root-key"]' "$key_json"
+
+    ${pkgs.coreutils}/bin/install -m 0644 "$cert" foggy/ca.crt
+
+    echo
+    echo "Generated a new Foggy CA:"
+    ${pkgs.openssl}/bin/openssl x509 -in foggy/ca.crt -noout -fingerprint -sha256
+    echo
+    echo "Updated foggy/ca.crt and caddy/pki-root-key in secrets-foggy.yaml."
+    echo
+    echo "Next steps:"
+    echo "  1. Stage and deploy:"
+    echo "     git add foggy/ca.crt secrets-foggy.yaml && make push-foggy"
+    echo "  2. Clear Caddy's cached CA on foggy and restart it:"
+    echo "     ssh-foggy 'systemctl stop caddy && rm -rf /var/lib/caddy/.local/share/caddy/pki/authorities/foggy /var/lib/caddy/.local/share/caddy/certificates/foggy && systemctl start caddy'"
+    echo "  3. Replace the CA in the laptop trust store with foggy/ca.crt."
+  '';
 in
   pkgs.symlinkJoin {
     name = "scripts";
@@ -121,5 +177,6 @@ in
       fix
       diff-versions
       gen-wgkeys
+      gen-foggy-ca
     ];
   }
