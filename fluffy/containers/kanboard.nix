@@ -49,7 +49,7 @@ in {
           serviceConfig = containerLib.ServiceConfig;
           # https://docs.podman.io/en/latest/markdown/podman-systemd.unit.5.html
           containerConfig = {
-            image = "docker.io/kanboard/kanboard:v1.2.54";
+            image = "docker.io/kanboard/kanboard:v1.2.56";
             autoUpdate = "registry";
             name = cfg.serviceName;
 
